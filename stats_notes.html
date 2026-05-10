@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>stats_notes · probability & statistics hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fc;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #1e2f3e;
+            padding: 2rem 1rem;
+        }
+
+        /* main container */
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header with breadcrumb to index */
+        .top-bar {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2edf2;
+        }
+        .home-link {
+            background: #eef3fa;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #2c5a7a;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .home-link:hover {
+            background: #e0eaf3;
+            color: #0f3b5c;
+        }
+        .stats-header {
+            text-align: center;
+            margin: 1.2rem 0 2rem;
+        }
+        .stats-header h1 {
+            font-size: 2.9rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #1c6e8f, #0b3b4f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+        }
+        .stats-header p {
+            font-size: 1.1rem;
+            color: #54738f;
+            margin-top: 0.5rem;
+        }
+
+        /* course grid layout */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* card style for each big subject */
+        .subject-card {
+            background: white;
+            border-radius: 1.8rem;
+            overflow: hidden;
+            box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border: 1px solid rgba(100, 150, 170, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 36px -16px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 1.2rem 1.5rem;
+            background: #fefefe;
+            border-bottom: 3px solid;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .probability-header { border-bottom-color: #3b82f6; }
+        .descriptive-header { border-bottom-color: #10b981; }
+        .distributions-header { border-bottom-color: #f59e0b; }
+
+        .unit-list {
+            padding: 1.2rem 1.5rem 1.5rem;
+            flex: 1;
+        }
+        .unit {
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #e2edf2;
+            padding-left: 1rem;
+        }
+        .unit h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e4b6e;
+            margin-bottom: 0.65rem;
+            display: inline-block;
+            background: #ecf5f9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            letter-spacing: -0.2px;
+        }
+        .topic-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .topic-link {
+            background: #f8fafc;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: #2c6282;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #e0edf2;
+        }
+        .topic-link:hover {
+            background: #e1f0f7;
+            color: #0f4b6e;
+            border-color: #bddae6;
+            transform: scale(0.98);
+        }
+        .sub-badge {
+            font-size: 0.7rem;
+            background: #eef2fa;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            color: #456e8c;
+            vertical-align: middle;
+        }
+
+        /* additional meta */
+        .footer-meta {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6793ae;
+            border-top: 1px solid #d9e4ec;
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 750px) {
+            .stats-header h1 { font-size: 2rem; }
+            .course-grid { gap: 1.2rem; }
+            .unit h3 { font-size: 1rem; }
+            .topic-link { font-size: 0.7rem; }
+        }
+
+        /* anchor indicator */
+        .chapter-note {
+            margin-top: 0.4rem;
+            font-size: 0.7rem;
+            color: #7f9bb5;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="stats-container">
+    <!-- top navigation: back to azsnotes index -->
+    <div class="top-bar">
+        <a href="index.html" class="home-link">← azsnotes / home</a>
+        <span style="font-size:0.75rem; background:#eef2f0; padding:0.2rem 0.7rem; border-radius:20px;">📊 statistics & probability hub</span>
+    </div>
+
+    <!-- main header -->
+    <div class="stats-header">
+        <h1>📈 stats_notes</h1>
+        <p>complete syllabus — probability theory · descriptive statistics · probability distributions</p>
+    </div>
+
+    <div class="course-grid">
+        
+        <!-- ================= PROBABILITY THEORY (4 UNITS) ================= -->
+        <div class="subject-card">
+            <div class="card-header probability-header">
+                <span style="font-size: 2rem;">🎲</span>
+                <h2>Probability Theory</h2>
+            </div>
+            <div class="unit-list">
+                <!-- UNIT I -->
+                <div class="unit">
+                    <h3>📘 UNIT I · Basic Foundations</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Basic concepts of probability</a>
+                        <a href="#" class="topic-link">Random experiment / trial</a>
+                        <a href="#" class="topic-link">Sample point & sample space</a>
+                        <a href="#" class="topic-link">Events & algebra of events</a>
+                        <a href="#" class="topic-link">Mutually exclusive events</a>
+                        <a href="#" class="topic-link">Exhaustive & equally likely</a>
+                        <a href="#" class="topic-link">Preliminary set theory</a>
+                        <a href="#" class="topic-link">Operations on sets</a>
+                        <a href="#" class="topic-link">Classical / relative freq. / axiomatic probability</a>
+                        <a href="#" class="topic-link">Limitations of probability definitions</a>
+                    </div>
+                </div>
+                <!-- UNIT II -->
+                <div class="unit">
+                    <h3>🔗 UNIT II · Probability Theorems & Bayes</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Addition theorem (n events)</a>
+                        <a href="#" class="topic-link">Total probability theorem</a>
+                        <a href="#" class="topic-link">Boole’s inequality</a>
+                        <a href="#" class="topic-link">Conditional probability</a>
+                        <a href="#" class="topic-link">Multiplication theorem for n events</a>
+                        <a href="#" class="topic-link">Independent events</a>
+                        <a href="#" class="topic-link">Bayes’ theorem & applications</a>
+                    </div>
+                </div>
+                <!-- UNIT III -->
+                <div class="unit">
+                    <h3>📊 UNIT III · Random Variables & Expectation</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Discrete & continuous RVs</a>
+                        <a href="#" class="topic-link">pmf, pdf, cdf</a>
+                        <a href="#" class="topic-link">Joint, marginal & conditional distributions</a>
+                        <a href="#" class="topic-link">Independence of RVs</a>
+                        <a href="#" class="topic-link">1D & 2D transformations</a>
+                        <a href="#" class="topic-link">Expectation & properties</a>
+                        <a href="#" class="topic-link">Expectation of sum / product of independent RVs</a>
+                        <a href="#" class="topic-link">Conditional expectation & variance</a>
+                    </div>
+                </div>
+                <!-- UNIT IV -->
+                <div class="unit">
+                    <h3>📐 UNIT IV · Moments, Inequalities & Limit Theorems</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Moments & moment generating function (m.g.f)</a>
+                        <a href="#" class="topic-link">Properties of m.g.f, continuity theorem</a>
+                        <a href="#" class="topic-link">Chebyshev’s inequality</a>
+                        <a href="#" class="topic-link">Weak law of large numbers (WLLN)</a>
+                        <a href="#" class="topic-link">Central Limit Theorem (CLT)</a>
+                        <a href="#" class="topic-link">i.i.d. sequences & applications</a>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 1.5rem 1rem 1.5rem;"><span class="chapter-note">📖 complete probability theory notes</span></div>
+        </div>
+
+        <!-- ================= DESCRIPTIVE STATISTICS (4 UNITS) ================= -->
+        <div class="subject-card">
+            <div class="card-header descriptive-header">
+                <span style="font-size: 2rem;">📋</span>
+                <h2>Descriptive Statistics</h2>
+            </div>
+            <div class="unit-list">
+                <!-- UNIT I -->
+                <div class="unit">
+                    <h3>📌 UNIT I · Data & Presentation</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Attributes & variables (discrete/continuous)</a>
+                        <a href="#" class="topic-link">Scales: nominal, ordinal, ratio, interval</a>
+                        <a href="#" class="topic-link">Primary data: questionnaire, schedule design</a>
+                        <a href="#" class="topic-link">Collection & consistency checking</a>
+                        <a href="#" class="topic-link">Secondary data scrutiny & cross validation</a>
+                        <a href="#" class="topic-link">Classification, tabulation & frequency distributions</a>
+                        <a href="#" class="topic-link">Cumulative frequency & ogives</a>
+                        <a href="#" class="topic-link">Bar chart, pie chart, histogram</a>
+                        <a href="#" class="topic-link">Frequency polygon, stem-leaf plot</a>
+                        <a href="#" class="topic-link">Box & Whisker plot</a>
+                    </div>
+                </div>
+                <!-- UNIT II -->
+                <div class="unit">
+                    <h3>📏 UNIT II · Central tendency, Dispersion & Shape</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Measures of central tendency (mean, median, mode)</a>
+                        <a href="#" class="topic-link">Measures of dispersion (range, variance, SD)</a>
+                        <a href="#" class="topic-link">Merits & demerits of measures</a>
+                        <a href="#" class="topic-link">Moments & factorial moments</a>
+                        <a href="#" class="topic-link">Shephard’s correction for moments</a>
+                        <a href="#" class="topic-link">Skewness & Kurtosis measures</a>
+                        <a href="#" class="topic-link">Quantile based measures (quartiles, deciles, percentiles)</a>
+                    </div>
+                </div>
+                <!-- UNIT III -->
+                <div class="unit">
+                    <h3>📈 UNIT III · Bivariate Analysis & Regression</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Least squares method / curve fitting</a>
+                        <a href="#" class="topic-link">Correlation & regression (bivariate)</a>
+                        <a href="#" class="topic-link">Bivariate frequency distribution</a>
+                        <a href="#" class="topic-link">Rank correlation: Spearman’s & Kendall’s</a>
+                        <a href="#" class="topic-link">Intra-class correlation</a>
+                        <a href="#" class="topic-link">Partial & multiple correlation</a>
+                        <a href="#" class="topic-link">Multiple regression for tri-variate data</a>
+                    </div>
+                </div>
+                <!-- UNIT IV -->
+                <div class="unit">
+                    <h3>📉 UNIT IV · Attributes & Association</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Notion of attributes & contingency table</a>
+                        <a href="#" class="topic-link">Class frequencies & ultimate class frequencies</a>
+                        <a href="#" class="topic-link">Consistency of data</a>
+                        <a href="#" class="topic-link">Association of attributes & independence</a>
+                        <a href="#" class="topic-link">Measures for 2x2 table</a>
+                        <a href="#" class="topic-link">Chi-square test for association</a>
+                        <a href="#" class="topic-link">Karl Pearson’s & Tschuprow’s coefficient</a>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 1.5rem 1rem 1.5rem;"><span class="chapter-note">📊 descriptive analytics & visual summaries</span></div>
+        </div>
+
+        <!-- ================= PROBABILITY DISTRIBUTIONS (4 UNITS) ================= -->
+        <div class="subject-card">
+            <div class="card-header distributions-header">
+                <span style="font-size: 2rem;">📡</span>
+                <h2>Probability Distributions</h2>
+            </div>
+            <div class="unit-list">
+                <!-- UNIT I : discrete -->
+                <div class="unit">
+                    <h3>🃏 UNIT I · Univariate Discrete Distributions</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Bernoulli distribution</a>
+                        <a href="#" class="topic-link">Binomial distribution</a>
+                        <a href="#" class="topic-link">Poisson distribution</a>
+                        <a href="#" class="topic-link">Geometric distribution</a>
+                        <a href="#" class="topic-link">Negative Binomial</a>
+                        <a href="#" class="topic-link">Hypergeometric distribution</a>
+                        <a href="#" class="topic-link">Uniform (discrete case)</a>
+                        <a href="#" class="topic-link">Properties & applications</a>
+                    </div>
+                </div>
+                <!-- UNIT II : continuous -->
+                <div class="unit">
+                    <h3>🌊 UNIT II · Univariate Continuous Distributions</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Uniform (continuous)</a>
+                        <a href="#" class="topic-link">Normal (Gaussian) distribution</a>
+                        <a href="#" class="topic-link">Exponential distribution</a>
+                        <a href="#" class="topic-link">Gamma distribution</a>
+                        <a href="#" class="topic-link">Beta distribution</a>
+                        <a href="#" class="topic-link">Cauchy distribution</a>
+                        <a href="#" class="topic-link">Laplace distribution</a>
+                        <a href="#" class="topic-link">Log-normal distribution</a>
+                    </div>
+                </div>
+                <!-- UNIT III : functions of random variables -->
+                <div class="unit">
+                    <h3>⚙️ UNIT III · Functions of Random Variables</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Distribution of sum of independent RVs</a>
+                        <a href="#" class="topic-link">Sum of different distributions (examples)</a>
+                        <a href="#" class="topic-link">Distribution of product of two RVs</a>
+                        <a href="#" class="topic-link">Distribution of quotient of two RVs</a>
+                        <a href="#" class="topic-link">Transformations & convolution methods</a>
+                    </div>
+                </div>
+                <!-- UNIT IV : sampling distributions + bivariate normal -->
+                <div class="unit">
+                    <h3>🎯 UNIT IV · Sampling Distributions & Bivariate Normal</h3>
+                    <div class="topic-links">
+                        <a href="#" class="topic-link">Chi-square (χ²) distribution</a>
+                        <a href="#" class="topic-link">t-distribution (Student’s t)</a>
+                        <a href="#" class="topic-link">F-distribution</a>
+                        <a href="#" class="topic-link">Relationships among χ², t, F</a>
+                        <a href="#" class="topic-link">Limiting forms (asymptotic)</a>
+                        <a href="#" class="topic-link">Bivariate normal distribution & properties</a>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 1.5rem 1rem 1.5rem;"><span class="chapter-note">📌 key models · generative processes · inference</span></div>
+        </div>
+    </div>
+
+    <!-- additional resource area (quick navigation highlight) -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0 1rem;">
+        <div style="background: #eef3fc; border-radius: 60px; padding: 0.4rem 1.2rem; font-size: 0.75rem;">
+            🧠 all topic links are ready — each opens detailed notes (coming content)
+        </div>
+        <div style="background: #eef3fc; border-radius: 60px; padding: 0.4rem 1.2rem; font-size: 0.75rem;">
+            📚 syllabus coverage: units I–IV for all three sections
+        </div>
+    </div>
+
+    <div class="footer-meta">
+        <span>stats_notes · complete syllabus portal</span> &nbsp;|&nbsp; 
+        <span>Probability Theory · Descriptive Statistics · Probability Distributions</span><br>
+        <span style="font-size:0.7rem;">📖 each topic-link is structured for future deep notes — ideal for self-study & revision</span>
+    </div>
+</div>
+
+<!-- (Optional) simple placeholder to demonstrate that links can be customized: 
+     you can replace '#' with actual note pages later -->
+<script>
+    // This script enhances usability: logs a friendly message and can be extended.
+    // All "topic-link" anchors currently point to "#", you can replace them with real note URLs.
+    // For now, they show an informative console hint that you can attach real content.
+    const allTopicLinks = document.querySelectorAll('.topic-link');
+    allTopicLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            if(link.getAttribute('href') === '#') {
+                e.preventDefault();
+                // mild notification for demo
+                let topicText = link.innerText;
+                alert(`📘 "${topicText}" — detailed notes will appear here.\nYou can replace '#' with actual .html or section pages.`);
+            }
+        });
+    });
+    console.log('stats_notes ready: three major sections, 12 units fully organized');
+</script>
+</body>
+</html>
