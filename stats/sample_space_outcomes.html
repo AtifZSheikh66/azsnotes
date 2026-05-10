@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sample Space & Sample Point | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        /* Additional styles for math and examples */
+        .math-display {
+            overflow-x: auto;
+            margin: 1.25rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+        .math-inline {
+            background: #f1f5f9;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+        }
+        .sample-space-example {
+            background: #eef2ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .sample-space-example strong {
+            color: #1e40af;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-top: 3px solid;
+        }
+        .card-discrete { border-top-color: #3b82f6; }
+        .card-continuous { border-top-color: #10b981; }
+        .definition-box {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            border-left: 4px solid #8b5cf6;
+        }
+        .notation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .notation-table th,
+        .notation-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        .notation-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        @media (max-width: 640px) {
+            .notation-table th,
+            .notation-table td {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Sample Space & Sample Point</span>
+        </div>
+        <h1>🎯 Sample Space & Sample Point</h1>
+        <p>The fundamental building blocks: defining all possible outcomes of a random experiment</p>
+        <span class="badge">Probability Theory · Unit I · Core Concepts</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <p>Every random experiment produces an <strong>outcome</strong>. To study the experiment mathematically, we must first define the <strong>set of all possible outcomes</strong>. This set is the foundation upon which probability theory is built [citation:1][citation:3].</p>
+            <div class="definition">
+                The <strong>sample space</strong> (denoted by \( \Omega \) or \( S \)) is the set of all possible outcomes of a random experiment [citation:1][citation:3][citation:7].
+            </div>
+            <p>Each individual outcome within the sample space is called a <strong>sample point</strong> or <strong>elementary event</strong> [citation:1][citation:5].</p>
+        </div>
+
+        <!-- Section 2: Formal Definitions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📖</span>
+                <h2>2. Formal Definitions</h2>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📌 Sample Space (\( \Omega \))</h3>
+                <p>The sample space is the universal set containing every possible outcome of an experiment. It is denoted by \( \Omega \) (capital Omega) or \( S \). The sample space must satisfy two conditions [citation:5][citation:7]:</p>
+                <ul>
+                    <li><strong>Collectively exhaustive</strong> — every possible outcome of the experiment is included</li>
+                    <li><strong>Mutually exclusive</strong> — no outcome can occur simultaneously with another</li>
+                </ul>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📍 Sample Point (\( \omega \))</h3>
+                <p>A <strong>sample point</strong> (also called an <strong>outcome</strong>, <strong>elementary event</strong>, or <strong>atom</strong>) is a single element of the sample space. It is denoted by \( \omega \) (lowercase omega) [citation:1][citation:5][citation:7].</p>
+                <p>Mathematically, if \( \Omega \) is the sample space, then each \( \omega \in \Omega \) is a sample point [citation:1]. A sample point cannot be broken down into simpler outcomes — it is the most basic result of the experiment.</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Notation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">✍️</span>
+                <h2>3. Mathematical Notation</h2>
+            </div>
+            
+            <table class="notation-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>\( \Omega \) or \( S \)</td>
+                        <td>Sample space</td>
+                        <td>Set of all possible outcomes</td>
+                        <td>\( \Omega = \{H, T\} \) for a coin toss</td>
+                    </tr>
+                    <tr>
+                        <td>\( \omega \)</td>
+                        <td>Sample point / Outcome</td>
+                        <td>Individual element of \( \Omega \)</td>
+                        <td>\( \omega = H \) (Heads)</td>
+                    </tr>
+                    <tr>
+                        <td>\( |\Omega| \) or \( n(\Omega) \)</td>
+                        <td>Cardinality</td>
+                        <td>Number of sample points in \( \Omega \)</td>
+                        <td>\( |\Omega| = 6 \) for a die roll</td>
+                    </tr>
+                    <tr>
+                        <td>\( P(\{\omega\}) \)</td>
+                        <td>Probability of a sample point</td>
+                        <td>Probability that specific outcome occurs</td>
+                        <td>\( P(\{H\}) = \frac{1}{2} \) for fair coin</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="note-tip">
+                💡 <strong>Important Distinction:</strong> In probability theory, \( p(x) \) refers to the probability of a <strong>sample point</strong> (individual outcome), while \( P(X) \) refers to the probability of an <strong>event</strong> (set of sample points) [citation:5].
+            </div>
+        </div>
+
+        <!-- Section 4: Types of Sample Spaces -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>4. Types of Sample Spaces</h2>
+            </div>
+            
+            <div class="grid-2col">
+                <div class="comparison-card card-discrete">
+                    <h3>📊 Discrete Sample Space</h3>
+                    <p>A sample space is <strong>discrete</strong> if it contains a finite or countably infinite number of outcomes [citation:2][citation:7].</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Coin toss: \( \Omega = \{H, T\} \) (2 outcomes)</li>
+                        <li>Die roll: \( \Omega = \{1, 2, 3, 4, 5, 6\} \) (6 outcomes)</li>
+                        <li>Number of coin tosses until first head: \( \Omega = \{1, 2, 3, \ldots\} \) (countably infinite)</li>
+                    </ul>
+                    <p>For discrete spaces, probabilities are assigned to individual sample points, and for any event \( A \subseteq \Omega \) [citation:2][citation:5]:</p>
+                    <div class="math-display">
+                        \[ P(A) = \sum_{\omega \in A} P(\{\omega\}) \]
+                    </div>
+                </div>
+                
+                <div class="comparison-card card-continuous">
+                    <h3>📏 Continuous Sample Space</h3>
+                    <p>A sample space is <strong>continuous</strong> if it contains an uncountably infinite number of outcomes [citation:5][citation:7].</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Measuring temperature: \( \Omega = \{T : T \in \mathbb{R}, T \geq -273.15\} \)</li>
+                        <li>Waiting time for a bus: \( \Omega = \{t : t \geq 0\} \)</li>
+                        <li>Angle of a spinning pointer: \( \Omega = [0, 2\pi) \)</li>
+                    </ul>
+                    <p>For continuous spaces, probabilities are assigned via a <strong>probability density function</strong> \( f(\omega) \), and [citation:5]:</p>
+                    <div class="math-display">
+                        \[ P(A) = \int_{\omega \in A} f(\omega) \, d\omega \]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Examples with Complete Solutions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>5. Worked Examples</h2>
+            </div>
+            
+            <h3>Example 1: Single Coin Toss</h3>
+            <div class="sample-space-example">
+                <p><strong>Experiment:</strong> Tossing a fair coin once.</p>
+                <p><strong>Sample Space:</strong> \( \Omega = \{H, T\} \) [citation:2][citation:10]</p>
+                <p><strong>Sample Points:</strong> \( \omega_1 = H \) (Heads), \( \omega_2 = T \) (Tails)</p>
+                <p><strong>Cardinality:</strong> \( |\Omega| = 2 \)</p>
+                <p><strong>Probabilities (fair coin):</strong> \( P(\{H\}) = \frac{1}{2} \), \( P(\{T\}) = \frac{1}{2} \)</p>
+            </div>
+            
+            <h3>Example 2: Rolling a Fair Die</h3>
+            <div class="sample-space-example">
+                <p><strong>Experiment:</strong> Rolling a standard six-sided die.</p>
+                <p><strong>Sample Space:</strong> \( \Omega = \{1, 2, 3, 4, 5, 6\} \) [citation:1][citation:10]</p>
+                <p><strong>Sample Points:</strong> Each integer from 1 to 6</p>
+                <p><strong>Cardinality:</strong> \( |\Omega| = 6 \)</p>
+                <p><strong>Probabilities (fair die):</strong> \( P(\{i\}) = \frac{1}{6} \) for \( i = 1, 2, \ldots, 6 \)</p>
+                <p><strong>Probability of an even number (event):</strong> \( P(\{2,4,6\}) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{3}{6} = \frac{1}{2} \) [citation:2]</p>
+            </div>
+            
+            <h3>Example 3: Two Coin Tosses</h3>
+            <div class="sample-space-example">
+                <p><strong>Experiment:</strong> Tossing a fair coin twice.</p>
+                <p><strong>Sample Space (ordered outcomes):</strong> \( \Omega = \{HH, HT, TH, TT\} \) [citation:1][citation:3][citation:10]</p>
+                <p><strong>Cardinality:</strong> \( |\Omega| = 4 \)</p>
+                <p><strong>Each sample point probability:</strong> \( P(\{HH\}) = P(\{HT\}) = P(\{TH\}) = P(\{TT\}) = \frac{1}{4} \)</p>
+                <p><strong>Event "Exactly one head":</strong> \( A = \{HT, TH\} \)</p>
+                <p><strong>Probability:</strong> \( P(A) = P(\{HT\}) + P(\{TH\}) = \frac{1}{4} + \frac{1}{4} = \frac{1}{2} \)</p>
+            </div>
+            
+            <h3>Example 4: Rolling Two Dice</h3>
+            <div class="sample-space-example">
+                <p><strong>Experiment:</strong> Rolling two fair dice.</p>
+                <p><strong>Sample Space (ordered pairs):</strong> \( \Omega = \{(i,j) : i,j \in \{1,2,3,4,5,6\}\} \) [citation:1][citation:2]</p>
+                <p><strong>Cardinality:</strong> \( |\Omega| = 6 \times 6 = 36 \)</p>
+                <p><strong>Probability of each sample point:</strong> \( P(\{(i,j)\}) = \frac{1}{36} \) for all \( i,j \)</p>
+                <p><strong>Event "Sum = 7":</strong> \( A = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \)</p>
+                <p><strong>Probability:</strong> \( P(A) = \frac{6}{36} = \frac{1}{6} \) [citation:2]</p>
+            </div>
+            
+            <h3>Example 5: Countably Infinite Sample Space</h3>
+            <div class="sample-space-example">
+                <p><strong>Experiment:</strong> Tossing a fair coin until the first head appears [citation:4][citation:9].</p>
+                <p><strong>Sample Space:</strong> \( \Omega = \{H, TH, TTH, TTTH, TTTTH, \ldots\} \) [citation:4]</p>
+                <p>This is a <strong>countably infinite</strong> sample space — theoretically, we could toss tails forever (though with probability 0).</p>
+                <p><strong>Individual probabilities:</strong> \( P(\{H\}) = \frac{1}{2} \), \( P(\{TH\}) = \left(\frac{1}{2}\right)^2 = \frac{1}{4} \), \( P(\{TTH\}) = \left(\frac{1}{2}\right)^3 = \frac{1}{8} \), etc. [citation:4]</p>
+                <p><strong>Verification:</strong> The sum of all probabilities is \( \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n = 1 \)</p>
+                <div class="math-display">
+                    \[ \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n = \frac{1/2}{1 - 1/2} = 1 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Sample Space Construction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🏗️</span>
+                <h2>6. Constructing Sample Spaces</h2>
+            </div>
+            
+            <p>When constructing a sample space, there are often multiple valid approaches. The key principle: <strong>choose the representation that makes probability calculation easiest</strong> [citation:2].</p>
+            
+            <h3>Option 1: Detailed Space (Equally Likely Outcomes)</h3>
+            <p>For two dice, we can record ordered pairs \((i,j)\). This gives 36 equally likely outcomes, making probability calculations straightforward [citation:2].</p>
+            <div class="math-display">
+                \[ \Omega_{\text{detailed}} = \{(1,1), (1,2), \ldots, (6,6)\}, \quad |\Omega| = 36 \]
+            </div>
+            
+            <h3>Option 2: Summarized Space (Not Equally Likely)</h3>
+            <p>For two dice, we could record only the sum \( i + j \). The sample space is \( \{2, 3, 4, \ldots, 12\} \), but outcomes are <strong>not equally likely</strong> — e.g., sum 7 has probability \( \frac{6}{36} \) while sum 2 has probability \( \frac{1}{36} \) [citation:2].</p>
+            
+            <div class="note-tip">
+                💡 <strong>Best Practice:</strong> When possible, construct a sample space where all outcomes are equally likely. This simplifies probability calculations significantly.
+            </div>
+        </div>
+
+        <!-- Section 7: Sample Point Method -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚙️</span>
+                <h2>7. The Sample Point Method</h2>
+            </div>
+            
+            <p>For discrete sample spaces, probability calculations follow a systematic approach called the <strong>sample point method</strong> [citation:2][citation:6]:</p>
+            
+            <div class="definition-box">
+                <h3>Steps of the Sample Point Method</h3>
+                <ol>
+                    <li><strong>List the sample space</strong> — Determine all possible outcomes of the experiment: \( \Omega = \{\omega_1, \omega_2, \ldots\} \)</li>
+                    <li><strong>Assign probabilities to each sample point</strong> — Ensure \( P(\{\omega_i\}) \geq 0 \) and \( \sum_i P(\{\omega_i\}) = 1 \)</li>
+                    <li><strong>Express the event of interest</strong> — Write event \( A \) as a set of sample points: \( A \subseteq \Omega \)</li>
+                    <li><strong>Sum the probabilities</strong> — \( P(A) = \sum_{\omega \in A} P(\{\omega\}) \)</li>
+                </ol>
+            </div>
+            
+            <div class="example">
+                <strong>📖 Example Application:</strong> Three fair coin tosses [citation:2][citation:8].<br>
+                Sample space: \( \Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\} \)<br>
+                Each sample point probability: \( \frac{1}{8} \)<br>
+                Event \( A \) = "exactly two heads" = \( \{HHT, HTH, THH\} \)<br>
+                \( P(A) = \frac{1}{8} + \frac{1}{8} + \frac{1}{8} = \frac{3}{8} \)
+            </div>
+        </div>
+
+        <!-- Section 8: Relationship Between Sample Points and Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>8. Sample Points vs. Events</h2>
+            </div>
+            
+            <p>A sample point is an individual outcome — the most elementary result possible. An <strong>event</strong> is any subset of the sample space [citation:1][citation:5].</p>
+            
+            <div class="grid-2col">
+                <div class="comparison-card" style="border-top-color: #8b5cf6;">
+                    <h3>Sample Point \( \omega \)</h3>
+                    <ul>
+                        <li>Single element of \( \Omega \)</li>
+                        <li>Denoted by lowercase \( \omega \)</li>
+                        <li>Also called "outcome" or "elementary event"</li>
+                        <li>Cannot be decomposed further</li>
+                    </ul>
+                </div>
+                <div class="comparison-card" style="border-top-color: #ec489a;">
+                    <h3>Event \( A \)</h3>
+                    <ul>
+                        <li>Subset of \( \Omega \) (any size, including 1)</li>
+                        <li>Denoted by capital letters \( A, B, C \)</li>
+                        <li>Can contain one or many sample points</li>
+                        <li>Entire sample space \( \Omega \) is the certain event</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="math-display">
+                \[ \text{If } \omega \in A \text{, then the occurrence of outcome } \omega \text{ implies event } A \text{ occurs} \]
+                \[ \text{Every sample point is an event, but not every event is a sample point} \]
+            </div>
+        </div>
+
+        <!-- Section 9: Check Your Understanding -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>9. Practice Questions</h2>
+            </div>
+            
+            <div class="sample-space-example">
+                <p><strong>Question 1:</strong> An experiment consists of selecting a card from a standard 52-card deck. What is the sample space? How many sample points does it contain?</p>
+                <details style="margin-top: 0.75rem;">
+                    <summary style="cursor: pointer; color: #3b82f6; font-weight: 500;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">\( \Omega = \{\text{Ace of Hearts}, 2\text{ of Hearts}, \ldots, \text{King of Spades}\} \). Number of sample points: \( |\Omega| = 52 \).</p>
+                </details>
+            </div>
+            
+            <div class="sample-space-example">
+                <p><strong>Question 2:</strong> An experiment consists of rolling a die and then tossing a coin. Describe the sample space.</p>
+                <details style="margin-top: 0.75rem;">
+                    <summary style="cursor: pointer; color: #3b82f6; font-weight: 500;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">\( \Omega = \{(1,H), (1,T), (2,H), (2,T), \ldots, (6,H), (6,T)\} \). Cardinality: \( 6 \times 2 = 12 \) equally likely outcomes.</p>
+                </details>
+            </div>
+            
+            <div class="sample-space-example">
+                <p><strong>Question 3:</strong> For the experiment of tossing a coin until a head appears, is the sample space finite or infinite?</p>
+                <details style="margin-top: 0.75rem;">
+                    <summary style="cursor: pointer; color: #3b82f6; font-weight: 500;">Show Answer</summary>
+                  <p style="margin-top: 0.5rem;">The sample space is countably infinite: \( \Omega = \{H, TH, TTH, TTTH, \ldots\} \).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Sample space \( \Omega \):</strong> The set of all possible outcomes of a random experiment [citation:1][citation:3]</li>
+                <li><strong>Sample point \( \omega \):</strong> A single outcome — an element of the sample space [citation:1][citation:5]</li>
+                <li><strong>Discrete vs. Continuous:</strong> Discrete spaces have finite/countably infinite outcomes; continuous spaces have uncountably infinite outcomes [citation:7]</li>
+                <li><strong>Sample Point Method:</strong> For discrete spaces, \( P(A) = \sum_{\omega \in A} P(\{\omega\}) \) [citation:2][citation:5]</li>
+                <li><strong>Events vs. Outcomes:</strong> Outcomes are individual results; events are sets of outcomes [citation:1][citation:3]</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="random_exp_trial.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Random Experiment & Trial</a>
+            <a href="events_algebra.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Events & Algebra of Events →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Core probability concepts: Sample Space (\( \Omega \)), Sample Point (\( \omega \)), and their mathematical foundations.<br>
+        Understanding sample spaces is essential for all subsequent probability theory and statistical inference.
+    </footer>
+</div>
+</body>
+</html>
