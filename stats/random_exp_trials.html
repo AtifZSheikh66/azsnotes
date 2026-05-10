@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Experiment & Trial | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <style>
+        /* Additional styles specific to experiment content */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            border-left: 4px solid;
+        }
+        .comparison-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+        .card-exp { border-left-color: #3b82f6; }
+        .card-det { border-left-color: #f59e0b; }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .example-real {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+            border: 1px solid #fde047;
+        }
+        .distinction-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+        }
+        .distinction-table th,
+        .distinction-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.85rem 1rem;
+            vertical-align: top;
+        }
+        .distinction-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            width: 25%;
+        }
+        .visual-center {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 1rem;
+        }
+        .badge-concept {
+            display: inline-block;
+            background: #e0f2fe;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #0369a1;
+            margin-right: 0.5rem;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            .distinction-table th,
+            .distinction-table td {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Random Experiment & Trial</span>
+        </div>
+        <h1>🧪 Random Experiment & Trial</h1>
+        <p>The fundamental building blocks of probability theory: understanding processes that generate uncertain outcomes</p>
+        <span class="badge">Probability Theory · Unit I · Core Concepts</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition of Random Experiment -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔬</span>
+                <h2>1. Random Experiment</h2>
+            </div>
+            <div class="definition">
+                A <strong>random experiment</strong> is a process or procedure that produces an uncertain outcome, can be repeated any number of times under identical conditions, and has a well-defined set of all possible outcomes.
+            </div>
+            
+            <h3>Essential Characteristics</h3>
+            <ul class="property-list">
+                <li><strong>Multiple possible outcomes</strong> — at least two different results can occur</li>
+                <li><strong>Outcome uncertainty</strong> — impossible to predict the exact outcome before performing the experiment</li>
+                <li><strong>Repeatable</strong> — can be performed again and again under similar conditions</li>
+                <li><strong>Well-defined sample space</strong> — all possible outcomes are known in advance, even if the actual result is not</li>
+            </ul>
+            
+            <div class="example-real">
+                <strong>🎲 Real-World Random Experiments:</strong><br><br>
+                • <strong>Coin toss</strong> — outcomes: Heads or Tails<br>
+                • <strong>Die roll</strong> — outcomes: 1, 2, 3, 4, 5, or 6<br>
+                • <strong>Card draw</strong> — outcomes: any of the 52 cards in a deck<br>
+                • <strong>Spinning a roulette wheel</strong> — outcomes: 0, 00, or 1-36<br>
+                • <strong>Measuring daily rainfall</strong> — outcomes: any non-negative real number (in mm)<br>
+                • <strong>Number of customers arriving at a store in an hour</strong> — outcomes: 0, 1, 2, 3, ...
+            </div>
+        </div>
+
+        <!-- Section 2: Deterministic vs Random -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>2. Random vs. Deterministic Experiments</h2>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-card card-det">
+                    <h4>🔧 Deterministic Experiment</h4>
+                    <p>An experiment that produces the <strong>same outcome</strong> every time under identical conditions. Only one possible outcome exists.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Adding 2 + 3 — always yields 5</li>
+                        <li>Boiling water at 100°C at sea level — always produces steam</li>
+                        <li>Dropping a ball from a fixed height — always falls to the ground</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-exp">
+                    <h4>🎲 Random Experiment</h4>
+                    <p>An experiment that can produce <strong>different outcomes</strong> even when conditions are identical. Multiple possible outcomes exist.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Flipping a coin — could be Heads or Tails</li>
+                        <li>Rolling a die — could be any number 1 through 6</li>
+                        <li>Drawing a lottery ticket — varies each time</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="note-tip">
+                💡 <strong>Key Insight:</strong> The distinction lies in <strong>predictability</strong>. Deterministic experiments are fully predictable; random experiments are not. However, random experiments exhibit <strong>statistical regularity</strong> — the pattern of outcomes becomes predictable in the long run.
+            </div>
+        </div>
+
+        <!-- Section 3: The Concept of a Trial -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>3. Trial</h2>
+            </div>
+            <div class="definition">
+                A <strong>trial</strong> (or repetition) is a single performance of a random experiment. It results in exactly one outcome from the sample space.
+            </div>
+            
+            <p>When we perform a random experiment multiple times, each individual performance is called a <strong>trial</strong>. The collection of all trials forms a <strong>sequence of repetitions</strong>.</p>
+            
+            <div class="example">
+                <strong>📖 Understanding Trials:</strong><br><br>
+                • If you flip a coin <strong>50 times</strong>, each flip is <strong>one trial</strong>.<br>
+                • If you roll a die <strong>100 times</strong>, each roll is a separate trial.<br>
+                • If you draw 5 cards from a deck (without replacement), the entire draw of 5 cards can be considered a single trial of a more complex experiment, or each card draw could be a trial — context matters.
+            </div>
+            
+            <div class="key-takeaway">
+                <strong>📌 Important:</strong> Trials of the same random experiment are assumed to be <strong>independent</strong> and <strong>identically distributed</strong> (unless stated otherwise). This means the outcome of one trial does not affect the outcome of another, and the probability of each outcome remains constant across trials.
+            </div>
+        </div>
+
+        <!-- Section 4: Trial vs Experiment - The Distinction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔍</span>
+                <h2>4. Trial vs. Experiment: Clarifying the Terms</h2>
+            </div>
+            
+            <p>In probability literature, the terms "experiment" and "trial" are sometimes used interchangeably, but there is a subtle and important distinction, especially when discussing repeated experiments.</p>
+            
+            <table class="distinction-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Experiment</th>
+                        <th>Trial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>The entire procedure or process under study</td>
+                        <td>A single execution or repetition of the experiment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>Broader — may consist of many repetitions</td>
+                        <td>Individual — one instance of the experiment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analogy</strong></td>
+                        <td>A clinical study (overall research)</td>
+                        <td>One patient's treatment and observation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Example</strong></td>
+                        <td>"Coin-flipping experiment (100 flips)"</td>
+                        <td>"One coin flip"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mathematical Usage</strong></td>
+                        <td>Often refers to the underlying probability model</td>
+                        <td>Refers to each realization of the model</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-real">
+                <strong>📊 Concrete Example:</strong><br><br>
+                Suppose a researcher wants to study the fairness of a coin.<br><br>
+                • <strong>Experiment:</strong> Tossing the coin 500 times to collect data.<br>
+                • <strong>Trial:</strong> Each individual toss of the coin.<br><br>
+                The experiment consists of 500 trials. After completing all trials, the researcher can estimate the probability of heads.
+            </div>
+        </div>
+
+        <!-- Section 5: Composed Experiment -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧩</span>
+                <h2>5. Composed Experiment</h2>
+            </div>
+            <div class="definition">
+                A <strong>composed experiment</strong> is an experiment that consists of performing several simpler experiments (trials) in sequence. The overall outcome is an ordered sequence of the outcomes of each individual trial.
+            </div>
+            
+            <p>When we perform multiple trials of the same random experiment, we are actually conducting a <strong>composed experiment</strong>. The sample space of a composed experiment is the Cartesian product of the sample spaces of the individual trials.</p>
+            
+            <div class="example">
+                <strong>📖 Examples of Composed Experiments:</strong><br><br>
+                • <strong>Two coin tosses:</strong> The composed experiment has sample space {HH, HT, TH, TT}. Each letter represents the outcome of one trial.<br>
+                • <strong>Rolling a die three times:</strong> The sample space contains 6 × 6 × 6 = 216 ordered triples like (1,3,5).<br>
+                • <strong>Drawing two cards from a deck (with replacement):</strong> The composed experiment allows any ordered pair of cards.
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Visualization:</strong> Tree diagrams are excellent tools for representing composed experiments. Each branch represents a trial outcome, and each path from root to leaf represents one complete outcome of the composed experiment.
+            </div>
+        </div>
+
+        <!-- Section 6: Statistical Regularity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>6. Statistical Regularity</h2>
+            </div>
+            <p>Although individual trials are unpredictable, the pattern of outcomes across many trials exhibits <strong>statistical regularity</strong>. This is the fundamental principle that makes probability useful.</p>
+            
+            <div class="axiom-box">
+                <h4>Key Principle</h4>
+                <p>As the number of trials increases, the <strong>relative frequency</strong> of each outcome tends to stabilize around a fixed number — the <strong>probability</strong> of that outcome.</p>
+            </div>
+            
+            <div class="example-real">
+                <strong>📊 Illustration with Coin Tosses:</strong><br><br>
+                • After 10 trials: 7 heads (70% heads) → unstable<br>
+                • After 100 trials: 52 heads (52% heads) → closer to 50%<br>
+                • After 1,000 trials: 498 heads (49.8% heads) → very close to 50%<br>
+                • After 10,000 trials: 5,012 heads (50.12% heads) → extremely stable<br><br>
+                The relative frequency <strong>converges</strong> to the true probability (0.5 for a fair coin).
+            </div>
+            
+            <div class="key-takeaway">
+                <strong>📌 Why This Matters:</strong> Statistical regularity is the foundation of the <strong>frequency interpretation of probability</strong>. It allows us to estimate unknown probabilities by performing many trials and observing relative frequencies. This principle is formalized in the <strong>Law of Large Numbers</strong>.
+            </div>
+        </div>
+
+        <!-- Section 7: Classification of Random Experiments -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📂</span>
+                <h2>7. Classification of Random Experiments</h2>
+            </div>
+            <p>Random experiments can be classified based on the nature of their sample space:</p>
+            
+            <div class="comparison-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="comparison-card" style="border-left-color: #3b82f6;">
+                    <h4>🔢 Finite</h4>
+                    <p>Sample space contains a finite (countable) number of outcomes.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Coin toss (2 outcomes)</li>
+                        <li>Die roll (6 outcomes)</li>
+                        <li>Card draw (52 outcomes)</li>
+                    </ul>
+                </div>
+                <div class="comparison-card" style="border-left-color: #10b981;">
+                    <h4>∞ Countably Infinite</h4>
+                    <p>Sample space is infinite but can be listed (countable).</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Number of coin tosses until first heads</li>
+                        <li>Number of customers arriving (0,1,2,...)</li>
+                        <li>Number of particles emitted by a radioactive source</li>
+                    </ul>
+                </div>
+                <div class="comparison-card" style="border-left-color: #f59e0b;">
+                    <h4>📏 Uncountably Infinite</h4>
+                    <p>Sample space is infinite and cannot be listed (uncountable).</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Measuring temperature (any real number)</li>
+                        <li>Waiting time for a bus (any non-negative real)</li>
+                        <li>Angle of a spinning pointer (0 to 2π radians)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Key Properties in One Place -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>8. Summary: Quick Reference</h2>
+            </div>
+            
+            <div class="key-takeaway" style="background: #f1f5f9;">
+                <h3>✅ Random Experiment Criteria</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>More than one possible outcome</li>
+                    <li>Outcome cannot be predicted with certainty beforehand</li>
+                    <li>Can be repeated under essentially the same conditions</li>
+                    <li>All possible outcomes are known in advance</li>
+                </ul>
+            </div>
+            
+            <div class="key-takeaway" style="background: #f1f5f9; margin-top: 1rem;">
+                <h3>✅ Trial Essentials</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>One single performance of a random experiment</li>
+                    <li>Produces exactly one outcome</li>
+                    <li>Multiple trials form a composed experiment</li>
+                    <li>Trials are typically independent and identically distributed</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 9: Practical Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">💼</span>
+                <h2>9. Practical Applications</h2>
+            </div>
+            
+            <div class="example-real">
+                <strong>🏥 Clinical Trial:</strong> Testing a new drug.<br>
+                • <strong>Random Experiment:</strong> The entire study where a patient receives either drug or placebo.<br>
+                • <strong>Trial:</strong> One patient's treatment and outcome measurement.<br>
+                • The experiment consists of many patient trials (e.g., 1,000 patients).<br>
+                • After all trials, data analysis reveals the drug's effectiveness.
+            </div>
+            
+            <div class="example-real" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+                <strong>🏭 Quality Control:</strong> Testing light bulbs from a factory.<br>
+                • <strong>Random Experiment:</strong> Testing a sample of 100 bulbs to estimate the defect rate.<br>
+                • <strong>Trial:</strong> Testing one individual bulb (working or defective).<br>
+                • The relative frequency of defects in the sample estimates the true defect probability for the entire production line.
+            </div>
+        </div>
+
+        <!-- Navigation to Next Topic -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="basic_of_prob.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Basic Concepts</a>
+            <a href="sample_space_outcomes.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Sample Space & Outcomes →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Core probability concepts: Random Experiment, Trial, and their applications.<br>
+        Understanding these fundamentals is essential for all subsequent probability theory.
+    </footer>
+</div>
+</body>
+</html>
