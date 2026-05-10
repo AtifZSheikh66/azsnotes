@@ -150,3 +150,15 @@
         padding-left: 0.75rem;
     }
 }
+
+/* Fix for the 3-column grid on mobile */
+@media (max-width: 768px) {
+    .comparison-grid[style*="grid-template-columns: repeat(3, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+    
+    .comparison-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
