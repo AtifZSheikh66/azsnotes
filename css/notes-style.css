@@ -122,7 +122,31 @@
             color: #475569;
             border-top: 1px solid #e2e8f0;
         }
-        @media (max-width: 640px) {
-            .content { padding: 1.25rem; }
-            .header { padding: 1.5rem; }
-        }
+        /* Complete mobile optimization */
+@media (max-width: 640px) {
+    .comparison-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .comparison-card {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Fix for any fixed-width containers */
+    .container {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    /* Better spacing on mobile */
+    .content {
+        padding: 1rem;
+    }
+    
+    .section {
+        padding-left: 0.75rem;
+    }
+}
