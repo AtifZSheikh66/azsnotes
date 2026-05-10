@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes: Experiment (Probability Theory)</title>
+    <link rel="stylesheet" href="notes-styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📊 Experiment (Probability Theory)</h1>
+        <p>Mathematical model of repeatable procedures with well-defined outcomes</p>
+        <span class="badge">🎲 Core concept in probability & statistics</span>
+    </div>
+
+    <div class="content">
+        <!-- Definition & basic idea -->
+        <div class="section">
+            <h2>🧪 1. What is a Random Experiment?</h2>
+            <div class="definition">
+                In probability theory, an <strong>experiment</strong> (or <strong>trial</strong>) is the mathematical model of any procedure that can be <strong>infinitely repeated</strong> and has a <strong>well-defined set of possible outcomes</strong> (the <strong>sample space</strong>).
+            </div>
+            <ul>
+                <li><strong>Random experiment:</strong> more than one possible outcome → non-deterministic. Example: rolling a die.</li>
+                <li><strong>Deterministic experiment:</strong> only one possible outcome. Example: dropping a ball from a height under controlled gravity (ignoring quantum effects).</li>
+                <li><strong>Bernoulli trial:</strong> random experiment with exactly <strong>two mutually exclusive outcomes</strong> (success/failure, heads/tails).</li>
+            </ul>
+            <div class="note-tip">
+                💡 <strong>Key insight:</strong> When an experiment is performed, exactly <em>one outcome</em> occurs — but that outcome may belong to many different <strong>events</strong>. All those events are said to have occurred on that trial.
+            </div>
+        </div>
+
+        <!-- Experiments vs Trials -->
+        <div class="section">
+            <h2>🔄 2. Experiments vs. Trials</h2>
+            <p>A fixed number of repetitions of the same experiment form a <strong>composed experiment</strong>, and each individual repetition is called a <strong>trial</strong>.</p>
+            <div class="example">
+                <strong>📌 Example:</strong> Tossing a coin <strong>100 times</strong> → each toss is a <strong>trial</strong>, and the whole procedure (100 tosses) is the <strong>experiment</strong>. After many trials, empirical probabilities can be estimated.
+            </div>
+            <p>By pooling trial results, statisticians assess empirical probabilities and apply statistical analysis.</p>
+        </div>
+
+        <!-- Mathematical description (Probability space) -->
+        <div class="section">
+            <h2>📐 3. Mathematical Description: Probability Space</h2>
+            <p>A random experiment is modeled by a <strong>probability space</strong>, which consists of three essential parts:</p>
+            <ol>
+                <li><strong>Sample space (Ω or S):</strong> the set of all possible outcomes.</li>
+                <li><strong>Set of events (ℱ):</strong> a sigma-algebra — each event is a set containing zero or more outcomes.</li>
+                <li><strong>Probability measure (P):</strong> a function that assigns probabilities to events.</li>
+            </ol>
+            <h3>📌 Step-by-step interpretation:</h3>
+            <ul>
+                <li>After performing the experiment, a single outcome <span class="math">ω ∈ Ω</span> is realized.</li>
+                <li>All events in ℱ that contain <span class="math">ω</span> are said to <strong>"have occurred"</strong>.</li>
+                <li>If the experiment is repeated infinitely many times, the relative frequency of each event will approach <span class="math">P(event)</span> (law of large numbers intuition).</li>
+            </ul>
+            <div class="example">
+                <strong>🎲 Classic Example — Two coin flips:</strong><br>
+                Sample space Ω = { (H,T), (T,H), (T,T), (H,H) } &nbsp; (order matters).<br>
+                Define event A = "at least one heads occurs". Then A = { (H,T), (T,H), (H,H) }.<br>
+                <strong>Outcome (H,T):</strong> event A occurs. Outcome (T,T): event A does <em>not</em> occur.
+            </div>
+        </div>
+
+        <!-- additional properties -->
+        <div class="section">
+            <h2>📚 4. Important Terminology & Properties</h2>
+            <ul>
+                <li><strong>Outcome:</strong> result of a single execution (e.g., rolling a 4 on a die).</li>
+                <li><strong>Event:</strong> a set of outcomes (e.g., rolling an even number).</li>
+                <li><strong>Sample space:</strong> exhaustive list of all possible outcomes.</li>
+                <li><strong>Mutually exclusive events:</strong> cannot occur at the same time (e.g., heads and tails on one coin toss).</li>
+                <li><strong>Collectively exhaustive events:</strong> cover the entire sample space.</li>
+            </ul>
+            <div class="definition">
+                🧠 <strong>Bernoulli trial reminder:</strong> An experiment with exactly two possible outcomes. Examples: coin flip, passing/failing a test, success/failure in a clinical trial.
+            </div>
+        </div>
+
+        <!-- Tree diagram mention -->
+        <div class="section">
+            <h2>🌳 5. Visual Representation</h2>
+            <div style="text-align: center; margin: 1.5rem 0;">
+    <img src="Three_fair_coin_flips_tree_diagram.svg.png" 
+         alt="Tree diagram for three fair coin flips showing all 8 outcomes and branching probabilities"
+         style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+</div>
+            <p>Experiments are often visualized using <strong>tree diagrams</strong> (as shown in the Wikipedia article). For three fair coin flips, a tree diagram shows all <span class="math">2^3 = 8</span> paths, helping calculate probabilities of compound events.</p>
+            <div class="note-tip">
+                ✨ <strong>Why it matters:</strong> Understanding experiments is the foundation of <strong>probability theory</strong>, statistical inference, machine learning, and risk analysis. Every time you calculate a probability or run an A/B test, you're dealing with a probabilistic experiment.
+            </div>
+        </div>
+</div>
+</body>
+</html>
