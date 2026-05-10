@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Concepts of Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <style>
+        /* Additional styles specific to probability content */
+        .axiom-box {
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0.75rem;
+        }
+        .axiom-box h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .key-takeaway {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.25rem 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        @media (max-width: 640px) {
+            .comparison-table th,
+            .comparison-table td {
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Basic Concepts of Probability</span>
+        </div>
+        <h1>🎲 Basic Concepts of Probability</h1>
+        <p>Foundations of uncertainty: Random experiments, sample spaces, events, and probability axioms</p>
+        <span class="badge">Probability Theory · Unit I</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: What is Probability? -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">❓</span>
+                <h2>1. What is Probability?</h2>
+            </div>
+            <p><strong>Probability</strong> is a branch of mathematics that quantifies uncertainty. It measures the likelihood that a particular event will occur, expressed as a number between 0 and 1 (or 0% to 100%)[citation:1].</p>
+            
+            <p>A probability of <strong>0</strong> means an event is impossible, while a probability of <strong>1</strong> means an event is certain. Values between 0 and 1 represent degrees of uncertainty—for example, a fair coin has probability 0.5 (or 50%) of landing on heads[citation:1][citation:8].</p>
+            
+            <div class="key-takeaway">
+                <strong>📌 Key Insight:</strong> Probability is the mathematical language for describing and reasoning about randomness. It allows us to make precise statements about uncertain events, from coin flips to complex scientific phenomena.
+            </div>
+        </div>
+
+        <!-- Section 2: Random Experiment -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧪</span>
+                <h2>2. Random Experiment</h2>
+            </div>
+            <div class="definition">
+                A <strong>random experiment</strong> is a process or procedure that produces an uncertain outcome, can be repeated indefinitely under the same conditions, and has a well-defined set of all possible outcomes[citation:2][citation:8].
+            </div>
+            <p>Key characteristics of a random experiment:</p>
+            <ul>
+                <li><strong>Unpredictable in the short run</strong> — we cannot determine the outcome of a single trial with certainty</li>
+                <li><strong>Predictable in the long run</strong> — the relative frequencies of outcomes stabilize over many trials (Law of Large Numbers)[citation:8]</li>
+                <li><strong>Repeatable</strong> — the experiment can be performed many times under identical or similar conditions</li>
+            </ul>
+            <div class="example">
+                <strong>📖 Examples of Random Experiments:</strong><br>
+                • Flipping a coin — possible outcomes: Heads (H) or Tails (T)<br>
+                • Rolling a six-sided die — possible outcomes: 1, 2, 3, 4, 5, 6<br>
+                • Drawing a card from a well-shuffled deck — possible outcomes: 52 different cards<br>
+                • Measuring the height of a randomly selected person — possible outcomes: any real number within a range
+            </div>
+            <p>Each performance of a random experiment is called a <strong>trial</strong> or <strong>repetition</strong>[citation:8].</p>
+        </div>
+
+        <!-- Section 3: Sample Space and Outcomes -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎯</span>
+                <h2>3. Sample Space and Outcomes</h2>
+            </div>
+            <div class="definition">
+                The <strong>sample space</strong> (denoted by Ω or S) is the set of all possible outcomes of a random experiment[citation:3][citation:9].
+            </div>
+            <p>Each element of the sample space is called an <strong>outcome</strong> or <strong>sample point</strong>. Outcomes are mutually exclusive—exactly one outcome occurs on each trial of the experiment[citation:9].</p>
+            
+            <div class="example">
+                <strong>📖 Sample Space Examples:</strong><br>
+                • <strong>Coin toss:</strong> S = {H, T}<br>
+                • <strong>Rolling a die:</strong> S = {1, 2, 3, 4, 5, 6}<br>
+                • <strong>Flipping two coins:</strong> S = {HH, HT, TH, TT}<br>
+                • <strong>Drawing a card:</strong> S = {Ace of Hearts, 2 of Hearts, ..., King of Spades}
+            </div>
+            
+            <p>Sample spaces can be:</p>
+            <ul>
+                <li><strong>Finite</strong> — limited number of outcomes (e.g., coin toss, die roll)</li>
+                <li><strong>Countably infinite</strong> — infinite but can be listed (e.g., number of coin tosses until first heads)</li>
+                <li><strong>Uncountably infinite</strong> — infinite and cannot be listed (e.g., measuring height or time)</li>
+            </ul>
+        </div>
+
+        <!-- Section 4: Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>4. Events</h2>
+            </div>
+            <div class="definition">
+                An <strong>event</strong> is a subset of the sample space — a collection of one or more outcomes[citation:9][citation:10].
+            </div>
+            <p>An event occurs if the outcome of the experiment is an element of that event. Events allow us to discuss meaningful collections of outcomes rather than just individual results.</p>
+            
+            <h3>Types of Events</h3>
+            <ul>
+                <li><strong>Simple (Elementary) Event:</strong> An event containing exactly one outcome[citation:9]. Example: rolling a 3 on a die → A = {3}</li>
+                <li><strong>Compound Event:</strong> An event containing two or more outcomes. Example: rolling an even number → B = {2, 4, 6}</li>
+                <li><strong>Certain Event:</strong> The event that always occurs, equal to the entire sample space S</li>
+                <li><strong>Impossible Event:</strong> The event that never occurs, represented by the empty set ∅[citation:6]</li>
+            </ul>
+            
+            <div class="example">
+                <strong>📖 Event Examples (Two Coin Flips):</strong><br>
+                Sample Space: S = {HH, HT, TH, TT}<br>
+                • Event A = "At least one head" = {HH, HT, TH}<br>
+                • Event B = "Same faces" = {HH, TT}<br>
+                • Event C = "Three heads" = ∅ (impossible with two coins)
+            </div>
+        </div>
+
+        <!-- Section 5: Types of Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>5. Special Types of Events</h2>
+            </div>
+            <p>Understanding relationships between events is crucial for probability calculations.</p>
+            
+            <div class="table-wrap">
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th>Term</th><th>Definition</th><th>Example (Rolling a Die)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Mutually Exclusive</strong></td><td>Events cannot occur simultaneously (A ∩ B = ∅)[citation:6]</td><td>A = {1,2}, B = {3,4} — disjoint</td></tr>
+                        <tr><td><strong>Exhaustive Events</strong></td><td>Union of events covers entire sample space[citation:6]</td><td>A = {1,2,3}, B = {4,5,6} — cover S</td></tr>
+                        <tr><td><strong>Equally Likely</strong></td><td>All outcomes have the same chance of occurring[citation:9]</td><td>Each face of a fair die has probability 1/6</td></tr>
+                        <tr><td><strong>Complement</strong></td><td>All outcomes not in event A (denoted Aᶜ)</td><td>A = {2,4,6}, Aᶜ = {1,3,5}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Visualization Tip:</strong> <strong>Venn diagrams</strong> are excellent for visualizing relationships between events—they show overlaps, complements, and unions as shaded regions[citation:6].
+            </div>
+        </div>
+
+        <!-- Section 6: Definitions of Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>6. Definitions of Probability</h2>
+            </div>
+            <p>Throughout history, probability has been defined in several ways. Each approach has its own strengths and limitations.</p>
+            
+            <h3>📊 Classical Definition (Laplace, 1812)</h3>
+            <div class="axiom-box">
+                <h4>P(A) = (Number of favorable outcomes) / (Total number of possible outcomes)</h4>
+                <p>This definition assumes all outcomes are <strong>equally likely</strong>[citation:4].</p>
+            </div>
+            <p><strong>Example:</strong> Probability of rolling an even number on a fair die = 3/6 = 0.5</p>
+            <p><em>Limitation:</em> Only applies when outcomes are equally likely; cannot handle biased coins or real-world events where outcomes have different probabilities[citation:2].</p>
+            
+            <h3>📈 Relative Frequency (Statistical) Definition</h3>
+            <div class="axiom-box">
+                <h4>P(A) = lim<sub>n→∞</sub> (number of times A occurs / n)</h4>
+                <p>Probability equals the limiting relative frequency of an event as the number of trials approaches infinity[citation:4][citation:8].</p>
+            </div>
+            <p><strong>Example:</strong> After flipping a coin 10,000 times, if heads appears 4,987 times, the relative frequency is ≈ 0.4987. As trials increase, this value approaches the true probability (0.5 for a fair coin).</p>
+            <p><em>Limitation:</em> Requires repeatable experiments; cannot assign probability to one-time events (e.g., "Will it rain tomorrow?").</p>
+            
+            <h3>📚 Axiomatic Definition (Kolmogorov, 1933)</h3>
+            <div class="axiom-box">
+                <p>The modern foundation of probability theory. Probability is defined as a function P that assigns numbers to events satisfying three axioms[citation:5].</p>
+            </div>
+            <p><em>Advantage:</em> No assumptions about equally likely outcomes; applies universally. This is the standard approach used in modern probability theory[citation:3].</p>
+        </div>
+
+        <!-- Section 7: Kolmogorov's Axioms -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>7. Kolmogorov's Axioms of Probability</h2>
+            </div>
+            <p>Introduced by Russian mathematician Andrey Kolmogorov in 1933, these three axioms form the foundation of modern probability theory[citation:5].</p>
+            
+            <div class="axiom-box">
+                <h4>Axiom 1: Non-negativity</h4>
+                <p class="formula">P(E) ≥ 0</p>
+                <p>The probability of any event E is a non-negative real number[citation:5].</p>
+            </div>
+            
+            <div class="axiom-box">
+                <h4>Axiom 2: Unit Measure</h4>
+                <p class="formula">P(S) = 1</p>
+                <p>The probability of the entire sample space (some outcome occurring) is 1 or 100%[citation:5].</p>
+            </div>
+            
+            <div class="axiom-box">
+                <h4>Axiom 3: σ-additivity (Countable Additivity)</h4>
+                <p class="formula">P(⋃<sub>i=1</sub><sup>∞</sup> E<sub>i</sub>) = Σ<sub>i=1</sub><sup>∞</sup> P(E<sub>i</sub>)</p>
+                <p>For any countable sequence of mutually exclusive events E₁, E₂, E₃, ... , the probability of their union equals the sum of their individual probabilities[citation:5].</p>
+            </div>
+            
+            <div class="key-takeaway">
+                <strong>📌 The Power of Axioms:</strong> From these three simple axioms, all of probability theory can be derived—including the addition rule, complement rule, and more complex theorems. This makes the axioms both elegant and powerful[citation:5][citation:7].
+            </div>
+        </div>
+
+        <!-- Section 8: Fundamental Theorems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚙️</span>
+                <h2>8. Fundamental Probability Theorems</h2>
+            </div>
+            <p>These corollaries follow directly from the axioms and are essential for calculations[citation:5][citation:7].</p>
+            
+            <h3>Complement Rule</h3>
+            <div class="formula">P(Aᶜ) = 1 - P(A)</div>
+            <p>The probability that an event does NOT occur is 1 minus the probability that it does occur.</p>
+            
+            <h3>Addition Rule (Union of Events)</h3>
+            <div class="formula">P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</div>
+            <p>For mutually exclusive events (A ∩ B = ∅), this simplifies to: <span class="formula">P(A ∪ B) = P(A) + P(B)</span>[citation:5].</p>
+            
+            <div class="example">
+                <strong>📖 Example:</strong> Drawing a card from a deck. Let A = "Heart", B = "King". P(A) = 13/52, P(B) = 4/52, P(A ∩ B) = 1/52 (King of Hearts).<br>
+                P(A ∪ B) = 13/52 + 4/52 - 1/52 = 16/52 ≈ 0.3077
+            </div>
+            
+            <h3>Numeric Bound</h3>
+            <div class="formula">0 ≤ P(E) ≤ 1</div>
+            <p>Probabilities always lie between 0 and 1 (inclusive)[citation:5][citation:7].</p>
+            
+            <h3>Probability of the Empty Set</h3>
+            <div class="formula">P(∅) = 0</div>
+            <p>The probability of an impossible event is zero[citation:5].</p>
+        </div>
+
+        <!-- Section 9: Law of Large Numbers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>9. Law of Large Numbers (LLN)</h2>
+            </div>
+            <p>Proved by Jacob Bernoulli in the 18th century, the Law of Large Numbers provides the theoretical foundation for the frequency interpretation of probability[citation:8].</p>
+            
+            <div class="definition">
+                As the number of trials n increases, the relative frequency of an event converges (in probability) to its true probability.
+            </div>
+            
+            <div class="example">
+                <strong>📖 Illustration:</strong> Flipping a fair coin:<br>
+                • After 10 flips: 7 heads (70%) — not close to 0.5<br>
+                • After 100 flips: 52 heads (52%) — closer<br>
+                • After 1,000 flips: 498 heads (49.8%) — even closer<br>
+                • After 10,000 flips: 5,012 heads (50.12%) — very close to 0.5
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Important:</strong> The LLN requires identical distribution (same probability each trial) and independence (outcomes don't affect each other)[citation:8]. This justifies why we can estimate probabilities from observed frequencies.
+            </div>
+        </div>
+
+        <!-- Section 10: Set Theory Foundations -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⋂</span>
+                <h2>10. Set Theory Preliminaries</h2>
+            </div>
+            <p>Probability theory is built on set theory. Understanding basic set operations is essential[citation:6].</p>
+            
+            <div class="table-wrap">
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th>Operation</th><th>Notation</th><th>Meaning</th><th>Probability Context</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Union</strong></td><td>A ∪ B</td><td>Elements in A OR B (or both)</td><td>Event A or B occurs</td></tr>
+                        <tr><td><strong>Intersection</strong></td><td>A ∩ B</td><td>Elements in both A AND B</td><td>Event A and B both occur</td></tr>
+                        <tr><td><strong>Complement</strong></td><td>Aᶜ</td><td>Elements not in A</td><td>Event A does not occur</td></tr>
+                        <tr><td><strong>Difference</strong></td><td>A \ B</td><td>Elements in A but not in B</td><td>A occurs, B does not</td></tr>
+                        <tr><td><strong>Subset</strong></td><td>A ⊆ B</td><td>All elements of A are in B</td><td>If A occurs, B must occur</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="note-tip">
+                📌 <strong>Venn Diagrams</strong> provide intuitive visual representations of these set relationships and are invaluable for solving probability problems involving multiple events[citation:6].
+            </div>
+        </div>
+
+        <!-- Summary Box -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Core Concepts to Remember</h3>
+            <ul style="margin-bottom: 0;">
+                <li>Probability measures uncertainty on a scale from 0 (impossible) to 1 (certain)</li>
+                <li>A <strong>random experiment</strong> is repeatable with uncertain outcomes</li>
+                <li>The <strong>sample space</strong> contains all possible outcomes</li>
+                <li><strong>Events</strong> are subsets of the sample space</li>
+                <li>Three probability interpretations exist: Classical (equally likely), Relative Frequency (long-run), Axiomatic (Kolmogorov's axioms)</li>
+                <li>Kolmogorov's three axioms (non-negativity, unit measure, additivity) form the foundation of modern probability theory</li>
+                <li>Key theorems include complement rule, addition rule, and Law of Large Numbers</li>
+            </ul>
+        </div>
+
+        <!-- Navigation to Next Topic -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <span></span>
+            <a href="unit1_next.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Set Theory & Algebra of Events →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Based on standard probability theory curricula (Kolmogorov axioms, 1933) and peer-reviewed sources.<br>
+        References: Wikipedia (Probability axioms, Outcome), MIT OpenCourseWare, Imperial College London notes, and academic textbooks.
+    </footer>
+</div>
+</body>
+</html>
