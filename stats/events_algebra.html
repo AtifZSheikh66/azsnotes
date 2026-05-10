@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Events & Algebra of Events | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .event-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .algebra-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+        .algebra-card h4 {
+            margin-bottom: 0.5rem;
+        }
+        .card-union { border-left-color: #3b82f6; }
+        .card-inter { border-left-color: #10b981; }
+        .card-comp { border-left-color: #f59e0b; }
+        .card-diff { border-left-color: #8b5cf6; }
+        .venn-placeholder {
+            background: #eef2ff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Events & Algebra of Events</span>
+        </div>
+        <h1>📋 Events & Algebra of Events</h1>
+        <p>Understanding subsets of sample space and operations combining them</p>
+        <span class="badge">Probability Theory · Unit I · Core Concepts</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: What is an Event? -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">❓</span>
+                <h2>1. What is an Event?</h2>
+            </div>
+            
+            <div class="definition">
+                An <strong>event</strong> is a subset of the sample space \( \Omega \). It is a collection of one or more outcomes (sample points).
+            </div>
+            
+            <p>When a random experiment is performed, an event is said to <strong>occur</strong> if the observed outcome is an element of that event.</p>
+            
+            <div class="event-box">
+                <strong>📌 Important Distinction:</strong>
+                <ul style="margin-top: 0.5rem;">
+                    <li>An <strong>outcome</strong> (or sample point) is a single result of an experiment.</li>
+                    <li>An <strong>event</strong> is a set of outcomes — it can contain one outcome or many outcomes.</li>
+                </ul>
+            </div>
+            
+            <h3>Examples of Events</h3>
+            <div class="grid-2col">
+                <div class="algebra-card" style="border-left-color: #3b82f6;">
+                    <h4>Experiment: Rolling a fair die</h4>
+                    <p>Sample Space: \( \Omega = \{1, 2, 3, 4, 5, 6\} \)</p>
+                    <ul>
+                        <li>Event A = "Rolling an even number" = \( \{2, 4, 6\} \)</li>
+                        <li>Event B = "Rolling a number greater than 4" = \( \{5, 6\} \)</li>
+                        <li>Event C = "Rolling a prime number" = \( \{2, 3, 5\} \)</li>
+                        <li>Event D = "Rolling a 1" = \( \{1\} \) (simple/ elementary event)</li>
+                    </ul>
+                </div>
+                <div class="algebra-card" style="border-left-color: #10b981;">
+                    <h4>Experiment: Tossing two coins</h4>
+                    <p>Sample Space: \( \Omega = \{HH, HT, TH, TT\} \)</p>
+                    <ul>
+                        <li>Event E = "At least one head" = \( \{HH, HT, TH\} \)</li>
+                        <li>Event F = "Both same faces" = \( \{HH, TT\} \)</li>
+                        <li>Event G = "Exactly one tail" = \( \{HT, TH\} \)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Special Types of Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⭐</span>
+                <h2>2. Special Types of Events</h2>
+            </div>
+            
+            <div class="grid-2col">
+                <div class="algebra-card card-union">
+                    <h4>🔵 Simple (Elementary) Event</h4>
+                    <p>An event containing exactly one outcome: \( A = \{\omega\} \)</p>
+                    <p><strong>Example:</strong> Rolling a 4 on a die: \( \{4\} \)</p>
+                </div>
+                <div class="algebra-card card-inter">
+                    <h4>🟢 Compound Event</h4>
+                    <p>An event containing two or more outcomes.</p>
+                    <p><strong>Example:</strong> Rolling an even number: \( \{2, 4, 6\} \)</p>
+                </div>
+                <div class="algebra-card card-comp">
+                    <h4>🟠 Certain (Sure) Event</h4>
+                    <p>The event that always occurs: \( \Omega \) (the sample space itself).</p>
+                    <p>\( P(\Omega) = 1 \)</p>
+                </div>
+                <div class="algebra-card card-diff">
+                    <h4>🟣 Impossible Event</h4>
+                    <p>The event that never occurs: \( \emptyset \) (empty set).</p>
+                    <p>\( P(\emptyset) = 0 \)</p>
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Note:</strong> Every outcome is an event (simple event), but not every event is a single outcome — events can be any subset of the sample space, including the entire space and the empty set.
+            </div>
+        </div>
+
+        <!-- Section 3: Algebra of Events - Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>3. Algebra of Events</h2>
+            </div>
+            
+            <p>Just as we can combine sets using operations like union, intersection, and complement, we can combine events using similar operations. The <strong>algebra of events</strong> is a Boolean algebra — it follows the same rules as set algebra.</p>
+            
+            <div class="definition">
+                If \( A \) and \( B \) are events (subsets of \( \Omega \)), then:
+                <ul>
+                    <li>\( A \cup B \) (A or B) is an event</li>
+                    <li>\( A \cap B \) (A and B) is an event</li>
+                    <li>\( A^c \) (not A) is an event</li>
+                    <li>\( A \setminus B \) (A but not B) is an event</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: Fundamental Operations -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚙️</span>
+                <h2>4. Fundamental Operations on Events</h2>
+            </div>
+            
+            <div class="algebra-card card-union">
+                <h4>📌 Union — Event "A or B"</h4>
+                <p>The union of two events \( A \) and \( B \), denoted \( A \cup B \), is the event consisting of all outcomes that are in \( A \) or in \( B \) (or in both).</p>
+                <div class="math-display">
+                    \[ A \cup B = \{\omega \in \Omega : \omega \in A \text{ or } \omega \in B\} \]
+                </div>
+                <p>This event occurs if <strong>at least one</strong> of the events \( A \) or \( B \) occurs.</p>
+                <div class="example">
+                    <strong>Example:</strong> Die roll. \( A = \{2, 4, 6\} \) (even), \( B = \{5, 6\} \) (&gt;4).<br>
+                    \( A \cup B = \{2, 4, 5, 6\} \)
+                </div>
+            </div>
+            
+            <div class="algebra-card card-inter">
+                <h4>📌 Intersection — Event "A and B"</h4>
+                <p>The intersection of two events \( A \) and \( B \), denoted \( A \cap B \), is the event consisting of all outcomes that are in <strong>both</strong> \( A \) and \( B \).</p>
+                <div class="math-display">
+                    \[ A \cap B = \{\omega \in \Omega : \omega \in A \text{ and } \omega \in B\} \]
+                </div>
+                <p>This event occurs if <strong>both</strong> events \( A \) and \( B \) occur simultaneously.</p>
+                <div class="example">
+                    <strong>Example:</strong> Die roll. \( A = \{2, 4, 6\} \), \( B = \{5, 6\} \).<br>
+                    \( A \cap B = \{6\} \)
+                </div>
+            </div>
+            
+            <div class="algebra-card card-comp">
+                <h4>📌 Complement — Event "not A"</h4>
+                <p>The complement of an event \( A \), denoted \( A^c \) or \( A' \) or \( \bar{A} \), is the event consisting of all outcomes in \( \Omega \) that are <strong>not</strong> in \( A \).</p>
+                <div class="math-display">
+                    \[ A^c = \{\omega \in \Omega : \omega \notin A\} = \Omega \setminus A \]
+                </div>
+                <p>This event occurs if \( A \) does <strong>not</strong> occur. Complement of the sample space is the impossible event: \( \Omega^c = \emptyset \).</p>
+                <div class="example">
+                    <strong>Example:</strong> Die roll. \( A = \{2, 4, 6\} \) (even).<br>
+                    \( A^c = \{1, 3, 5\} \) (odd)
+                </div>
+            </div>
+            
+            <div class="algebra-card card-diff">
+                <h4>📌 Difference — Event "A but not B"</h4>
+                <p>The difference of events \( A \) and \( B \), denoted \( A \setminus B \) or \( A - B \), is the event consisting of outcomes in \( A \) that are <strong>not</strong> in \( B \).</p>
+                <div class="math-display">
+                    \[ A \setminus B = \{\omega \in \Omega : \omega \in A \text{ and } \omega \notin B\} = A \cap B^c \]
+                </div>
+                <p>This event occurs if \( A \) occurs but \( B \) does not occur.</p>
+                <div class="example">
+                    <strong>Example:</strong> Die roll. \( A = \{2, 4, 6\} \), \( B = \{5, 6\} \).<br>
+                    \( A \setminus B = \{2, 4\} \)
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Relationships Between Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>5. Relationships Between Events</h2>
+            </div>
+            
+            <div class="grid-2col">
+                <div class="algebra-card">
+                    <h4>📌 Mutually Exclusive (Disjoint) Events</h4>
+                    <p>Two events \( A \) and \( B \) are <strong>mutually exclusive</strong> if they cannot occur at the same time — their intersection is empty.</p>
+                    <div class="math-display">
+                        \[ A \cap B = \emptyset \]
+                    </div>
+                    <p><strong>Example:</strong> Rolling a die: \( A = \{2, 4, 6\} \), \( B = \{1, 3, 5\} \). No outcome is both even and odd.</p>
+                </div>
+                <div class="algebra-card">
+                    <h4>📌 Exhaustive Events</h4>
+                    <p>Events \( A_1, A_2, \ldots, A_n \) are <strong>collectively exhaustive</strong> if their union equals the entire sample space.</p>
+                    <div class="math-display">
+                        \[ \bigcup_{i=1}^n A_i = \Omega \]
+                    </div>
+                    <p>At least one of the events must occur.</p>
+                    <p><strong>Example:</strong> \( A = \{1, 2, 3\} \), \( B = \{4, 5, 6\} \) — together they cover all outcomes.</p>
+                </div>
+                <div class="algebra-card">
+                    <h4>📌 Partition of Sample Space</h4>
+                    <p>A collection of events forms a <strong>partition</strong> if they are:
+                    <ul>
+                        <li>Mutually exclusive (\( A_i \cap A_j = \emptyset \) for \( i \neq j \))</li>
+                        <li>Collectively exhaustive (\( \bigcup_i A_i = \Omega \))</li>
+                    </ul>
+                    </p>
+                    <div class="math-display">
+                        \[ \Omega = A_1 \cup A_2 \cup \cdots \cup A_n, \quad A_i \cap A_j = \emptyset \ (i \neq j) \]
+                    </div>
+                </div>
+                <div class="algebra-card">
+                    <h4>📌 Subset Relationship</h4>
+                    <p>If all outcomes of event \( A \) are also in event \( B \), we write \( A \subseteq B \).</p>
+                    <p>When \( A \subseteq B \), the occurrence of \( A \) implies the occurrence of \( B \).</p>
+                    <p><strong>Example:</strong> \( A = \{2, 4\} \), \( B = \{2, 4, 6\} \). Rolling a 2 or 4 implies rolling an even number.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Laws of Algebra of Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>6. Laws of Algebra of Events</h2>
+            </div>
+            
+            <p>The algebra of events follows the same laws as set algebra. These laws help simplify complex event expressions.</p>
+            
+            <div class="law-box">
+                <h3>Commutative Laws</h3>
+                <div class="math-display">
+                    \[ A \cup B = B \cup A \]
+                    \[ A \cap B = B \cap A \]
+                </div>
+                <p>The order of events does not matter for union or intersection.</p>
+            </div>
+            
+            <div class="law-box">
+                <h3>Associative Laws</h3>
+                <div class="math-display">
+                    \[ (A \cup B) \cup C = A \cup (B \cup C) \]
+                    \[ (A \cap B) \cap C = A \cap (B \cap C) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Distributive Laws</h3>
+                <div class="math-display">
+                    \[ A \cap (B \cup C) = (A \cap B) \cup (A \cap C) \]
+                    \[ A \cup (B \cap C) = (A \cup B) \cap (A \cup C) \]
+                </div>
+                <p>These are analogous to the distributive law in arithmetic: \( a \times (b + c) = a \times b + a \times c \).</p>
+            </div>
+            
+            <div class="law-box">
+                <h3>De Morgan's Laws</h3>
+                <div class="math-display">
+                    \[ (A \cup B)^c = A^c \cap B^c \]
+                    \[ (A \cap B)^c = A^c \cup B^c \]
+                </div>
+                <p>The complement of a union is the intersection of complements. The complement of an intersection is the union of complements.</p>
+                <div class="example">
+                    <strong>Example:</strong> The complement of "rolling an even OR a prime number" is "rolling a number that is NEITHER even NOR prime" (i.e., odd AND not prime). For die: Even = {2,4,6}, Prime = {2,3,5}. Union = {2,3,4,5,6}. Complement = {1}. And indeed {1} is odd AND not prime.
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Identity Laws</h3>
+                <div class="math-display">
+                    \[ A \cup \emptyset = A, \quad A \cap \Omega = A \]
+                    \[ A \cup \Omega = \Omega, \quad A \cap \emptyset = \emptyset \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Complement Laws</h3>
+                <div class="math-display">
+                    \[ A \cup A^c = \Omega \]
+                    \[ A \cap A^c = \emptyset \]
+                    \[ (A^c)^c = A \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Idempotent Laws</h3>
+                <div class="math-display">
+                    \[ A \cup A = A \]
+                    \[ A \cap A = A \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Visual Representation with Venn Diagrams -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🟢</span>
+                <h2>7. Venn Diagram Representation</h2>
+            </div>
+            
+            <p>Venn diagrams provide a visual way to understand relationships between events. The sample space \( \Omega \) is represented as a rectangle, and events are represented as circles (or other shapes) within it.</p>
+            
+            <div class="grid-2col">
+                <div class="venn-placeholder">
+                    ⋃ — Union<br>
+                    Circles A and B (shaded area)
+                </div>
+                <div class="venn-placeholder">
+                    ∩ — Intersection<br>
+                    Overlap region shaded
+                </div>
+                <div class="venn-placeholder">
+                    Aᶜ — Complement<br>
+                    Everything outside A shaded
+                </div>
+                <div class="venn-placeholder">
+                    A \ B — Difference<br>
+                    A only (not B) shaded
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 Venn diagrams are extremely useful for solving probability problems involving two or three events. The entire rectangle (sample space) has total probability 1, and areas represent probabilities.
+            </div>
+        </div>
+
+        <!-- Section 8: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>8. Worked Examples</h2>
+            </div>
+            
+            <div class="example">
+                <strong>Example 1: Two Dice Roll</strong><br>
+                Consider the experiment of rolling two fair dice. Let:
+                <ul>
+                    <li>\( A \) = "Sum is 7"</li>
+                    <li>\( B \) = "First die shows 4"</li>
+                </ul>
+                Find \( A \cup B \), \( A \cap B \), and \( A \setminus B \).<br><br>
+                <strong>Solution:</strong> Sample space has 36 outcomes.<br>
+                \( A = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \)<br>
+                \( B = \{(4,1), (4,2), (4,3), (4,4), (4,5), (4,6)\} \)<br>
+                \( A \cap B = \{(4,3)\} \) (only the outcome where first die is 4 AND sum is 7)<br>
+                \( A \cup B = A \cup B \) — all outcomes in A or B (11 outcomes)<br>
+                \( A \setminus B = \{(1,6), (2,5), (3,4), (5,2), (6,1)\} \) (A outcomes where first die is not 4)
+            </div>
+            
+            <div class="example">
+                <strong>Example 2: Drawing Cards</strong><br>
+                One card is drawn from a standard 52-card deck. Define:
+                <ul>
+                    <li>\( A \) = "Card is a heart"</li>
+                    <li>\( B \) = "Card is a face card (J, Q, K)"</li>
+                </ul>
+                Describe \( A \cap B \), \( A \cup B \), and \( A^c \).<br><br>
+                <strong>Solution:</strong><br>
+                \( A \cap B \) = "Heart face card" — {Jack of Hearts, Queen of Hearts, King of Hearts} (3 cards)<br>
+                \( A \cup B \) = "Heart or face card" — 13 hearts + 12 face cards - 3 overlap = 22 cards<br>
+                \( A^c \) = "Not a heart" — 39 cards (spades, clubs, diamonds)
+            </div>
+        </div>
+
+        <!-- Section 9: Practice Questions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>9. Check Your Understanding</h2>
+            </div>
+            
+            <div class="event-box">
+                <p><strong>Question 1:</strong> For a single die roll, let \( A = \{1, 2, 3\} \) and \( B = \{3, 4, 5\} \). Find \( A \cup B \), \( A \cap B \), \( A \setminus B \), and \( A^c \).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">\( A \cup B = \{1, 2, 3, 4, 5\} \), \( A \cap B = \{3\} \), \( A \setminus B = \{1, 2\} \), \( A^c = \{4, 5, 6\} \)</p>
+                </details>
+            </div>
+            
+            <div class="event-box">
+                <p><strong>Question 2:</strong> If \( A \) and \( B \) are mutually exclusive events, what is \( A \cap B \)? What is \( P(A \cap B) \)?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">\( A \cap B = \emptyset \), and \( P(\emptyset) = 0 \).</p>
+                </details>
+            </div>
+            
+            <div class="event-box">
+                <p><strong>Question 3:</strong> Using De Morgan's law, simplify \( (A^c \cap B^c)^c \).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">By De Morgan's law, \( (A^c \cap B^c)^c = A \cup B \).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li>An <strong>event</strong> is any subset of the sample space \( \Omega \)</li>
+                <li>The <strong>algebra of events</strong> uses set operations: union (\( \cup \)), intersection (\( \cap \)), complement (\( ^c \)), and difference (\( \setminus \))</li>
+                <li><strong>Mutually exclusive</strong> events have \( A \cap B = \emptyset \)</li>
+                <li><strong>Exhaustive</strong> events satisfy \( A_1 \cup A_2 \cup \cdots \cup A_n = \Omega \)</li>
+                <li><strong>De Morgan's laws</strong> relate complements of unions and intersections</li>
+                <li>The algebra of events forms a <strong>Boolean algebra</strong> with the same laws as set theory</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="sample_space_outcomes.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Sample Space & Outcomes</a>
+            <a href="definitions_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Definitions of Probability →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Core probability concepts: Events and the Algebra of Events.<br>
+        Understanding event operations is essential for probability calculations and applying probability laws.
+    </footer>
+</div>
+</body>
+</html>
