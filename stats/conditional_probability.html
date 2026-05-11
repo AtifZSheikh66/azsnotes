@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Conditional Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Conditional Probability</span>
+        </div>
+        <h1>📊 Conditional Probability</h1>
+        <p>The probability of an event given that another event has occurred — updating beliefs with partial information</p>
+        <span class="badge">Probability Theory · Unit II · Conditional Probability</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">❓</span>
+                <h2>1. What is Conditional Probability?</h2>
+            </div>
+            <div class="definition">
+                <strong>Conditional probability</strong> is the probability of an event occurring given that another event has already occurred. It allows us to update our probability assessments in light of new information.
+            </div>
+            <p>In many real-world situations, we are not interested in the absolute probability of an event, but rather the probability of an event <strong>given that we know something else</strong> has happened. For example:</p>
+            <ul>
+                <li>What is the probability that a person has a disease given that they tested positive?</li>
+                <li>What is the probability that a card drawn from a deck is an ace given that it is a heart?</li>
+                <li>What is the probability that it will rain given that the sky is cloudy?</li>
+            </ul>
+            <p>The notation \( P(A \mid B) \) is read as "the probability of A given B."</p>
+        </div>
+
+        <!-- Section 2: Formal Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Formal Definition</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition of Conditional Probability</h3>
+                <div class="math-display">
+                    \[ P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0 \]
+                </div>
+                <p>Where:</p>
+                <ul>
+                    <li>\( P(A \mid B) \) is the conditional probability of A given B</li>
+                    <li>\( P(A \cap B) \) is the joint probability of A and B occurring together</li>
+                    <li>\( P(B) \) is the marginal probability of B</li>
+                </ul>
+                <p>The condition \( P(B) > 0 \) ensures we are not dividing by zero — we cannot condition on an impossible event.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Intuition Behind the Definition:</h4>
+                <div class="proof-step">
+                    <strong>Step 1:</strong> When we know that B has occurred, the sample space is reduced from \( \Omega \) to \( B \).
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Within this reduced sample space, the probability of A is proportional to the probability of \( A \cap B \).
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3:</strong> To ensure the total probability of the new sample space B is 1, we divide by \( P(B) \).
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Thus, \( P(A \mid B) = \frac{P(A \cap B)}{P(B)} \) is the natural definition.
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Properties of Conditional Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔧</span>
+                <h2>3. Properties of Conditional Probability</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Property 1: Conditional Probability is a Probability Measure</h3>
+                <p>For a fixed event B with \( P(B) > 0 \), the function \( P(\cdot \mid B) \) satisfies Kolmogorov's axioms:</p>
+                <ul>
+                    <li><strong>Non-negativity:</strong> \( P(A \mid B) \geq 0 \) for any event A</li>
+                    <li><strong>Unit measure:</strong> \( P(\Omega \mid B) = 1 \)</li>
+                    <li><strong>Additivity:</strong> If \( A_1, A_2, \ldots \) are mutually exclusive, then \( P(\bigcup_{i=1}^{\infty} A_i \mid B) = \sum_{i=1}^{\infty} P(A_i \mid B) \)</li>
+                </ul>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Verification of Properties:</h4>
+                <div class="proof-step">
+                    <strong>Non-negativity:</strong> Since \( P(A \cap B) \geq 0 \) and \( P(B) > 0 \), their quotient is non-negative.
+                </div>
+                <div class="proof-step">
+                    <strong>Unit measure:</strong> \( P(\Omega \mid B) = \frac{P(\Omega \cap B)}{P(B)} = \frac{P(B)}{P(B)} = 1 \).
+                </div>
+                <div class="proof-step">
+                    <strong>Additivity:</strong> For disjoint \( A_i \), \( ( \bigcup_i A_i ) \cap B = \bigcup_i (A_i \cap B) \) are also disjoint. Therefore,
+                    <div class="math-display">
+                        \[ P\left( \bigcup_i A_i \mid B \right) = \frac{P( \bigcup_i (A_i \cap B) )}{P(B)} = \frac{\sum_i P(A_i \cap B)}{P(B)} = \sum_i P(A_i \mid B) \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Property 2: Complement Rule for Conditional Probability</h3>
+                <div class="math-display">
+                    \[ P(A^c \mid B) = 1 - P(A \mid B) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <div class="proof-step">
+                    <strong>Proof:</strong> Since \( A \) and \( A^c \) are mutually exclusive and \( A \cup A^c = \Omega \),
+                    <div class="math-display">
+                        \[ P(A \mid B) + P(A^c \mid B) = P(\Omega \mid B) = 1 \]
+                    </div>
+                    Hence, \( P(A^c \mid B) = 1 - P(A \mid B) \).
+                </div>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Property 3: Multiplication Rule</h3>
+                <div class="math-display">
+                    \[ P(A \cap B) = P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A) \]
+                </div>
+                <p>This follows directly from the definition of conditional probability and is one of the most important formulas in probability.</p>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Multiplication Rule for n events):</strong>
+                <div class="math-display">
+                    \[ P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap A_2 \cap \cdots \cap A_{n-1}) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Multiplication Rule for n Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">✖️</span>
+                <h2>4. Multiplication Rule for n Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (General Multiplication Rule)</h3>
+                <div class="math-display">
+                    \[ P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap A_2 \cap \cdots \cap A_{n-1}) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof by Induction:</h4>
+                <div class="proof-step">
+                    <strong>Base case (n = 2):</strong> \( P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1) \) by definition.
+                </div>
+                <div class="proof-step">
+                    <strong>Inductive hypothesis:</strong> Assume the formula holds for n events.
+                </div>
+                <div class="proof-step">
+                    <strong>Inductive step:</strong> For n+1 events,
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{n+1} A_i \right) = P\left( \bigcap_{i=1}^{n} A_i \right) \cdot P\left( A_{n+1} \mid \bigcap_{i=1}^{n} A_i \right) \]
+                    </div>
+                    <p>By the inductive hypothesis, the first term expands to the product of n conditional probabilities. Multiplying by the last term gives the product of n+1 conditional probabilities.</p>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> Three cards are drawn without replacement from a standard deck. Find the probability of drawing three aces in a row.<br>
+                <div class="math-display">
+                    \[ P(A_1 \cap A_2 \cap A_3) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) = \frac{4}{52} \cdot \frac{3}{51} \cdot \frac{2}{50} = \frac{24}{132600} = \frac{1}{5525} \approx 0.000181 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Law of Total Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>5. Law of Total Probability</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Law of Total Probability)</h3>
+                <p>Let \( B_1, B_2, \ldots, B_n \) form a partition of the sample space \( \Omega \) (i.e., they are mutually exclusive and exhaustive, with \( P(B_i) > 0 \) for all i). Then for any event A,</p>
+                <div class="math-display">
+                    \[ P(A) = \sum_{i=1}^{n} P(A \mid B_i) \cdot P(B_i) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1:</strong> Since \( B_1, B_2, \ldots, B_n \) partition \( \Omega \), we have:
+                    <div class="math-display">
+                        \[ A = A \cap \Omega = A \cap \left( \bigcup_{i=1}^{n} B_i \right) = \bigcup_{i=1}^{n} (A \cap B_i) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2:</strong> The events \( A \cap B_i \) are mutually exclusive because the \( B_i \) are disjoint.
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3:</strong> By Axiom 3 (countable additivity):
+                    <div class="math-display">
+                        \[ P(A) = \sum_{i=1}^{n} P(A \cap B_i) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4:</strong> By the multiplication rule, \( P(A \cap B_i) = P(A \mid B_i) \cdot P(B_i) \).
+                </div>
+                <div class="proof-step">
+                    <strong>Step 5:</strong> Therefore:
+                    <div class="math-display">
+                        \[ P(A) = \sum_{i=1}^{n} P(A \mid B_i) \cdot P(B_i) \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> A factory has three machines producing 20%, 30%, and 50% of the total output, with defect rates 1%, 2%, and 3% respectively. Find the probability that a randomly selected product is defective.<br>
+                <strong>Solution:</strong> Let D be the event that a product is defective. Then:
+                <div class="math-display">
+                    \[ P(D) = P(D \mid M_1)P(M_1) + P(D \mid M_2)P(M_2) + P(D \mid M_3)P(M_3) \]
+                </div>
+                <div class="math-display">
+                    \[ P(D) = 0.01 \times 0.2 + 0.02 \times 0.3 + 0.03 \times 0.5 = 0.002 + 0.006 + 0.015 = 0.023 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Bayes' Theorem -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>6. Bayes' Theorem</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Bayes' Theorem)</h3>
+                <div class="math-display">
+                    \[ P(B_i \mid A) = \frac{P(A \mid B_i) \cdot P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) \cdot P(B_j)} \]
+                </div>
+                <p>Where \( B_1, B_2, \ldots, B_n \) form a partition of the sample space.</p>
+                <p>For two events, Bayes' theorem simplifies to:</p>
+                <div class="math-display">
+                    \[ P(B \mid A) = \frac{P(A \mid B) \cdot P(B)}{P(A)} = \frac{P(A \mid B) \cdot P(B)}{P(A \mid B)P(B) + P(A \mid B^c)P(B^c)} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1:</strong> From the definition of conditional probability:
+                    <div class="math-display">
+                        \[ P(B_i \mid A) = \frac{P(A \cap B_i)}{P(A)} \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Apply the multiplication rule to the numerator:
+                    <div class="math-display">
+                        \[ P(A \cap B_i) = P(A \mid B_i) \cdot P(B_i) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Apply the Law of Total Probability to the denominator:
+                    <div class="math-display">
+                        \[ P(A) = \sum_{j=1}^{n} P(A \mid B_j) \cdot P(B_j) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Combining gives the result:
+                    <div class="math-display">
+                        \[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example (Medical Test):</strong> A disease affects 1 in 1000 people. A test has 99% sensitivity and 95% specificity. If a person tests positive, what is the probability they actually have the disease?<br>
+                Let D = "has the disease", T = "tests positive". Then:
+                <div class="math-display">
+                    \[ P(D \mid T) = \frac{P(T \mid D)P(D)}{P(T \mid D)P(D) + P(T \mid D^c)P(D^c)} \]
+                </div>
+                <div class="math-display">
+                    \[ = \frac{0.99 \times 0.001}{0.99 \times 0.001 + 0.05 \times 0.999} = \frac{0.00099}{0.00099 + 0.04995} = \frac{0.00099}{0.05094} \approx 0.0194 \]
+                </div>
+                <p>Thus, even with a positive test, only about 1.94% of people actually have the disease — highlighting the importance of considering base rates.</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Two Dice</strong><br>
+                Two fair dice are rolled. Find the probability that the sum is 8 given that the first die shows a 3.<br><br>
+                <strong>Solution:</strong> Let A = "sum is 8" and B = "first die shows 3".<br>
+                \( P(B) = \frac{1}{6} \). A ∩ B occurs only when (3,5) gives sum 8. So \( P(A \cap B) = \frac{1}{36} \).<br>
+                Thus, \( P(A \mid B) = \frac{1/36}{1/6} = \frac{1}{6} \).
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Card Draw (Without Replacement)</strong><br>
+                Two cards are drawn from a standard deck without replacement. Find the probability that the second card is an ace given that the first card is an ace.<br><br>
+                <strong>Solution:</strong> After drawing the first ace, 3 aces remain among 51 cards.<br>
+                \( P(\text{second ace} \mid \text{first ace}) = \frac{3}{51} = \frac{1}{17} \approx 0.0588 \).
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: Conditional Probability Tree</strong><br>
+                In a certain population, 40% have blue eyes and 30% have blonde hair. Among those with blue eyes, 50% have blonde hair. Find the probability that a randomly selected person has blue eyes given that they have blonde hair.<br><br>
+                <strong>Solution:</strong> \( P(B) = 0.4 \) (blue eyes), \( P(H) = 0.3 \) (blonde hair), \( P(H \mid B) = 0.5 \).<br>
+                \( P(B \cap H) = P(H \mid B)P(B) = 0.5 \times 0.4 = 0.2 \).<br>
+                Then \( P(B \mid H) = \frac{P(B \cap H)}{P(H)} = \frac{0.2}{0.3} = \frac{2}{3} \approx 0.6667 \).
+            </div>
+        </div>
+
+        <!-- Section 8: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> A box contains 3 red balls and 5 blue balls. Two balls are drawn without replacement. What is the probability that the second ball is red given that the first ball was blue?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">After drawing a blue ball, there are 3 red and 4 blue balls left (total 7). \( P(\text{second red} \mid \text{first blue}) = \frac{3}{7} \approx 0.4286 \).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> A family has two children. Given that at least one is a boy, what is the probability that both are boys? (Assume equal probability for boy/girl)</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Sample space: {BB, BG, GB, GG}. Given at least one boy: {BB, BG, GB}. Only one favorable outcome (BB). \( P = \frac{1}{3} \).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> In a class, 60% are male, 40% are female. 80% of males and 70% of females passed the exam. A student is chosen at random. What is the probability that they are male given that they passed the exam?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\( P(M) = 0.6 \), \( P(F) = 0.4 \), \( P(Pass \mid M) = 0.8 \), \( P(Pass \mid F) = 0.7 \).<br>
+                    \( P(Pass) = 0.8 \times 0.6 + 0.7 \times 0.4 = 0.48 + 0.28 = 0.76 \).<br>
+                    \( P(M \mid Pass) = \frac{0.48}{0.76} = \frac{48}{76} = \frac{12}{19} \approx 0.6316 \).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Conditional Probability:</strong> \( P(A \mid B) = \frac{P(A \cap B)}{P(B)} \), defined only when \( P(B) > 0 \)</li>
+                <li><strong>Multiplication Rule:</strong> \( P(A \cap B) = P(A \mid B) P(B) = P(B \mid A) P(A) \)</li>
+                <li><strong>Law of Total Probability:</strong> \( P(A) = \sum_{i} P(A \mid B_i) P(B_i) \), where \( \{B_i\} \) partition the sample space</li>
+                <li><strong>Bayes' Theorem:</strong> Updates prior probabilities with new evidence: \( P(B \mid A) = \frac{P(A \mid B) P(B)}{P(A)} \)</li>
+                <li><strong>Conditional probability satisfies all probability axioms</strong> for a fixed conditioning event</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="bonferroni_inequality.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Bonferroni's Inequality</a>
+            <a href="multiplication_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Multiplication Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Conditional Probability — updating probabilities with partial information, leading to the Law of Total Probability and Bayes' Theorem.
+    </footer>
+</div>
+</body>
+</html>
