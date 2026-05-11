@@ -525,65 +525,65 @@
 <script>
     // Create Venn diagram for mutually exclusive events (disjoint circles)
     function createVennMutuallyExclusive() {
-        const container = d3.select("#venn-mutually-exclusive");
-        container.html("");
-        const width = 200, height = 200;
-        const svg = container.append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("viewBox", "0 0 200 200")
-            .append("g")
-            .attr("transform", "translate(100, 100)");
-        
-        const radius = 60;
-        const offset = 35;
-        
-        // Background rectangle (sample space)
-        svg.append("rect")
-            .attr("x", -100)
-            .attr("y", -100)
-            .attr("width", 200)
-            .attr("height", 200)
-            .attr("fill", "#f1f5f9")
-            .attr("stroke", "#cbd5e1")
-            .attr("stroke-width", 1);
-        
-        // Circle A (left) - no overlap
-        svg.append("circle")
-            .attr("cx", -offset)
-            .attr("cy", 0)
-            .attr("r", radius)
-            .attr("fill", "#3b82f6")
-            .attr("fill-opacity", 0.4)
-            .attr("stroke", "#1e40af")
-            .attr("stroke-width", 2);
-        
-        // Circle B (right)
-        svg.append("circle")
-            .attr("cx", offset)
-            .attr("cy", 0)
-            .attr("r", radius)
-            .attr("fill", "#10b981")
-            .attr("fill-opacity", 0.4)
-            .attr("stroke", "#065f46")
-            .attr("stroke-width", 2);
-        
-        // Labels
-        svg.append("text")
-            .attr("x", -offset - 18)
-            .attr("y", 5)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "13")
-            .attr("font-weight", "bold")
-            .text("A");
-        svg.append("text")
-            .attr("x", offset + 18)
-            .attr("y", 5)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "13")
-            .attr("font-weight", "bold")
-            .text("B");
-    }
+    const container = d3.select("#venn-mutually-exclusive");
+    container.html("");
+    const width = 200, height = 200;
+    const svg = container.append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", "0 0 200 200")
+        .append("g")
+        .attr("transform", "translate(100, 100)");
+    
+    const radius = 60;
+    const offset = 75;  // ← Increased from 35 to make circles disjoint
+    
+    // Background rectangle (sample space)
+    svg.append("rect")
+        .attr("x", -100)
+        .attr("y", -100)
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("fill", "#f1f5f9")
+        .attr("stroke", "#cbd5e1")
+        .attr("stroke-width", 1);
+    
+    // Circle A (left)
+    svg.append("circle")
+        .attr("cx", -offset)
+        .attr("cy", 0)
+        .attr("r", radius)
+        .attr("fill", "#3b82f6")
+        .attr("fill-opacity", 0.4)
+        .attr("stroke", "#1e40af")
+        .attr("stroke-width", 2);
+    
+    // Circle B (right)
+    svg.append("circle")
+        .attr("cx", offset)
+        .attr("cy", 0)
+        .attr("r", radius)
+        .attr("fill", "#10b981")
+        .attr("fill-opacity", 0.4)
+        .attr("stroke", "#065f46")
+        .attr("stroke-width", 2);
+    
+    // Labels
+    svg.append("text")
+        .attr("x", -offset - 18)
+        .attr("y", 5)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "13")
+        .attr("font-weight", "bold")
+        .text("A");
+    svg.append("text")
+        .attr("x", offset + 18)
+        .attr("y", 5)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "13")
+        .attr("font-weight", "bold")
+        .text("B");
+}
     
     // Create Venn diagram for independent events (overlapping circles)
     function createVennIndependent() {
