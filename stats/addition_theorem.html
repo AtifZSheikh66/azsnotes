@@ -454,13 +454,13 @@
                 <p>The probability of the union of n events equals the sum of probabilities of single events, minus sum of pairwise intersections, plus sum of triple intersections, and so on, alternating signs until the n-fold intersection.</p>
             </div>
             
-                        <div class="proof-box">
+                                    <div class="proof-box">
                 <h4>📝 Proof of General Addition Theorem for n Events (by Mathematical Induction):</h4>
                 
                 <div class="proof-step">
                     <strong>Statement to Prove:</strong>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - {\sum\sum}_{1 \leq i < j \leq n} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right) \]
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - \sum_{\substack{1 \leq i < j \leq n}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq n}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right) \]
                     </div>
                 </div>
                 
@@ -477,7 +477,7 @@
                         \[ P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2) \]
                     </div>
                     <div class="math-display">
-                        \[ \text{This matches the formula: } \sum_{i=1}^{2} P(A_i) - \sum_{1 \leq i < j \leq 2} P(A_i \cap A_j) \]
+                        \[ \text{This matches the formula: } \sum_{i=1}^{2} P(A_i) - \sum_{\substack{1 \leq i < j \leq 2}} P(A_i \cap A_j) \]
                     </div>
                     <div class="math-display">
                         \[ \text{✓ Base case holds.} \]
@@ -488,7 +488,7 @@
                     <strong>Step 3 — Inductive Hypothesis:</strong>
                     <p>Assume that the inclusion-exclusion principle holds for any collection of \(k\) events, where \(k = m\) (for some \(m \geq 2\)). That is:</p>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{m} A_i \right) = \sum_{i=1}^{m} P(A_i) - \sum_{1 \leq i < j \leq m} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \]
+                        \[ P\left( \bigcup_{i=1}^{m} A_i \right) = \sum_{i=1}^{m} P(A_i) - \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \]
                     </div>
                 </div>
                 
@@ -514,7 +514,7 @@
                 <div class="proof-step">
                     <strong>Step 6 — Express \(P(B)\) using the inductive hypothesis:</strong>
                     <div class="math-display">
-                        \[ P(B) = P\left( \bigcup_{i=1}^{m} A_i \right) = \sum_{i=1}^{m} P(A_i) - \sum_{1 \leq i < j \leq m} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \]
+                        \[ P(B) = P\left( \bigcup_{i=1}^{m} A_i \right) = \sum_{i=1}^{m} P(A_i) - \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \]
                     </div>
                 </div>
                 
@@ -525,17 +525,17 @@
                     </div>
                     <p>This is the union of \(m\) events. Apply the inductive hypothesis to these \(m\) events \((A_1 \cap A_{m+1}), (A_2 \cap A_{m+1}), \ldots, (A_m \cap A_{m+1})\):</p>
                     <div class="math-display">
-                        \[ P(B \cap A_{m+1}) = \sum_{i=1}^{m} P(A_i \cap A_{m+1}) - \sum_{1 \leq i < j \leq m} P(A_i \cap A_j \cap A_{m+1}) + \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k \cap A_{m+1}) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \cap A_{m+1} \right) \]
+                        \[ P(B \cap A_{m+1}) = \sum_{i=1}^{m} P(A_i \cap A_{m+1}) - \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j \cap A_{m+1}) + \sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k \cap A_{m+1}) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \cap A_{m+1} \right) \]
                     </div>
                 </div>
                 
                 <div class="proof-step">
                     <strong>Step 8 — Substitute \(P(B)\) and \(P(B \cap A_{m+1})\) into the equation from Step 5:</strong>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{m+1} A_i \right) = \left[ \sum_{i=1}^{m} P(A_i) - \sum_{1 \leq i < j \leq m} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \right] \]
+                        \[ P\left( \bigcup_{i=1}^{m+1} A_i \right) = \left[ \sum_{i=1}^{m} P(A_i) - \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \right) \right] \]
                     </div>
                     <div class="math-display">
-                        \[ + P(A_{m+1}) - \left[ \sum_{i=1}^{m} P(A_i \cap A_{m+1}) - \sum_{1 \leq i < j \leq m} P(A_i \cap A_j \cap A_{m+1}) + \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k \cap A_{m+1}) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \cap A_{m+1} \right) \right] \]
+                        \[ + P(A_{m+1}) - \left[ \sum_{i=1}^{m} P(A_i \cap A_{m+1}) - \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j \cap A_{m+1}) + \sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k \cap A_{m+1}) - \cdots + (-1)^{m-1} P\left( \bigcap_{i=1}^{m} A_i \cap A_{m+1} \right) \right] \]
                     </div>
                 </div>
                 
@@ -548,14 +548,14 @@
                     </div>
                     
                     <p><strong>Pairwise intersection terms (two events):</strong></p>
-                    <p>From \(P(B)\) we have: \(- \sum_{1 \leq i < j \leq m} P(A_i \cap A_j)\)</p>
-                    <p>From subtracting \(P(B \cap A_{m+1})\) we get: \(- \sum_{i=1}^{m} P(A_i \cap A_{m+1})\)</p>
-                    <p>Combining: \(- \left[ \sum_{1 \leq i < j \leq m} P(A_i \cap A_j) + \sum_{i=1}^{m} P(A_i \cap A_{m+1}) \right] = - \sum_{1 \leq i < j \leq m+1} P(A_i \cap A_j)\)</p>
+                    <p>From \(P(B)\) we have: \(- \displaystyle\sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j)\)</p>
+                    <p>From subtracting \(P(B \cap A_{m+1})\) we get: \(- \displaystyle\sum_{i=1}^{m} P(A_i \cap A_{m+1})\)</p>
+                    <p>Combining: \(- \left[ \displaystyle\sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j) + \sum_{i=1}^{m} P(A_i \cap A_{m+1}) \right] = - \displaystyle\sum_{\substack{1 \leq i < j \leq m+1}} P(A_i \cap A_j)\)</p>
                     
                     <p><strong>Triple intersection terms (three events):</strong></p>
-                    <p>From \(P(B)\) we have: \(+ \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k)\)</p>
-                    <p>From subtracting \(P(B \cap A_{m+1})\) we get: \(+ \sum_{1 \leq i < j \leq m} P(A_i \cap A_j \cap A_{m+1})\)</p>
-                    <p>Combining: \(+ \left[ \sum_{1 \leq i < j < k \leq m} P(A_i \cap A_j \cap A_k) + \sum_{1 \leq i < j \leq m} P(A_i \cap A_j \cap A_{m+1}) \right] = + \sum_{1 \leq i < j < k \leq m+1} P(A_i \cap A_j \cap A_k)\)</p>
+                    <p>From \(P(B)\) we have: \(+ \displaystyle\sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k)\)</p>
+                    <p>From subtracting \(P(B \cap A_{m+1})\) we get: \(+ \displaystyle\sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j \cap A_{m+1})\)</p>
+                    <p>Combining: \(+ \left[ \displaystyle\sum_{\substack{1 \leq i < j < k \leq m}} P(A_i \cap A_j \cap A_k) + \sum_{\substack{1 \leq i < j \leq m}} P(A_i \cap A_j \cap A_{m+1}) \right] = + \displaystyle\sum_{\substack{1 \leq i < j < k \leq m+1}} P(A_i \cap A_j \cap A_k)\)</p>
                     
                     <p><strong>Continuing this pattern:</strong> The sign alternates with each higher order of intersection. The last term (intersection of all \(m+1\) events) will have sign \((-1)^{(m+1)-1} = (-1)^m\).</p>
                 </div>
@@ -563,7 +563,7 @@
                 <div class="proof-step">
                     <strong>Step 10 — Write the final expression:</strong>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{m+1} A_i \right) = \sum_{i=1}^{m+1} P(A_i) - \sum_{1 \leq i < j \leq m+1} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq m+1} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m} P\left( \bigcap_{i=1}^{m+1} A_i \right) \]
+                        \[ P\left( \bigcup_{i=1}^{m+1} A_i \right) = \sum_{i=1}^{m+1} P(A_i) - \sum_{\substack{1 \leq i < j \leq m+1}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq m+1}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{m} P\left( \bigcap_{i=1}^{m+1} A_i \right) \]
                     </div>
                 </div>
                 
@@ -571,7 +571,7 @@
                     <strong>Step 11 — Conclusion:</strong>
                     <p>Since the formula holds for \(n = 1\) and \(n = 2\), and assuming it holds for \(n = m\), we have proved it holds for \(n = m+1\). Therefore, by the principle of mathematical induction, the inclusion-exclusion principle (general addition theorem) holds for all positive integers \(n\).</p>
                     <div class="math-display">
-                        \[ \boxed{P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right)} \]
+                        \[ \boxed{P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - \sum_{\substack{1 \leq i < j \leq n}} P(A_i \cap A_j) + \sum_{\substack{1 \leq i < j < k \leq n}} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right)} \]
                     </div>
                 </div>
             </div>
