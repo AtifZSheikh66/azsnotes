@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Assigning Probabilities | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .principle-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-top: 3px solid;
+        }
+        .card-axiom { border-top-color: #3b82f6; }
+        .card-natural { border-top-color: #10b981; }
+        .formula-box {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: monospace;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Assigning Probabilities</span>
+        </div>
+        <h1>⚖️ Assigning Probabilities</h1>
+        <p>Acceptable assignments and the natural equally likely model</p>
+        <span class="badge">Probability Theory · Unit I · Core Concepts</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">❓</span>
+                <h2>1. The Fundamental Question</h2>
+            </div>
+            <div class="definition">
+                How do we assign numerical probabilities to outcomes and events? While the axioms of probability tell us how probabilities behave, they do not tell us what values to assign. This is the fundamental question of probability assignment.
+            </div>
+            <p>There are two levels to answering this question:</p>
+            <ul>
+                <li><strong>Acceptable Assignment:</strong> Any assignment that satisfies the probability axioms is mathematically valid.</li>
+                <li><strong>Natural Assignment:</strong> When all outcomes are equally likely, we assign equal probability to each outcome.</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Acceptable Assignment of Probabilities -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Acceptable Assignment of Probabilities</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Definition:</strong> An <strong>acceptable assignment</strong> of probabilities is any assignment of non-negative numbers to the outcomes of a sample space such that the sum of the probabilities over all outcomes equals 1.</p>
+            </div>
+            
+            <p>This definition follows directly from Kolmogorov's axioms. For a finite sample space \( \Omega = \{\omega_1, \omega_2, \ldots, \omega_n\} \), an assignment is acceptable if:</p>
+            
+            <div class="formula-box">
+                \[ P(\{\omega_i\}) \geq 0 \quad \text{for all } i = 1, 2, \ldots, n \]
+                \[ \sum_{i=1}^{n} P(\{\omega_i\}) = 1 \]
+            </div>
+            
+            <div class="law-box">
+                <h3>Key Properties of Acceptable Assignments</h3>
+                <ul class="property-list" style="list-style: none; padding-left: 0;">
+                    <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">✓ <strong>Non-negativity:</strong> \( 0 \leq P(A) \leq 1 \) for any event \( A \)</li>
+                    <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">✓ <strong>Normalization:</strong> \( P(\Omega) = 1 \)</li>
+                    <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">✓ <strong>Additivity:</strong> For mutually exclusive events \( A \) and \( B \), \( P(A \cup B) = P(A) + P(B) \)</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example of Acceptable Assignment:</strong><br>
+                Consider a sample space \( \Omega = \{a, b, c\} \). The following assignments are all acceptable:<br><br>
+                • Assignment 1: \( P(a) = \frac{1}{3}, P(b) = \frac{1}{3}, P(c) = \frac{1}{3} \) (equally likely)<br>
+                • Assignment 2: \( P(a) = \frac{1}{2}, P(b) = \frac{1}{4}, P(c) = \frac{1}{4} \)<br>
+                • Assignment 3: \( P(a) = 0.6, P(b) = 0.3, P(c) = 0.1 \)<br><br>
+                Each satisfies \( p_i \geq 0 \) and \( \sum p_i = 1 \).
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Important:</strong> The axioms do not prescribe a unique assignment. Any assignment meeting the two conditions is mathematically acceptable. The "correct" assignment depends on the real-world situation being modeled.
+            </div>
+        </div>
+
+        <!-- Section 3: Natural Assignment of Probabilities -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎲</span>
+                <h2>3. Natural Assignment of Probabilities</h2>
+            </div>
+            
+            <div class="definition">
+                When there is <strong>no reason to believe</strong> that one outcome is more likely than another, we assign equal probability to all outcomes. This is called the <strong>natural assignment</strong> or the <strong>equally likely outcome model</strong>.
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Principle of Indifference (or Insufficient Reason):</strong> If there are \( N \) mutually exclusive and exhaustive possibilities, and we have no reason to favor any one over another, we assign probability \( \frac{1}{N} \) to each.</p>
+            </div>
+            
+            <p>For a sample space with \( N \) equally likely outcomes, the probability of any event \( E \) is:</p>
+            
+            <div class="formula-box">
+                \[ P(E) = \frac{\text{Number of outcomes in } E}{\text{Total number of outcomes}} = \frac{|E|}{|\Omega|} = \frac{f}{N} \]
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>📊 Classical Examples</h3>
+                    <ul>
+                        <li><strong>Fair coin:</strong> \( P(H) = P(T) = \frac{1}{2} \)</li>
+                        <li><strong>Fair die:</strong> \( P(1) = P(2) = \cdots = P(6) = \frac{1}{6} \)</li>
+                        <li><strong>Standard deck of cards:</strong> Each card has probability \( \frac{1}{52} \)</li>
+                        <li><strong>Drawing a ball from an urn:</strong> If the urn contains identical balls, each has equal probability</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-natural">
+                    <h3>📏 Why "Natural"?</h3>
+                    <ul>
+                        <li>Reflects physical symmetry of many random devices</li>
+                        <li>Minimizes assumptions about the process</li>
+                        <li>Yields maximum uncertainty (entropy) given constraints</li>
+                        <li>Often serves as a default model when no other information is available</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Rolling a Fair Die</strong><br>
+                Sample space: \( \Omega = \{1, 2, 3, 4, 5, 6\} \), \( N = 6 \)<br>
+                Event \( E \) = "rolling an even number" = \( \{2, 4, 6\} \), \( |E| = 3 \)<br>
+                \( P(E) = \frac{3}{6} = \frac{1}{2} \)<br><br>
+                <strong>Example 2: Tossing Two Fair Coins</strong><br>
+                Sample space: \( \Omega = \{HH, HT, TH, TT\} \), \( N = 4 \)<br>
+                Event \( F \) = "at least one head" = \( \{HH, HT, TH\} \), \( |F| = 3 \)<br>
+                \( P(F) = \frac{3}{4} \)
+            </div>
+        </div>
+
+        <!-- Section 4: The f/N Rule -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>4. The \( \frac{f}{N} \) Rule</h2>
+            </div>
+            
+            <div class="definition">
+                For any experiment with \( N \) equally likely outcomes, the probability of an event \( E \) is the ratio of the number of outcomes \( f \) favorable to \( E \) to the total number of outcomes \( N \).
+            </div>
+            
+            <div class="math-display">
+                \[ P(E) = \frac{f}{N} = \frac{\text{Number of outcomes in } E}{\text{Number of outcomes in } \Omega} \]
+            </div>
+            
+            <p>This rule is sometimes called the <strong>classical definition of probability</strong> and forms the foundation of combinatorial probability.</p>
+            
+            <div class="law-box">
+                <h3>Properties Derived from the f/N Rule</h3>
+                <div class="math-display">
+                    \[ 0 \leq P(E) \leq 1 \]
+                    \[ P(\Omega) = \frac{N}{N} = 1 \]
+                    \[ P(\emptyset) = \frac{0}{N} = 0 \]
+                    \[ \text{If } A \cap B = \emptyset \text{, then } P(A \cup B) = \frac{|A| + |B|}{N} = P(A) + P(B) \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Drawing a Card</strong><br>
+                From a standard 52-card deck, find the probability of drawing a heart.<br>
+                Total outcomes: \( N = 52 \)<br>
+                Favorable outcomes: \( f = 13 \) (hearts)<br>
+                \( P(\text{heart}) = \frac{13}{52} = \frac{1}{4} = 0.25 \)<br><br>
+                <strong>Example: Rolling Two Dice</strong><br>
+                Two fair dice are rolled. Find the probability that the sum is 7.<br>
+                Total outcomes: \( N = 36 \)<br>
+                Favorable outcomes: \( \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} \) → \( f = 6 \)<br>
+                \( P(\text{sum} = 7) = \frac{6}{36} = \frac{1}{6} \)
+            </div>
+        </div>
+
+        <!-- Section 5: Historical Context -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>5. Historical and Philosophical Background</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Bernoulli's Principle of Insufficient Reason (1713):</strong> If we can enumerate a set of basic, mutually exclusive possibilities, and have no reason to believe that any one is more likely than another, we should assign the same probability to all.</p>
+            </div>
+            
+            <p>This principle, later renamed the <strong>Principle of Indifference</strong> by Keynes (1921), provides the philosophical justification for the natural assignment. It can be derived from more fundamental requirements of logical consistency and symmetry.</p>
+            
+            <div class="note-tip">
+                💡 <strong>Caution:</strong> The principle must be applied carefully. Paradoxes arise when the same situation can be described in different ways, leading to different "natural" assignments. For example, the classic "Bertrand's paradox" demonstrates that the principle of indifference is not always unambiguous.
+            </div>
+            
+            <div class="law-box">
+                <h3>When is the Natural Assignment Appropriate?</h3>
+                <ul>
+                    <li><strong>Physical symmetry:</strong> Fair coins, dice, roulette wheels, shuffled cards</li>
+                    <li><strong>Random sampling:</strong> Each member of a population has equal chance of selection</li>
+                    <li><strong>Maximum entropy:</strong> When no information favors any outcome, the uniform distribution maximizes uncertainty</li>
+                    <li><strong>Default model:</strong> Often used as a baseline before data is observed</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6: Limitations and Extensions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>6. Limitations of the Natural Assignment</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>When Natural Assignment Fails</h3>
+                    <ul>
+                        <li><strong>Biased coins or dice:</strong> Physical asymmetry → unequal probabilities</li>
+                        <li><strong>Real-world events:</strong> Weather, stock prices, sports outcomes</li>
+                        <li><strong>Infinite or continuous sample spaces:</strong> Need density functions</li>
+                        <li><strong>When additional information exists:</strong> Prior knowledge should be used</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-natural">
+                    <h3>Alternative Approaches</h3>
+                    <ul>
+                        <li><strong>Relative frequency:</strong> Estimate probabilities from observed data</li>
+                        <li><strong>Subjective probability:</strong> Personal degrees of belief</li>
+                        <li><strong>Maximum entropy:</strong> Most uninformative distribution consistent with constraints</li>
+                        <li><strong>Bayesian approach:</strong> Update prior beliefs with observed Data</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Biased Coin</strong><br>
+                A coin is known to land heads 70% of the time. The natural assignment would give \( P(H) = 0.5 \), which is incorrect. Instead, we must assign based on observed relative frequency: \( P(H) = 0.7 \), \( P(T) = 0.3 \). This remains an acceptable assignment since both probabilities are non-negative and sum to 1.
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Selecting a Student</strong><br>
+                A class has 100 students with the following distribution:<br>
+                Freshmen: 25, Sophomores: 35, Juniors: 30, Seniors: 10<br><br>
+                (a) What is the natural assignment if a student is chosen at random?<br>
+                (b) Find \( P(\text{Freshman}) \), \( P(\text{Not Senior}) \), \( P(\text{Freshman or Sophomore}) \)<br><br>
+                <strong>Solution:</strong><br>
+                (a) Each student has probability \( \frac{1}{100} \) — this is the natural assignment for random sampling.<br>
+                (b) \( P(\text{Freshman}) = \frac{25}{100} = 0.25 \)<br>
+                \( P(\text{Not Senior}) = \frac{100 - 10}{100} = \frac{90}{100} = 0.9 \)<br>
+                \( P(\text{Freshman or Sophomore}) = \frac{25 + 35}{100} = \frac{60}{100} = 0.6 \)
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Three Coin Flips</strong><br>
+                Three fair coins are flipped. Find the probability of getting exactly two heads using the natural assignment.<br><br>
+                <strong>Solution:</strong><br>
+                Sample space has \( N = 2^3 = 8 \) equally likely outcomes.<br>
+                Event \( E \) = "exactly two heads" = \( \{HHT, HTH, THH\} \) → \( |E| = 3 \)<br>
+                \( P(E) = \frac{3}{8} = 0.375 \)
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: Birthday Problem</strong><br>
+                What is the probability that in a group of \( n \) randomly selected people, at least two share the same birthday? (Assume 365 equally likely birthdays, ignoring leap years)<br><br>
+                <strong>Solution:</strong><br>
+                It is easier to find the complement: probability all birthdays are distinct.<br>
+                Total outcomes: \( N = 365^n \)<br>
+                Favorable for distinct birthdays: \( f = 365 \times 364 \times \cdots \times (365 - n + 1) \)<br>
+                \( P(\text{at least one match}) = 1 - \frac{365 \times 364 \times \cdots \times (365 - n + 1)}{365^n} \)<br>
+                For \( n = 23 \), this probability is approximately \( 0.507 \).
+            </div>
+        </div>
+
+        <!-- Section 8: Practice Questions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Questions</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Question 1:</strong> A sample space has four outcomes: \( \{a, b, c, d\} \). Which of the following are acceptable probability assignments?</p>
+                <p>(a) \( P(a)=0.2, P(b)=0.3, P(c)=0.4, P(d)=0.1 \)<br>
+                (b) \( P(a)=0.5, P(b)=0.5, P(c)=0, P(d)=0 \)<br>
+                (c) \( P(a)=0.3, P(b)=0.3, P(c)=0.3, P(d)=0.3 \)<br>
+                (d) \( P(a)=1, P(b)=0, P(c)=0, P(d)=0 \)</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">All are acceptable except (c) because the sum is 1.2 > 1. (a) sums to 1, (b) sums to 1, (d) sums to 1. Each also has non-negative probabilities.</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Question 2:</strong> If you roll a fair die twice, what is the probability that the sum is greater than 9?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">Total outcomes: 36. Favorable outcomes: sum=10 → {(4,6),(5,5),(6,4)} (3 outcomes); sum=11 → {(5,6),(6,5)} (2 outcomes); sum=12 → {(6,6)} (1 outcome). Total favorable = 6. \( P = \frac{6}{36} = \frac{1}{6} \).</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Question 3:</strong> A bag contains 3 red balls and 5 blue balls. If one ball is drawn at random, what is the probability it is red using the natural assignment?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Answer</summary>
+                    <p style="margin-top: 0.5rem;">Total balls = 8. Natural assignment (random draw) gives each ball probability \( \frac{1}{8} \). Red balls = 3, so \( P(\text{red}) = \frac{3}{8} = 0.375 \).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Acceptable assignment:</strong> Any assignment satisfying \( p_i \geq 0 \) and \( \sum p_i = 1 \) is mathematically valid</li>
+                <li><strong>Natural assignment:</strong> When outcomes are equally likely, \( P(\{\omega_i\}) = \frac{1}{N} \) for all \( i \)</li>
+                <li><strong>f/N Rule:</strong> For equally likely outcomes, \( P(E) = \frac{|E|}{|\Omega|} \)</li>
+                <li><strong>Principle of Indifference:</strong> Justifies equal probability when no reason to favor any outcome</li>
+                <li>The axioms define acceptable assignments; the natural assignment is a special case</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="algebra_of_events.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Algebra of Events</a>
+            <a href="theorems_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Theorems of Probability →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Acceptable and natural assignments of probabilities — from Kolmogorov's axioms to the equally likely model.<br>
+        Understanding how probabilities are assigned is essential for building correct probability models.
+    </footer>
+</div>
+</body>
+</html>
