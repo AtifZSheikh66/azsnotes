@@ -551,17 +551,16 @@
                 break;
                 
             case "symdiff":
+    // Both circles light gray
     circleAFill = "#e2e8f0";
     circleBFill = "#e2e8f0";
     circleAOpacity = 0.4;
     circleBOpacity = 0.4;
-    // Color A-only region (A minus B)
+    // Draw pink only in A-only region
     extraElements = `
         <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipB_${operationSymbol})"/>
-        // Color B-only region (B minus A)
         <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipA_${operationSymbol})"/>
-        // Draw a white overlay on the intersection to erase any pink there
-        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="white" fill-opacity="0.9" clip-path="url(#clipA_${operationSymbol})" clip-path="url(#clipB_${operationSymbol})"/>
+        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#e2e8f0" fill-opacity="0.8" clip-path="url(#clipA_${operationSymbol})" clip-path="url(#clipB_${operationSymbol})"/>
     `;
     break;
                 
