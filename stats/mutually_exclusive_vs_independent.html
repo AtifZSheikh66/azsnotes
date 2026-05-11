@@ -527,11 +527,11 @@
     function createVennMutuallyExclusive() {
     const container = d3.select("#venn-mutually-exclusive");
     container.html("");
-    const width = 200, height = 200;
+    const width = 300, height = 250;
     const svg = container.append("svg")
         .attr("width", width)
         .attr("height", height)
-        .attr("viewBox", "0 0 200 200")
+        .attr("viewBox", "0 0 300 250")
         .append("g")
         .attr("transform", "translate(100, 100)");
     
@@ -540,10 +540,10 @@
     
     // Background rectangle (sample space)
     svg.append("rect")
-        .attr("x", -100)
-        .attr("y", -100)
-        .attr("width", 200)
-        .attr("height", 200)
+        .attr("x", -150)
+        .attr("y", -125)
+        .attr("width", 300)
+        .attr("height", 250)
         .attr("fill", "#f1f5f9")
         .attr("stroke", "#cbd5e1")
         .attr("stroke-width", 1);
