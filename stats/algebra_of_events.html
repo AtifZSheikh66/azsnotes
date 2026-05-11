@@ -551,7 +551,9 @@
                 break;
                 
             case "symdiff":
-    // Use same technique as complement: draw colored background first, then mask out intersection
+    // Draw A-only region in pink (left crescent)
+    // Draw B-only region in pink (right crescent)
+    // Keep intersection hollow (no color)
     vennHtml = `
         <h3>${operation}</h3>
         <div class="venn-container">
@@ -563,18 +565,20 @@
                     <clipPath id="clipB_${operationSymbol}">
                         <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
                     </clipPath>
-                    <clipPath id="intersection_${operationSymbol}">
+                    <clipPath id="A_minus_B_${operationSymbol}">
                         <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
-                        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" clip-path="url(#clipA_${operationSymbol})"/>
+                        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" clip-path="url(#clipA_${operationSymbol})" transform="scale(-1,1) translate(-200,0)"/>
+                    </clipPath>
+                    <clipPath id="B_minus_A_${operationSymbol}">
+                        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
+                        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" clip-path="url(#clipB_${operationSymbol})" transform="scale(-1,1) translate(-200,0)"/>
                     </clipPath>
                 </defs>
                 <rect x="0" y="0" width="200" height="200" fill="#f1f5f9"/>
-                <!-- Draw pink background for A-only region -->
-                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipB_${operationSymbol})"/>
-                <!-- Draw pink background for B-only region -->
-                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipA_${operationSymbol})"/>
-                <!-- Draw white circle to erase pink from intersection -->
-                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#f1f5f9" clip-path="url(#intersection_${operationSymbol})"/>
+                <!-- Draw pink in A-only region -->
+                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#B_minus_A_${operationSymbol})"/>
+                <!-- Draw pink in B-only region -->
+                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#A_minus_B_${operationSymbol})"/>
                 <!-- Draw circle outlines -->
                 <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="none" stroke="#1e40af" stroke-width="2"/>
                 <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="none" stroke="#065f46" stroke-width="2"/>
