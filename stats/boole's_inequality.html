@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Boole's Inequality | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .dual-box {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Boole's Inequality</span>
+        </div>
+        <h1>📊 Boole's Inequality (Union Bound)</h1>
+        <p>The probability of a union is at most the sum of individual probabilities — and its dual for intersections</p>
+        <span class="badge">Probability Theory · Unit II · Boole's Inequality</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                <strong>Boole's Inequality</strong> (also called the <strong>Union Bound</strong>) is a fundamental result in probability theory that provides an upper bound on the probability of a union of events. It states that the probability of the union of any collection of events is at most the sum of their individual probabilities.
+            </div>
+            <p>Named after the mathematician George Boole (1815-1864), this inequality is extremely useful when exact probabilities of intersections are difficult or impossible to compute. It appears in many areas including:</p>
+            <ul>
+                <li>Concentration inequalities (e.g., Chernoff bounds, Markov's inequality)</li>
+                <li>Borel-Cantelli lemmas</li>
+                <li>Analysis of algorithms and randomized computations</li>
+                <li>Statistical learning theory and generalization bounds</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Boole's Inequality for Two Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➕</span>
+                <h2>2. Boole's Inequality for Two Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Boole's Inequality for Two Events — Union Form)</h3>
+                <div class="math-display">
+                    \[ P(A \cup B) \leq P(A) + P(B) \]
+                </div>
+                <p>The probability that at least one of A or B occurs is at most the sum of their individual probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Boole's Inequality for Two Events:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1:</strong> From Kolmogorov's Axiom 1 (Non-negativity), we know that for any event, its probability is non-negative. In particular:
+                    <div class="math-display">
+                        \[ P(A \cap B) \geq 0 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Recall the addition theorem for two events:
+                    <div class="math-display">
+                        \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                    </div>
+                    <p>This is derived directly from Kolmogorov's axioms.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Since \( P(A \cap B) \geq 0 \), we have:
+                    <div class="math-display">
+                        \[ P(A) + P(B) - P(A \cap B) \leq P(A) + P(B) \]
+                    </div>
+                    <p>Because subtracting a non-negative number (or zero) from \( P(A) + P(B) \) cannot increase the sum.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Substitute the left-hand side using the addition theorem:
+                    <div class="math-display">
+                        \[ P(A \cup B) \leq P(A) + P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5:</strong> This completes the proof. ∎
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> For any events A and B, \( P(A \cup B) \geq \max(P(A), P(B)) \).<br>
+                <strong>📌 Corollary 2.2:</strong> If \( P(A) = 0 \), then \( P(A \cup B) \leq P(B) \), and since \( P(A \cup B) \geq P(B) \), we get \( P(A \cup B) = P(B) \).<br>
+                <strong>📌 Corollary 2.3:</strong> The union bound is tight when A and B are mutually exclusive, because then \( P(A \cap B) = 0 \) and equality holds: \( P(A \cup B) = P(A) + P(B) \).
+            </div>
+        </div>
+
+        <!-- Section 3: Boole's Inequality for n Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>3. Boole's Inequality for n Events (Union Bound)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Boole's Inequality for n Events — Union Form)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i) \]
+                </div>
+                <p>The probability of the union of any finite collection of events is at most the sum of their individual probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Boole's Inequality for n Events (by Mathematical Induction):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Base Case (n = 1):</strong>
+                    <div class="math-display">
+                        \[ P(A_1) \leq P(A_1) \quad \text{✓ The inequality holds with equality.} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Base Case (n = 2):</strong>
+                    <p>We have already proved \( P(A_1 \cup A_2) \leq P(A_1) + P(A_2) \) from the previous proof. ✓ Base case holds.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Inductive Hypothesis:</strong>
+                    <p>Assume that Boole's inequality holds for any collection of \(m\) events, where \(m \geq 2\). That is:</p>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{m} A_i \right) \leq \sum_{i=1}^{m} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Inductive Step (prove for \(n = m+1\) events):</strong>
+                    <p>Consider \(m+1\) events \(A_1, A_2, \ldots, A_m, A_{m+1}\). Define:</p>
+                    <div class="math-display">
+                        \[ B = \bigcup_{i=1}^{m} A_i \]
+                    </div>
+                    <p>Then the union of all \(m+1\) events can be written as:</p>
+                    <div class="math-display">
+                        \[ \bigcup_{i=1}^{m+1} A_i = B \cup A_{m+1} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Apply Boole's inequality for two events to \(B\) and \(A_{m+1}\):</strong>
+                    <div class="math-display">
+                        \[ P(B \cup A_{m+1}) \leq P(B) + P(A_{m+1}) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Apply the inductive hypothesis to \(P(B)\):</strong>
+                    <p>Since \(B = \bigcup_{i=1}^{m} A_i\), by the inductive hypothesis:</p>
+                    <div class="math-display">
+                        \[ P(B) \leq \sum_{i=1}^{m} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Combine the inequalities:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{m+1} A_i \right) = P(B \cup A_{m+1}) \leq P(B) + P(A_{m+1}) \leq \sum_{i=1}^{m} P(A_i) + P(A_{m+1}) = \sum_{i=1}^{m+1} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion:</strong>
+                    <p>Since the inequality holds for \(n = 1\) and \(n = 2\), and assuming it holds for \(n = m\), we have proved it holds for \(n = m+1\). Therefore, by the principle of mathematical induction, Boole's inequality holds for all positive integers \(n\):</p>
+                    <div class="math-display">
+                        \[ \boxed{P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Countable Union Bound):</strong> For a countably infinite collection of events \(A_1, A_2, A_3, \ldots\):
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{\infty} A_i \right) \leq \sum_{i=1}^{\infty} P(A_i) \]</div>
+                This follows from the finite case by taking the limit as \(n \to \infty\) and using the continuity of probability.<br><br>
+                
+                <strong>📌 Corollary 3.2 (Borel-Cantelli Lemma — First Part):</strong> If \(\sum_{i=1}^{\infty} P(A_i) < \infty\), then \(P(\limsup_{n \to \infty} A_n) = 0\). This is a direct consequence of countable Boole's inequality.<br><br>
+                
+                <strong>📌 Corollary 3.3 (Simple Bound for Complement):</strong> Since \(P(A_1 \cup A_2 \cup \cdots \cup A_n) \geq P(A_i)\) for any \(i\):
+                <div class="math-display">\[ \max_{1 \leq i \leq n} P(A_i) \leq P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i) \]</div>
+            </div>
+        </div>
+
+        <!-- Section 4: Dual Inequality (Bonferroni's Inequality for Intersection) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">∩</span>
+                <h2>4. Dual of Boole's Inequality (Lower Bound for Intersection)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Dual Boole Inequality — Lower Bound for Intersection)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) \geq 1 - \sum_{i=1}^{n} P(A_i^c) \]
+                </div>
+                <p>Equivalently, for two events:</p>
+                <div class="math-display">
+                    \[ P(A \cap B) \geq P(A) + P(B) - 1 \]
+                </div>
+                <p>This gives a lower bound on the probability of the intersection of events.</p>
+            </div>
+            
+            <div class="dual-box">
+                <h4>📝 Proof of Dual Boole Inequality for Two Events:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1:</strong> Start with Boole's inequality for two events applied to the complements:
+                    <div class="math-display">
+                        \[ P(A^c \cup B^c) \leq P(A^c) + P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2:</strong> By De Morgan's law, \( A^c \cup B^c = (A \cap B)^c \). Therefore:
+                    <div class="math-display">
+                        \[ P((A \cap B)^c) \leq P(A^c) + P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Apply the complement rule: \( P((A \cap B)^c) = 1 - P(A \cap B) \).
+                    <div class="math-display">
+                        \[ 1 - P(A \cap B) \leq P(A^c) + P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Rearranging the inequality:
+                    <div class="math-display">
+                        \[ 1 - P(A \cap B) \leq (1 - P(A)) + (1 - P(B)) \]
+                    </div>
+                    <div class="math-display">
+                        \[ 1 - P(A \cap B) \leq 2 - P(A) - P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5:</strong> Subtract 1 from both sides and multiply by -1 (reversing the inequality):
+                    <div class="math-display">
+                        \[ -P(A \cap B) \leq 1 - P(A) - P(B) \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(A \cap B) \geq P(A) + P(B) - 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6:</strong> This completes the proof. ∎
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Alternative Proof of Dual Inequality (using union bound directly):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1:</strong> Note that \( A \cap B = (A^c \cup B^c)^c \) by De Morgan's law.
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Apply the complement rule:
+                    <div class="math-display">
+                        \[ P(A \cap B) = 1 - P(A^c \cup B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Apply Boole's inequality to \( P(A^c \cup B^c) \):
+                    <div class="math-display">
+                        \[ P(A^c \cup B^c) \leq P(A^c) + P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Therefore:
+                    <div class="math-display">
+                        \[ P(A \cap B) \geq 1 - [P(A^c) + P(B^c)] \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(A \cap B) \geq 1 - [(1 - P(A)) + (1 - P(B))] \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(A \cap B) \geq P(A) + P(B) - 1 \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Dual Boole Inequality for n Events (General Form)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) \geq 1 - \sum_{i=1}^{n} P(A_i^c) = 1 - \sum_{i=1}^{n} (1 - P(A_i)) \]
+                </div>
+                <p>Equivalently:</p>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) \geq \sum_{i=1}^{n} P(A_i) - (n - 1) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Dual Boole Inequality for n Events (by Induction):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Base Case (n = 1):</strong>
+                    <div class="math-display">
+                        \[ P(A_1) \geq P(A_1) \quad \text{(trivially true)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Base Case (n = 2):</strong>
+                    <p>We have already proved \( P(A_1 \cap A_2) \geq P(A_1) + P(A_2) - 1 \). ✓</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Inductive Hypothesis:</strong>
+                    <p>Assume that the dual inequality holds for any collection of \(m\) events, where \(m \geq 2\):</p>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m} A_i \right) \geq \sum_{i=1}^{m} P(A_i) - (m - 1) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Inductive Step (prove for \(n = m+1\) events):</strong>
+                    <p>Consider \(m+1\) events. We can write:</p>
+                    <div class="math-display">
+                        \[ \bigcap_{i=1}^{m+1} A_i = \left( \bigcap_{i=1}^{m} A_i \right) \cap A_{m+1} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Apply the dual inequality for two events:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m+1} A_i \right) \geq P\left( \bigcap_{i=1}^{m} A_i \right) + P(A_{m+1}) - 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Apply the inductive hypothesis to \( P\left( \bigcap_{i=1}^{m} A_i \right) \):</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m} A_i \right) \geq \sum_{i=1}^{m} P(A_i) - (m - 1) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Combine the inequalities:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m+1} A_i \right) \geq \left[ \sum_{i=1}^{m} P(A_i) - (m - 1) \right] + P(A_{m+1}) - 1 \]
+                    </div>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m+1} A_i \right) \geq \sum_{i=1}^{m+1} P(A_i) - m \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion:</strong>
+                    <p>Therefore, by induction, for all \(n \geq 1\):</p>
+                    <div class="math-display">
+                        \[ \boxed{P\left( \bigcap_{i=1}^{n} A_i \right) \geq 1 - \sum_{i=1}^{n} P(A_i^c)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Bonferroni's First Inequality):</strong> For any collection of n events:
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{n} A_i \right) \geq \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i \cap A_j) \]</div>
+                This is the first Bonferroni inequality, which is stronger than the simple union bound.<br><br>
+                
+                <strong>📌 Corollary 4.2 (Lower Bound for Intersection):</strong> If each event \(A_i\) has probability at least \(p\), then:
+                <div class="math-display">\[ P\left( \bigcap_{i=1}^{n} A_i \right) \geq np - (n - 1) \]</div>
+                
+                <strong>📌 Corollary 4.3:</strong> If \( \sum_{i=1}^{n} P(A_i) > n - 1 \), then \( P\left( \bigcap_{i=1}^{n} A_i \right) > 0 \). This gives a sufficient condition for a non-empty intersection with positive probability.
+            </div>
+        </div>
+
+        <!-- Section 5: Summary of Both Forms -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>5. Summary of Boole's Inequality and Its Dual</h2>
+            </div>
+            
+            <div class="formula-card" style="background: #eff6ff; border-left-color: #3b82f6;">
+                <h4>📌 Union Form (Boole's Inequality):</h4>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i) \]
+                </div>
+                <p><strong>Interpretation:</strong> The probability that at least one event occurs is at most the sum of individual probabilities.</p>
+            </div>
+            
+            <div class="formula-card" style="background: #ecfdf5; border-left-color: #10b981;">
+                <h4>📌 Intersection Form (Dual Boole Inequality):</h4>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) \geq 1 - \sum_{i=1}^{n} P(A_i^c) = \sum_{i=1}^{n} P(A_i) - (n - 1) \]
+                </div>
+                <p><strong>Interpretation:</strong> The probability that all events occur is at least the sum of individual probabilities minus (n-1).</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 1: Using Union Bound</strong><br><br>
+                A system has 10 components, each with failure probability 0.05. The system fails if any component fails. Find an upper bound on the probability of system failure.<br><br>
+                <strong>Solution:</strong><br>
+                Let \(A_i\) be the event that component \(i\) fails. Then system failure is \( \bigcup_{i=1}^{10} A_i \).<br>
+                By Boole's inequality:
+                <div class="math-display">
+                    \[ P(\text{system failure}) = P\left( \bigcup_{i=1}^{10} A_i \right) \leq \sum_{i=1}^{10} P(A_i) = 10 \times 0.05 = 0.5 \]
+                </div>
+                So the probability of system failure is at most 50%.
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 2: Using Dual Inequality</strong><br><br>
+                Three events have probabilities \(P(A_1) = 0.9\), \(P(A_2) = 0.8\), \(P(A_3) = 0.7\). Find a lower bound for \(P(A_1 \cap A_2 \cap A_3)\).<br><br>
+                <strong>Solution:</strong><br>
+                By the dual Boole inequality for three events:
+                <div class="math-display">
+                    \[ P(A_1 \cap A_2 \cap A_3) \geq P(A_1) + P(A_2) + P(A_3) - 2 = 0.9 + 0.8 + 0.7 - 2 = 2.4 - 2 = 0.4 \]
+                </div>
+                So the probability that all three events occur is at least 40%.
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 3: Application to Borel-Cantelli</strong><br><br>
+                Let \(A_1, A_2, A_3, \ldots\) be events such that \( \sum_{i=1}^{\infty} P(A_i) < \infty \). Show that \(P(\limsup A_n) = 0\).<br><br>
+                <strong>Solution Outline:</strong><br>
+                Define \(B_n = \bigcup_{k=n}^{\infty} A_k\). Then \(\limsup A_n = \bigcap_{n=1}^{\infty} B_n\).<br>
+                By Boole's inequality, \(P(B_n) \leq \sum_{k=n}^{\infty} P(A_k)\).<br>
+                Since the tail sum goes to 0 as \(n \to \infty\), \(P(B_n) \to 0\). Then \(P(\limsup A_n) = \lim_{n \to \infty} P(B_n) = 0\).
+            </div>
+        </div>
+
+        <!-- Section 7: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>7. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> If \(P(A) = 0.6\) and \(P(B) = 0.5\), what is the range of possible values for \(P(A \cup B)\)?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">By Boole's inequality: \(P(A \cup B) \leq 0.6 + 0.5 = 1.1\), but probability cannot exceed 1, so \(P(A \cup B) \leq 1\). Also \(P(A \cup B) \geq \max(0.6, 0.5) = 0.6\). Therefore \(0.6 \leq P(A \cup B) \leq 1\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> For four events with \(P(A_i) = 0.3\) for all i, what is the minimum possible value of \(P(\bigcap_{i=1}^{4} A_i)\)?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">By dual Boole inequality: \(P(\bigcap_{i=1}^{4} A_i) \geq 0.3 + 0.3 + 0.3 + 0.3 - 3 = 1.2 - 3 = -1.8\). Since probability cannot be negative, the inequality gives no useful lower bound (it's trivially true). The actual minimum is 0, which can occur if the events are mutually exclusive in a certain way.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that \(P(A \cap B) \geq 1 - P(A^c) - P(B^c)\) using Boole's inequality.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">By Boole: \(P(A^c \cup B^c) \leq P(A^c) + P(B^c)\). By De Morgan: \(P((A \cap B)^c) \leq P(A^c) + P(B^c)\). Then \(1 - P(A \cap B) \leq P(A^c) + P(B^c)\). Rearranging: \(P(A \cap B) \geq 1 - P(A^c) - P(B^c)\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Boole's Inequality (Union Bound):</strong> \(P(\bigcup_{i=1}^{n} A_i) \leq \sum_{i=1}^{n} P(A_i)\)</li>
+                <li><strong>Proof:</strong> Uses the addition theorem \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\) and the fact that \(P(A \cap B) \geq 0\), extended to n events by induction</li>
+                <li><strong>Dual Boole Inequality (Intersection Bound):</strong> \(P(\bigcap_{i=1}^{n} A_i) \geq \sum_{i=1}^{n} P(A_i) - (n - 1)\)</li>
+                <li><strong>Derivation:</strong> From Boole's inequality applied to complements and De Morgan's law</li>
+                <li><strong>Applications:</strong> Borel-Cantelli lemmas, concentration inequalities, reliability theory</li>
+                <li><strong>Both forms are tight:</strong> Equality when events are mutually exclusive (for union) or when events are nested (for intersection)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="addition_theorem.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Addition Theorem</a>
+            <a href="total_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Total Probability →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Boole's Inequality (Union Bound) and its Dual — fundamental bounds derived from Kolmogorov's axioms.
+    </footer>
+</div>
+</body>
+</html>
