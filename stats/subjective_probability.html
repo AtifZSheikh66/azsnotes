@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Subjective (Bayesian) Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .principle-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.25rem 0;
+            border-radius: 0.75rem;
+        }
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .formula-card h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-top: 3px solid;
+        }
+        .card-bayesian { border-top-color: #8b5cf6; }
+        .card-frequentist { border-top-color: #3b82f6; }
+        .card-classical { border-top-color: #10b981; }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.2rem !important;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .betting-quote {
+            background: #eef2ff;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin: 1.25rem 0;
+            font-style: italic;
+            border: 1px solid #c7d2fe;
+        }
+        .bayes-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin: 1.25rem 0;
+            border-left: 4px solid #d97706;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Subjective (Bayesian) Probability</span>
+        </div>
+        <h1>🧠 Subjective (Bayesian) Probability</h1>
+        <p>Probability as a degree of belief — the personal interpretation of uncertainty</p>
+        <span class="badge">Probability Theory · Unit I · Subjective Interpretation</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. What is Subjective Probability?</h2>
+            </div>
+            <div class="definition">
+                <strong>Subjective probability</strong> (also called <strong>personal probability</strong> or <strong>Bayesian probability</strong>) is a measure of an individual's degree of belief in the occurrence of an event. Unlike classical or frequentist probabilities, subjective probability does not rely on physical symmetry or long-run frequencies — it reflects personal judgment informed by available knowledge and experience.
+            </div>
+            <p>In this framework, probability is not an objective property of the external world but rather a rational expression of uncertainty. Different individuals may assign different probabilities to the same event based on their unique knowledge, and all such assignments can be valid as long as they satisfy the axioms of probability.</p>
+            <div class="betting-quote">
+                "Probability is the measure of an individual's degree of belief in the truth of a proposition. It is not a property of the world, but a property of the observer's state of knowledge."
+            </div>
+            <div class="principle-box">
+                <p><strong>Core Principle — The Betting Interpretation:</strong> A person's subjective probability for an event \(E\) is the highest price (in terms of utility) that the person would be willing to pay for a gamble that pays 1 unit if \(E\) occurs and 0 otherwise. A rational person's subjective probabilities must satisfy the laws of probability to avoid inconsistent ("Dutch book") betting behavior [citation:1][citation:9].</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Comparison of Probability Interpretations -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>2. Three Major Interpretations of Probability</h2>
+            </div>
+            
+            <p>It is common to distinguish between three types of probabilities — classical, frequentist, and subjective — each with different philosophical foundations and domains of application [citation:2].</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-classical">
+                    <h3>📐 Classical Probability</h3>
+                    <div class="math-display">
+                        \[ P(E) = \frac{|E|}{|\Omega|} \]
+                    </div>
+                    <p><strong>Based on:</strong> Symmetry and equally likely outcomes</p>
+                    <p><strong>Example:</strong> Fair die → \(P(1) = \frac{1}{6}\)</p>
+                    <p><strong>Limitation:</strong> Only applies to symmetric, finite sample spaces</p>
+                </div>
+                <div class="comparison-card card-frequentist">
+                    <h3>📊 Frequentist Probability</h3>
+                    <div class="math-display">
+                        \[ P(E) = \lim_{n \to \infty} \frac{f_n(E)}{n} \]
+                    </div>
+                    <p><strong>Based on:</strong> Long-run relative frequency</p>
+                    <p><strong>Example:</strong> After infinite coin tosses, proportion of heads → \(0.5\)</p>
+                    <p><strong>Limitation:</strong> Requires repeatable experiments; cannot handle unique events</p>
+                </div>
+                <div class="comparison-card card-bayesian">
+                    <h3>🧠 Subjective (Bayesian) Probability</h3>
+                    <div class="math-display">
+                        \[ P(E) = \text{Degree of belief in } E \]
+                    </div>
+                    <p><strong>Based on:</strong> Personal knowledge and judgment</p>
+                    <p><strong>Example:</strong> "I believe there's a 70% chance my favorite team wins"</p>
+                    <p><strong>Strength:</strong> Applicable to any event, including one-of-a-kind situations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Philosophical Foundations -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📚</span>
+                <h2>3. Philosophical Foundations</h2>
+            </div>
+            
+            <div class="definition">
+                According to the subjective interpretation, "probability" does not describe a property of events themselves. Rather, it reflects a person's beliefs about them. The basic idea is to use the machinery of probability theory as a tool to model beliefs, and to clarify and sharpen them in the process [citation:5].
+            </div>
+            
+            <div class="law-box">
+                <h3>Key Features of Subjective Probability</h3>
+                <ul class="property-list">
+                    <li><strong>Personal:</strong> Probability assignments vary between individuals based on their unique knowledge and experience</li>
+                    <li><strong>Coherent:</strong> Rational assignments must satisfy Kolmogorov's axioms to avoid logical inconsistency</li>
+                    <li><strong>Dynamic:</strong> Probabilities can be updated as new information becomes available using Bayes' rule</li>
+                    <li><strong>Contextual:</strong> The same event may have different probability assignments in different informational contexts</li>
+                </ul>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>The Coherence (Dutch Book) Argument:</strong> If a person's subjective probabilities violate the probability axioms, a clever opponent can construct a series of bets (a "Dutch book") that guarantees the person will lose money regardless of the outcome. Therefore, rational agents must assign probabilities that satisfy the axioms [citation:9].</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Subjectivity vs. Objectivity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>4. Subjectivity vs. Objectivity</h2>
+            </div>
+            
+            <p>The term "subjective" does not imply that probability assignments are arbitrary or capricious. Rather, subjectivity arises from differences in available knowledge and information [citation:4].</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-frequentist">
+                    <h3>More Objective Assignments</h3>
+                    <p>Based on reliable, generally agreed-upon information and established scientific evidence.</p>
+                    <p><strong>Example:</strong> DNA profile probabilities — well-established scientific evidence leads to expert consensus.</p>
+                </div>
+                <div class="comparison-card card-bayesian">
+                    <h3>More Subjective Assignments</h3>
+                    <p>Based on limited published research, personal case experience, or expert judgment.</p>
+                    <p><strong>Example:</strong> Probability of DNA transfer in a specific scenario — active research area with limited consensus [citation:4].</p>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Convergence of Subjective Probabilities:</strong><br>
+                For repeatable events, different individuals' subjective probabilities can converge as more objective information becomes available. For example, with enough coin tosses, initially differing personal beliefs about the coin's fairness will converge to the same empirical probability. In one-of-a-kind events (e.g., criminal cases), opportunities for repetition are limited, but probabilities can still be informed by available empirical data and expert knowledge that is fully disclosed [citation:4].
+            </div>
+        </div>
+
+        <!-- Section 5: Bayes' Rule — Updating Subjective Probabilities -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>5. Bayes' Rule — The Engine of Bayesian Updating</h2>
+            </div>
+            
+            <div class="definition">
+                A defining feature of subjective (Bayesian) probability is the use of <strong>Bayes' rule</strong> to update beliefs in light of new evidence. This provides a mathematically coherent method for learning from data [citation:3][citation:7].
+            </div>
+            
+            <div class="bayes-box">
+                <h3 style="color: #92400e;">📌 Bayes' Rule (Probability Form)</h3>
+                <div class="math-display">
+                    \[ P(A \mid E) = \frac{P(E \mid A) \times P(A)}{P(E)} \]
+                </div>
+                <div class="math-display">
+                    \[ P(E) = P(E \mid A)P(A) + P(E \mid A^c)P(A^c) \]
+                </div>
+                <div class="usage">
+                    <strong>Where:</strong>
+                    <ul>
+                        <li>\(P(A)\) is the <strong>prior probability</strong> (degree of belief before observing evidence)</li>
+                        <li>\(P(E \mid A)\) is the <strong>likelihood</strong> (probability of observing evidence given \(A\))</li>
+                        <li>\(P(A \mid E)\) is the <strong>posterior probability</strong> (updated belief after observing evidence)</li>
+                        <li>\(P(E)\) is the <strong>marginal likelihood</strong> (total probability of the evidence)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bayes-box">
+                <h3 style="color: #92400e;">📌 Bayes' Rule (Odds Form)</h3>
+                <div class="math-display">
+                    \[ \frac{P(A \mid E)}{P(B \mid E)} = \frac{P(E \mid A)}{P(E \mid B)} \times \frac{P(A)}{P(B)} \]
+                </div>
+                <div class="usage">
+                    <strong>Interpretation:</strong> Posterior odds = Likelihood ratio × Prior odds [citation:7]
+                </div>
+            </div>
+            
+            <div class="bayes-box">
+                <h3 style="color: #92400e;">📌 Bayes' Rule for Parameter Estimation</h3>
+                <div class="math-display">
+                    \[ P(\theta \mid D) \propto P(\theta) \times P(D \mid \theta) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{Posterior} \propto \text{Prior} \times \text{Likelihood} \]
+                </div>
+                <div class="usage">
+                    Where \(\theta\) represents the unknown parameter of interest and \(D\) represents the observed data [citation:3].
+                </div>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Key Insight:</strong> Bayes' rule provides the uniquely coherent method for updating subjective probabilities. It does not remove subjectivity from the initial probability assignment, but it does remove subjectivity from how that probability should be updated in light of new information. The rule is derived from the laws of probability and ensures consistency in belief revision [citation:7].</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Example of Bayesian Updating -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Example — Bayesian Updating</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Medical Test</strong><br><br>
+                A patient undergoes a test for a rare disease D. The disease affects 1 in 1000 people in the population (\(P(D) = 0.001\)). The test has 99% sensitivity (true positive rate) and 95% specificity (true negative rate).<br><br>
+                If the test comes back positive, what is the updated probability that the patient has the disease?<br><br>
+                <strong>Step 1 — Identify quantities:</strong><br>
+                \(P(D) = 0.001\) (prior probability of disease)<br>
+                \(P(+ \mid D) = 0.99\) (likelihood of positive test given disease)<br>
+                \(P(+ \mid D^c) = 0.05\) (false positive rate)<br><br>
+                <strong>Step 2 — Apply Bayes' rule:</strong>
+                <div class="math-display">
+                    \[ P(D \mid +) = \frac{P(+ \mid D) \times P(D)}{P(+ \mid D)P(D) + P(+ \mid D^c)P(D^c)} \]
+                </div>
+                <div class="math-display">
+                    \[ P(D \mid +) = \frac{0.99 \times 0.001}{0.99 \times 0.001 + 0.05 \times 0.999} \]
+                </div>
+                <div class="math-display">
+                    \[ P(D \mid +) = \frac{0.00099}{0.00099 + 0.04995} = \frac{0.00099}{0.05094} \approx 0.0194 \]
+                </div>
+                <strong>Result:</strong> Even with a positive test, the probability of having the disease is only about 1.94% — dramatically higher than the prior probability of 0.1%, but still low due to the rarity of the disease and the false positive rate.
+            </div>
+        </div>
+
+        <!-- Section 7: Subjective Probability in Practice -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">💼</span>
+                <h2>7. Practical Applications</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-bayesian">
+                    <h3>📈 Bayesian Statistics</h3>
+                    <p>Modern statistical inference that explicitly incorporates prior information into analysis. Used in:</p>
+                    <ul>
+                        <li>Clinical trials and medical research</li>
+                        <li>Machine learning and artificial intelligence</li>
+                        <li>Genetics and bioinformatics</li>
+                        <li>Econometrics and finance</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-frequentist">
+                    <h3>⚖️ Legal Reasoning</h3>
+                    <p>Subjective probabilities are used to evaluate evidence in forensic science. Bayesian reasoning helps avoid logical fallacies such as the "prosecutor's fallacy" — incorrectly equating \(P(E \mid D)\) with \(P(D \mid E)\) [citation:7].</p>
+                </div>
+                <div class="comparison-card card-bayesian">
+                    <h3>🏟️ Sports Prediction</h3>
+                    <p>Subjective probabilities incorporate expert knowledge about player conditions, team strengths, and historical performance [citation:8].</p>
+                </div>
+                <div class="comparison-card card-frequentist">
+                    <h3>🌤️ Weather Forecasting</h3>
+                    <p>"40% chance of rain" is fundamentally a subjective probability — it reflects the forecaster's degree of belief based on model outputs and experience, not a long-run frequency of identical weather patterns.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: The Prior Distribution in Bayesian Analysis -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>8. Prior Distributions — Quantifying Initial Beliefs</h2>
+            </div>
+            
+            <div class="definition">
+                In Bayesian analysis, the <strong>prior distribution</strong> \(P(\theta)\) represents the state of knowledge about an unknown parameter \(\theta\) before observing any data. It is the mathematical expression of subjective belief.
+            </div>
+            
+            <div class="principle-box">
+                <h3>Types of Prior Distributions</h3>
+                <ul>
+                    <li><strong>Informative prior:</strong> Incorporates substantial prior knowledge (e.g., from previous studies or expert opinion)</li>
+                    <li><strong>Vague (diffuse) prior:</strong> Expresses minimal prior information, allowing the data to dominate the posterior</li>
+                    <li><strong>Conjugate prior:</strong> A mathematically convenient prior that yields a posterior of the same distribution family [citation:3]</li>
+                    <li><strong>Improper prior:</strong> A prior that does not integrate to 1, used when no finite prior is available</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example — Conjugate Prior for Binomial Data:</strong><br><br>
+                If data follow a Binomial distribution with unknown success probability \(p\), and the prior for \(p\) is a Beta distribution with parameters \(\alpha\) and \(\beta\):
+                <div class="math-display">
+                    \[ P(p) = \text{Beta}(\alpha, \beta) = \frac{p^{\alpha-1}(1-p)^{\beta-1}}{B(\alpha, \beta)} \]
+                </div>
+                After observing \(x\) successes in \(n\) trials, the posterior distribution is:
+                <div class="math-display">
+                    \[ P(p \mid x) = \text{Beta}(\alpha + x, \beta + n - x) \]
+                </div>
+                The posterior mean, combining prior and data, is:
+                <div class="math-display">
+                    \[ E[p \mid x] = \frac{\alpha + x}{\alpha + \beta + n} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Subjective Probability vs. Bayesian Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔍</span>
+                <h2>9. "Subjective" vs. "Bayesian" — Terminology</h2>
+            </div>
+            
+            <p>The terms "subjective probability" and "Bayesian probability" are often used interchangeably, but there is a subtle distinction:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-bayesian">
+                    <h3>🧠 Subjective Probability</h3>
+                    <p>Focuses on the <strong>interpretation</strong> of probability as a degree of belief. It answers the question: "What does a probability mean?" The answer: It measures an individual's uncertainty.</p>
+                </div>
+                <div class="comparison-card card-frequentist">
+                    <h3>📊 Bayesian Probability</h3>
+                    <p>Focuses on the <strong>methodology</strong> of using Bayes' rule to update probabilities. It answers the question: "How should beliefs change with evidence?" The answer: Using Bayes' theorem.</p>
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <p><strong>Relation:</strong> Bayesian methods (updating via Bayes' rule) are built upon the subjective interpretation of probability. However, one can use Bayesian updating without necessarily subscribing to a fully subjective interpretation — the rules of probability are mathematically derived, but the interpretation of prior and posterior distributions is naturally subjective because they represent states of knowledge [citation:1][citation:7].</p>
+            </div>
+        </div>
+
+        <!-- Section 10: Famous Example — The Linda Problem -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Understanding Subjective Probability — The Linda Problem</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Linda the Bank Teller — Tversky and Kahneman (1974):</strong><br><br>
+                Participants were given this description:<br><br>
+                "Linda is 31 years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and she participated in antinuclear demonstrations."<br><br>
+                Participants then ranked the probability of several statements, including:
+                <ul>
+                    <li><strong>Statement A:</strong> Linda is a bank teller</li>
+                    <li><strong>Statement B:</strong> Linda is a bank teller and is active in the feminist movement</li>
+                </ul>
+                Most participants judged \(P(B) > P(A)\), which violates the conjunction rule of probability: \(P(A \cap B) \leq P(A)\). This demonstrates that intuitive probability judgments can violate the laws of probability, highlighting the need for formal, coherent probability assignments [citation:5].
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Lesson:</strong> While subjective probabilities are personal, they must be <strong>coherent</strong> — they must satisfy the laws of probability to avoid logical contradictions. The Linda problem shows that unaided human judgment often violates these laws, which is why formal quantitative approaches are valuable.</p>
+            </div>
+        </div>
+
+        <!-- Section 11: Advantages and Limitations -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>11. Advantages and Limitations</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-bayesian">
+                    <h3>✅ Advantages</h3>
+                    <ul>
+                        <li>Applicable to any event, including unique one-of-a-kind situations</li>
+                        <li>Explicitly incorporates prior knowledge and expert judgment</li>
+                        <li>Provides a coherent framework for learning from data via Bayes' rule</li>
+                        <li>Naturally handles sequential updating as new information arrives</li>
+                        <li>Allows quantification of uncertainty in scientific and practical contexts</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-frequentist">
+                    <h3>⚠️ Limitations</h3>
+                    <ul>
+                        <li>Different individuals may assign different probabilities to the same event</li>
+                        <li>Cannot be empirically verified (no "true" subjective probability exists)</li>
+                        <li>Choice of prior can be controversial and influence results</li>
+                        <li>Requires elicitation methods to quantify expert beliefs reliably</li>
+                        <li>Human probability judgments are often biased (as seen in the Linda problem)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>12. Practice Problems</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 1:</strong> A subjective probability must satisfy which mathematical properties? Why?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Subjective probabilities must satisfy Kolmogorov's three axioms: non-negativity (\(P(E) \geq 0\)), unit measure (\(P(\Omega) = 1\)), and countable additivity (for mutually exclusive events, the probability of the union equals the sum of individual probabilities). These are required for coherence — to avoid Dutch book arguments and ensure logical consistency in belief representation.</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 2:</strong> A doctor believes a patient has a 30% chance of having a certain disease. A test with 95% sensitivity and 90% specificity comes back positive. What is the doctor's updated subjective probability (posterior) that the patient has the disease? (Assume the prior is the doctor's initial belief).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Using Bayes' rule: \(P(D|+) = \frac{0.95 \times 0.30}{0.95 \times 0.30 + 0.10 \times 0.70} = \frac{0.285}{0.285 + 0.07} = \frac{0.285}{0.355} \approx 0.803\). The posterior probability that the patient has the disease is approximately 80.3%.</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 3:</strong> What is the "conjunction fallacy" illustrated by the Linda problem? Why is it a fallacy?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">The conjunction fallacy occurs when people judge \(P(A \cap B) > P(A)\) for the same \(A\). This violates the probability law that the probability of a conjunction cannot exceed the probability of either conjunct individually, since \(A \cap B \subseteq A\). In the Linda problem, participants judged it more probable that Linda is a bank teller AND a feminist than that she is simply a bank teller — a logical impossibility in probability theory.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Subjective (Bayesian) Probability:</strong> Probability as a personal degree of belief, not an objective property of events</li>
+                <li><strong>Coherence Requirement:</strong> Subjective assignments must satisfy probability axioms to be logically consistent</li>
+                <li><strong>Bayes' Rule:</strong> The fundamental tool for updating subjective beliefs in light of new evidence: \(P(A \mid E) = \frac{P(E \mid A)P(A)}{P(E)}\)</li>
+                <li><strong>Prior and Posterior:</strong> Prior distribution represents initial belief; posterior combines prior with data via Bayes' rule</li>
+                <li><strong>Applicability:</strong> Unlike classical or frequentist probability, subjective probability applies to any event, including unique, one-of-a-kind situations</li>
+                <li><strong>Convergence:</strong> Different individuals' subjective probabilities can converge as more objective information becomes available</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="axiomatic_probability.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Axiomatic Probability</a>
+            <a href="addition_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Addition Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Subjective (Bayesian) Probability — the personal interpretation of probability as degree of belief, updated coherently via Bayes' rule.
+    </footer>
+</div>
+</body>
+</html>
