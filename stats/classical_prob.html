@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Classical Probability | A Priori Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .principle-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .formula-card h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-top: 3px solid;
+        }
+        .card-axiom { border-top-color: #3b82f6; }
+        .card-natural { border-top-color: #10b981; }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Classical Probability</span>
+        </div>
+        <h1>🎭 Mathematical (Classical) Probability</h1>
+        <p>The a priori approach — probability based on equally likely outcomes</p>
+        <span class="badge">Probability Theory · Unit I · Classical Definition</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Historical Origins</h2>
+            </div>
+            <div class="definition">
+                The <strong>classical definition of probability</strong> (also called <strong>mathematical probability</strong>, <strong>a priori probability</strong>, or <strong>theoretical probability</strong>) emerged from the analysis of games of chance in the 17th century. It was developed by mathematicians such as Pascal, Fermat, and Jacob Bernoulli.
+            </div>
+            <p>The term <strong>"a priori"</strong> (Latin for "from what comes before") reflects that this probability is derived from deductive reasoning about the nature of the experiment itself, rather than from observed data or experimental trials.</p>
+            <div class="principle-box">
+                <p><strong>Core Principle:</strong> When all possible outcomes of an experiment are equally likely, the probability of an event is the ratio of favorable outcomes to total outcomes.</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Formal Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Formal Definition</h2>
+            </div>
+            
+            <div class="formula-card">
+                <h4>📌 Classical Probability Formula</h4>
+                <div class="math-display">
+                    \[ P(E) = \frac{\text{Number of outcomes favorable to } E}{\text{Total number of outcomes in sample space}} = \frac{|E|}{|S|} = \frac{m}{n} \]
+                </div>
+                <div class="usage">
+                    Where:
+                    <ul>
+                        <li>\( S \) is the sample space (set of all possible outcomes)</li>
+                        <li>\( E \) is the event of interest (subset of \( S \))</li>
+                        <li>\( |E| \) denotes the cardinality (number of elements) of \( E \)</li>
+                        <li>\( |S| = n \) is the total number of equally likely outcomes</li>
+                        <li>\( m = |E| \) is the number of favorable outcomes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="definition">
+                <strong>Definition:</strong> For a random experiment with a finite sample space \( S = \{\omega_1, \omega_2, \ldots, \omega_n\} \), if the outcomes are equally likely, then:
+                \[ P(\{\omega_i\}) = \frac{1}{n} \quad \text{for each } i = 1, 2, \ldots, n \]
+                And for any event \( A \subseteq S \):
+                \[ P(A) = \frac{|A|}{n} \]
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Key Insight:</strong> The classical definition transforms probability problems into counting problems. To find a probability, we simply count favorable outcomes and total outcomes — no experiments needed!
+            </div>
+        </div>
+
+        <!-- Section 3: Essential Assumptions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚙️</span>
+                <h2>3. Essential Assumptions</h2>
+            </div>
+            
+            <div class="law-box">
+                <p>The classical definition rests on three essential conditions:</p>
+                <ul class="property-list">
+                    <li><strong>Mutually Exclusive Outcomes:</strong> The outcomes cannot occur simultaneously; exactly one outcome occurs on each trial.</li>
+                    <li><strong>Exhaustive Outcomes:</strong> The sample space includes all possible outcomes of the experiment.</li>
+                    <li><strong>Equally Likely Outcomes:</strong> Each outcome has the same chance of occurring due to symmetry or fairness.</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>✅ When Classical Probability Applies</h3>
+                    <ul>
+                        <li>Fair coins, dice, cards, roulette wheels</li>
+                        <li>Random selection from a well-mixed population</li>
+                        <li>Symmetrical physical processes</li>
+                        <li>Gambling devices and lotteries</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-natural">
+                    <h3>⚠️ When It Does NOT Apply</h3>
+                    <ul>
+                        <li>Biased or unfair devices</li>
+                        <li>Real-world events without symmetry</li>
+                        <li>Infinite or continuous sample spaces</li>
+                        <li>One-time events with no repeatable structure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: The Equally Likely Condition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>4. The Principle of Equally Likely Outcomes</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Principle of Indifference (also called Principle of Insufficient Reason):</strong></p>
+                <p>If there are \( n \) mutually exclusive and exhaustive possibilities, and we have no reason to believe any one is more likely than another, we assign probability \( \frac{1}{n} \) to each.</p>
+            </div>
+            
+            <div class="math-display">
+                \[ P(\omega_1) = P(\omega_2) = \cdots = P(\omega_n) = \frac{1}{n} \]
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> When rolling a fair die, there is no reason to think any face is more likely than another. Therefore, by the principle of indifference, each face has probability \( \frac{1}{6} \).
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Caution - Bertrand's Paradox:</strong> The principle of indifference can lead to contradictions when applied carelessly to problems with infinite possibilities or different parameterizations. For example, Bertrand's chord paradox shows that different "natural" ways of describing the same problem can yield different probability values, highlighting the need for careful problem formulation.
+            </div>
+        </div>
+
+        <!-- Section 5: Sample Points, Favorable Cases, and Total Cases -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>5. Sample Points, Favorable Cases, and Total Cases</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Terminology:</strong></p>
+                <ul>
+                    <li><strong>Total number of cases (n):</strong> The total number of equally likely sample points in the sample space.</li>
+                    <li><strong>Favorable number of cases (m):</strong> The number of sample points that belong to the event of interest.</li>
+                    <li><strong>Sample point:</strong> An individual outcome of the experiment.</li>
+                </ul>
+            </div>
+            
+            <div class="formula-card">
+                <h4>📌 Classical Probability in Case-Favorability Form</h4>
+                <div class="math-display">
+                    \[ P(E) = \frac{m}{n} = \frac{\text{favorable cases}}{\text{total cases}} \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> Drawing a card from a standard 52-card deck. Find the probability of drawing a heart.<br><br>
+                <strong>Total cases (n):</strong> \( 52 \) (all cards equally likely to be drawn)<br>
+                <strong>Favorable cases (m):</strong> \( 13 \) (hearts: Ace through King of Hearts)<br>
+                <strong>Probability:</strong> \( P(\text{Heart}) = \frac{13}{52} = \frac{1}{4} = 0.25 \)
+            </div>
+        </div>
+
+        <!-- Section 6: Properties of Classical Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>6. Properties of Classical Probability</h2>
+            </div>
+            
+            <div class="law-box">
+                <h3>Fundamental Properties</h3>
+                <div class="math-display">
+                    \[ 0 \leq P(E) \leq 1 \]
+                    \[ P(S) = 1 \quad \text{(certain event)} \]
+                    \[ P(\emptyset) = 0 \quad \text{(impossible event)} \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Complement Rule</h3>
+                <div class="math-display">
+                    \[ P(E^c) = 1 - P(E) \]
+                </div>
+                <p>The probability that an event does NOT occur is 1 minus the probability that it does occur.</p>
+            </div>
+            
+            <div class="law-box">
+                <h3>Addition Rule for Mutually Exclusive Events</h3>
+                <div class="math-display">
+                    \[ \text{If } A \cap B = \emptyset \text{, then } P(A \cup B) = P(A) + P(B) \]
+                </div>
+                <p>For mutually exclusive events, the probability of their union equals the sum of their probabilities.</p>
+            </div>
+            
+            <div class="law-box">
+                <h3>General Addition Rule</h3>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Rolling Two Dice</strong><br>
+                Two fair dice are rolled. Find the probability that the sum of the numbers is 8.<br><br>
+                <strong>Solution:</strong><br>
+                Total number of possible outcomes: \( n = 6 \times 6 = 36 \)<br>
+                All outcomes are equally likely.<br>
+                Outcomes where sum = 8: (2,6), (3,5), (4,4), (5,3), (6,2) → \( m = 5 \)<br>
+                \( P(\text{sum} = 8) = \frac{5}{36} \approx 0.1389 \)
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Drawing Cards</strong><br>
+                One card is drawn from a standard 52-card deck. Find:<br>
+                (a) \( P(\text{Ace}) \) (b) \( P(\text{Red}) \) (c) \( P(\text{Face card}) \) (d) \( P(\text{Heart or King}) \)<br><br>
+                <strong>Solution:</strong><br>
+                Total cases: \( n = 52 \)<br>
+                (a) Aces: 4 cards → \( m = 4 \), \( P = \frac{4}{52} = \frac{1}{13} \)<br>
+                (b) Red cards: 26 cards → \( m = 26 \), \( P = \frac{26}{52} = \frac{1}{2} \)<br>
+                (c) Face cards (J, Q, K): 12 cards → \( m = 12 \), \( P = \frac{12}{52} = \frac{3}{13} \)<br>
+                (d) \( P(\text{Heart or King}) = \frac{13}{52} + \frac{4}{52} - \frac{1}{52} = \frac{16}{52} = \frac{4}{13} \) (since King of Hearts counted twice)
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: Tossing Three Coins</strong><br>
+                Three fair coins are tossed simultaneously. Find the probability of getting exactly two heads.<br><br>
+                <strong>Solution:</strong><br>
+                Sample space: \( S = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\} \), \( n = 8 \)<br>
+                Favorable outcomes (exactly 2 heads): \( \{HHT, HTH, THH\} \), \( m = 3 \)<br>
+                \( P(\text{exactly 2 heads}) = \frac{3}{8} = 0.375 \)
+            </div>
+        </div>
+
+        <!-- Section 8: Counting Techniques -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧮</span>
+                <h2>8. Counting Techniques in Classical Probability</h2>
+            </div>
+            
+            <p>Since classical probability reduces to counting, combinatorial methods are essential. The most important counting principles are:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>Fundamental Counting Principle</h3>
+                    <p>If one event can occur in \( m \) ways and a second event can occur in \( n \) ways, the number of ways both can occur in sequence is \( m \times n \).</p>
+                    <div class="math-display">\[ \text{Total outcomes} = m \times n \]</div>
+                </div>
+                <div class="comparison-card card-natural">
+                    <h3>Permutations (\( P(n, r) \))</h3>
+                    <p>Number of ordered arrangements of \( r \) objects chosen from \( n \) distinct objects.</p>
+                    <div class="math-display">\[ P(n, r) = \frac{n!}{(n-r)!} \]</div>
+                </div>
+                <div class="comparison-card card-axiom">
+                    <h3>Combinations (\( C(n, r) \))</h3>
+                    <p>Number of unordered selections of \( r \) objects chosen from \( n \) distinct objects.</p>
+                    <div class="math-display">\[ C(n, r) = \binom{n}{r} = \frac{n!}{r!(n-r)!} \]</div>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Committee Selection</strong><br>
+                A committee of 3 people is to be selected from 10 candidates. What is the probability that a particular person (say, person A) is selected?<br><br>
+                <strong>Solution:</strong><br>
+                Total number of ways to choose any 3 from 10: \( \binom{10}{3} = 120 \)<br>
+                Number of ways choosing A plus any 2 from remaining 9: \( \binom{9}{2} = 36 \)<br>
+                \( P(\text{A is selected}) = \frac{36}{120} = \frac{3}{10} = 0.3 \)
+            </div>
+        </div>
+
+        <!-- Section 9: Classical vs. Other Approaches -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>9. Classical vs. Other Probability Interpretations</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>Classical (A Priori)</h3>
+                    <ul>
+                        <li>Based on deductive reasoning</li>
+                        <li>Assumes equally likely outcomes</li>
+                        <li>No experimentation required</li>
+                        <li>Example: \( P(\text{heads}) = 0.5 \) for fair coin</li>
+                        <li>Limited to symmetric situations</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-natural">
+                    <h3>Empirical (A Posteriori)</h3>
+                    <ul>
+                        <li>Based on observed data</li>
+                        <li>Relative frequency interpretation</li>
+                        <li>Requires repeated experimentation</li>
+                        <li>Example: \( P(\text{heads}) = \frac{\text{heads observed}}{n} \)</li>
+                        <li>Applicable to any repeatable experiment</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-axiom">
+                    <h3>Subjective (Bayesian)</h3>
+                    <ul>
+                        <li>Based on personal belief</li>
+                        <li>Incorporates prior knowledge</li>
+                        <li>Updated with evidence</li>
+                        <li>Example: "I believe there's a 70% chance"</li>
+                        <li>Applicable to one-of-a-kind events</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Key Distinction:</strong> Classical probability is <strong>a priori</strong> (from theory), while empirical probability is <strong>a posteriori</strong> (from experience). The classical approach defines probability before any experiment; the empirical approach estimates probability from experimental results.
+            </div>
+        </div>
+
+        <!-- Section 10: Limitations and Criticisms -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>10. Limitations of Classical Probability</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Criticisms and Limitations:</strong></p>
+                <ul class="property-list">
+                    <li><strong>Equally Likely Assumption:</strong> Many real-world experiments do not have equally likely outcomes.</li>
+                    <li><strong>Circular Reasoning:</strong> The definition of "equally likely" itself involves probability concepts.</li>
+                    <li><strong>Infinite Sample Spaces:</strong> Cannot handle experiments with infinitely many outcomes without modification.</li>
+                    <li><strong>Bertrand's Paradox:</strong> Shows that the principle of indifference can produce contradictions.</li>
+                    <li><strong>Limited Applicability:</strong> Cannot handle biased devices or one-time events.</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Bertrand's Paradox Illustration:</strong><br>
+                Problem: "What is the probability that a random chord of a circle is longer than the side of the inscribed equilateral triangle?"<br><br>
+                Different "natural" methods of generating random chords yield different probability values: \( \frac{1}{2} \), \( \frac{1}{3} \), or \( \frac{1}{4} \). This demonstrates the limitation of the principle of indifference when the sample space is not clearly defined.
+            </div>
+        </div>
+
+        <!-- Section 11: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>11. Practice Problems</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 1:</strong> A bag contains 4 red balls, 3 blue balls, and 5 green balls. If one ball is drawn at random, what is the probability that it is blue?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Total balls = 4 + 3 + 5 = 12. Blue balls = 3. \( P(\text{blue}) = \frac{3}{12} = \frac{1}{4} = 0.25 \)</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 2:</strong> Two fair dice are rolled. What is the probability that the sum is greater than 9?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Total outcomes = 36. Favorable outcomes: sum=10 → {(4,6),(5,5),(6,4)} (3 outcomes); sum=11 → {(5,6),(6,5)} (2 outcomes); sum=12 → {(6,6)} (1 outcome). Total = 6. \( P = \frac{6}{36} = \frac{1}{6} \)</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 3:</strong> What is the probability that a randomly selected 3-digit number is even? (Note: 3-digit numbers range from 100 to 999)</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Total 3-digit numbers = 900 (from 100 to 999). Half of all numbers are even, so \( P = \frac{450}{900} = 0.5 \)</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Classical (Mathematical/A Priori) Probability:</strong> \( P(E) = \frac{|E|}{|S|} = \frac{m}{n} \), based on equally likely outcomes</li>
+                <li><strong>Core Conditions:</strong> Outcomes must be mutually exclusive, exhaustive, and equally likely</li>
+                <li><strong>Principle of Indifference:</strong> No reason to favor one outcome → equal probability</li>
+                <li><strong>Transforms probability</strong> into counting problems (permutations, combinations)</li>
+                <li><strong>Limitations:</strong> Not applicable to biased devices, infinite spaces, or asymmetric situations</li>
+                <li><strong>Historical Significance:</strong> First formal definition of probability; foundation of combinatorial probability</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="assigning_probabilities.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Assigning Probabilities</a>
+            <a href="relative_frequency_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Empirical Probability →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Classical Probability — the original mathematical theory of chance based on equally likely outcomes and combinatorial analysis.
+    </footer>
+</div>
+</body>
+</html>
