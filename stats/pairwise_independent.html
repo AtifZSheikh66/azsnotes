@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pairwise Independent Events | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.85rem 1rem;
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Pairwise Independent Events</span>
+        </div>
+        <h1>🔗 Pairwise Independent Events</h1>
+        <p>Understanding the hierarchy of independence: pairwise vs mutual independence</p>
+        <span class="badge">Probability Theory · Unit II · Independence Concepts</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                When dealing with more than two events, independence can be defined at different levels. The most common are <strong>pairwise independence</strong> and <strong>mutual independence</strong>. This page explains both concepts, their relationship, and provides classical examples showing that pairwise independence does NOT imply mutual independence.
+            </div>
+        </div>
+
+        <!-- Section 2: Definition of Pairwise Independence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Pairwise Independence</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition (Pairwise Independence)</h3>
+                <p>A collection of events \(A_1, A_2, \ldots, A_n\) is said to be <strong>pairwise independent</strong> if for every pair \(i \neq j\),</p>
+                <div class="math-display">
+                    \[ P(A_i \cap A_j) = P(A_i) \cdot P(A_j) \]
+                </div>
+                <p>Pairwise independence means that any two events in the collection do not influence each other's probabilities. However, it does NOT consider relationships involving three or more events simultaneously.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Equivalent Condition for Pairwise Independence:</h4>
+                <p>If \(P(A_i) > 0\) and \(P(A_j) > 0\), pairwise independence is equivalent to:</p>
+                <div class="math-display">
+                    \[ P(A_i \mid A_j) = P(A_i) \quad \text{and} \quad P(A_j \mid A_i) = P(A_j) \]
+                </div>
+                <p>This follows directly from the definition of conditional probability.</p>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> Pairwise independence requires checking \(\binom{n}{2}\) conditions.<br><br>
+                <strong>📌 Corollary 2.2:</strong> If events are pairwise independent, then for any distinct \(i, j\):
+                <div class="math-display">\[ P(A_i^c \cap A_j) = P(A_i^c)P(A_j) \]</div>
+                <div class="math-display">\[ P(A_i \cap A_j^c) = P(A_i)P(A_j^c) \]</div>
+                <div class="math-display">\[ P(A_i^c \cap A_j^c) = P(A_i^c)P(A_j^c) \]</div>
+                This follows because complements of independent events are also independent.
+            </div>
+        </div>
+
+        <!-- Section 3: Definition of Mutual Independence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>3. Mutual Independence (Complete Independence)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition (Mutual Independence)</h3>
+                <p>A collection of events \(A_1, A_2, \ldots, A_n\) is said to be <strong>mutually independent</strong> (or simply independent) if for every subset \( \{i_1, i_2, \ldots, i_k\} \subseteq \{1, 2, \ldots, n\} \) with \(k \geq 2\),</p>
+                <div class="math-display">
+                    \[ P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \prod_{j=1}^{k} P(A_{i_j}) \]
+                </div>
+                <p>Mutual independence is a stronger condition than pairwise independence. It requires that the probability of the intersection of any subcollection equals the product of the individual probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Total Number of Conditions for Mutual Independence:</h4>
+                <p>For \(n\) events, mutual independence requires checking all non-empty subsets of size at least 2:</p>
+                <div class="math-display">
+                    \[ \text{Number of conditions} = 2^n - n - 1 \]
+                </div>
+                <p>For \(n = 3\): \(2^3 - 3 - 1 = 8 - 4 = 4\) conditions (three pairwise + one triple).</p>
+                <p>For \(n = 4\): \(2^4 - 4 - 1 = 16 - 5 = 11\) conditions.</p>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1:</strong> Mutual independence implies pairwise independence, but the converse is NOT true.<br><br>
+                <strong>📌 Corollary 3.2:</strong> If events are mutually independent, then any subcollection of the events is also mutually independent.<br><br>
+                <strong>📌 Corollary 3.3:</strong> For mutually independent events, complements are also mutually independent.
+            </div>
+        </div>
+
+        <!-- Section 4: Classical Example – Pairwise but NOT Mutual Independence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎲</span>
+                <h2>4. Classical Example: Pairwise Independent but NOT Mutually Independent</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Example (Tossing Two Fair Coins)</h3>
+                <p>Consider tossing two fair coins. Define the following events:</p>
+                <ul>
+                    <li>\(A\) = "First coin shows Heads"</li>
+                    <li>\(B\) = "Second coin shows Heads"</li>
+                    <li>\(C\) = "Both coins show the same face"</li>
+                </ul>
+                <p>We will show that \(A, B, C\) are pairwise independent but NOT mutually independent.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Verification of Pairwise Independence:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Compute individual probabilities:</strong>
+                    <div class="math-display">
+                        \[ P(A) = \frac{1}{2}, \quad P(B) = \frac{1}{2}, \quad P(C) = \frac{1}{2} \]
+                    </div>
+                    <p>Explanation: \(C\) occurs when both are Heads or both are Tails: \(\frac{2}{4} = \frac{1}{2}\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Compute pairwise intersections:</strong>
+                    <div class="math-display">
+                        \[ A \cap B = \{HH\} \implies P(A \cap B) = \frac{1}{4} \]
+                    </div>
+                    <div class="math-display">
+                        \[ A \cap C = \{HH\} \implies P(A \cap C) = \frac{1}{4} \]
+                    </div>
+                    <div class="math-display">
+                        \[ B \cap C = \{HH\} \implies P(B \cap C) = \frac{1}{4} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Check pairwise independence conditions:</strong>
+                    <div class="math-display">
+                        \[ P(A)P(B) = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4} = P(A \cap B) \quad \checkmark \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(A)P(C) = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4} = P(A \cap C) \quad \checkmark \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(B)P(C) = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4} = P(B \cap C) \quad \checkmark \]
+                    </div>
+                    <p>Thus, \(A, B, C\) are pairwise independent.</p>
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Verification that they are NOT Mutually Independent:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Compute triple intersection:</strong>
+                    <div class="math-display">
+                        \[ A \cap B \cap C = \{HH\} \implies P(A \cap B \cap C) = \frac{1}{4} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Compute product of individual probabilities:</strong>
+                    <div class="math-display">
+                        \[ P(A) \cdot P(B) \cdot P(C) = \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{8} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Compare:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B \cap C) = \frac{1}{4} \neq \frac{1}{8} = P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <p>Since the condition \(P(A \cap B \cap C) = P(A)P(B)P(C)\) fails, \(A, B, C\) are <strong>not</strong> mutually independent.</p>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1:</strong> Pairwise independence does NOT imply mutual independence. The coin-toss example is a classic counterexample.<br><br>
+                <strong>📌 Corollary 4.2:</strong> For mutual independence to hold, we need to check ALL subset intersections, not just pairwise ones.<br><br>
+                <strong>📌 Corollary 4.3:</strong> The difference arises because pairwise independence only guarantees that information about one event doesn't affect the probability of another individual event, but it may still affect the probability of their combination.
+            </div>
+        </div>
+
+        <!-- Section 5: Relationship Between Pairwise and Mutual Independence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>5. Relationship Between Pairwise and Mutual Independence</h2>
+            </div>
+            
+            <div class="definition">
+                <p>The relationship can be summarized as:</p>
+                <div class="math-display">
+                    \[ \text{Mutual Independence} \implies \text{Pairwise Independence} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{Pairwise Independence} \;\not\!\!\!\implies\; \text{Mutual Independence} \]
+                </div>
+                <p>Mutual independence is a strictly stronger condition. The counterexample above proves that the converse is false.</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Theorem: When Does Pairwise Independence Imply Mutual Independence?</h3>
+                <p>Pairwise independence does NOT generally imply mutual independence. However, there are special cases where it does:</p>
+                <ul>
+                    <li>When \(n = 2\): Pairwise independence is the same as mutual independence (since there are no higher-order intersections).</li>
+                    <li>When all events have probability 0 or 1 (trivial case).</li>
+                    <li>Under certain additional assumptions (e.g., the events form a field with specific structure).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6: Mutually Exclusive vs Pairwise Independent -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>6. Mutually Exclusive vs Pairwise Independent</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Theorem: Mutually Exclusive Events with Positive Probabilities are NOT Pairwise Independent</h3>
+                <p>If \(A\) and \(B\) are mutually exclusive and \(P(A) > 0\), \(P(B) > 0\), then they are NOT independent (pairwise or otherwise).</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Since \(A\) and \(B\) are mutually exclusive:</strong>
+                    <div class="math-display">
+                        \[ A \cap B = \emptyset \implies P(A \cap B) = 0 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — If they were independent:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B) = P(A)P(B) > 0 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Contradiction:</strong>
+                    <div class="math-display">
+                        \[ 0 = P(A \cap B) = P(A)P(B) > 0 \]
+                    </div>
+                    <p>Therefore, mutually exclusive events with positive probabilities cannot be independent (pairwise or mutually).</p>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 6.1:</strong> A collection of mutually exclusive events (with positive probabilities) can never be pairwise independent.<br><br>
+                <strong>📌 Corollary 6.2:</strong> If a collection of events is pairwise independent and each has positive probability, then none of them can be mutually exclusive with any other.
+            </div>
+        </div>
+
+        <!-- Section 7: Conditions for Mutual Independence of n Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>7. Conditions for Mutual Independence of n Events</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Theorem: Complete Set of Conditions for Mutual Independence</h3>
+                <p>Events \(A_1, A_2, \ldots, A_n\) are mutually independent if and only if for every choice of \(B_i\) either \(A_i\) or \(A_i^c\),</p>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} B_i \right) = \prod_{i=1}^{n} P(B_i) \]
+                </div>
+                <p>This is an equivalent and often more convenient formulation.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Equivalence:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Forward direction (if the condition holds, then mutual independence follows as a special case):</strong>
+                    <p>Taking \(B_i = A_i\) for all \(i\) gives the product rule for the full intersection. Any subset intersection can be obtained by taking \(B_i = A_i\) for indices in the subset and \(B_i = \Omega\) for others (since \(P(\Omega) = 1\) and \(\Omega = A_i \cup A_i^c\) is independent of anything).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Reverse direction (mutual independence implies the condition):</strong>
+                    <p>If events are mutually independent, then using the fact that complements of independent events are independent, the product rule holds for any combination of \(A_i\) and \(A_i^c\).</p>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{n} B_i \right) = \prod_{i=1}^{n} P(B_i) \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 7.1:</strong> For \(n = 3\), mutual independence requires checking 4 conditions:
+                <div class="math-display">\[ P(A \cap B) = P(A)P(B) \]</div>
+                <div class="math-display">\[ P(A \cap C) = P(A)P(C) \]</div>
+                <div class="math-display">\[ P(B \cap C) = P(B)P(C) \]</div>
+                <div class="math-display">\[ P(A \cap B \cap C) = P(A)P(B)P(C) \]</div>
+                
+                <strong>📌 Corollary 7.2:</strong> For \(n = 3\), mutual independence also implies:
+                <div class="math-display">\[ P(A \cap B \cap C^c) = P(A)P(B)P(C^c) \]</div>
+                <div class="math-display">\[ P(A \cap B^c \cap C) = P(A)P(B^c)P(C) \]</div>
+                <div class="math-display">\[ P(A^c \cap B \cap C) = P(A^c)P(B)P(C) \]</div>
+                <div class="math-display">\[ P(A^c \cap B^c \cap C) = P(A^c)P(B^c)P(C) \]</div>
+                <div class="math-display">\[ P(A^c \cap B \cap C^c) = P(A^c)P(B)P(C^c) \]</div>
+                <div class="math-display">\[ P(A \cap B^c \cap C^c) = P(A)P(B^c)P(C^c) \]</div>
+                <div class="math-display">\[ P(A^c \cap B^c \cap C^c) = P(A^c)P(B^c)P(C^c) \]</div>
+            </div>
+        </div>
+
+        <!-- Section 8: Another Classical Counterexample -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎯</span>
+                <h2>8. Another Counterexample: Four Events</h2>
+            </div>
+            <div class="example-box">
+                <strong>📖 Example (Bernstein's Example):</strong>
+                <p>Consider a random experiment with four equally likely outcomes: \(\Omega = \{a, b, c, d\}\) with \(P(a) = P(b) = P(c) = P(d) = \frac{1}{4}\). Define:</p>
+                <ul>
+                    <li>\(A = \{a, b\}\)</li>
+                    <li>\(B = \{a, c\}\)</li>
+                    <li>\(C = \{b, c\}\)</li>
+                </ul>
+                <p>Then:</p>
+                <ul>
+                    <li>\(P(A) = P(B) = P(C) = \frac{1}{2}\)</li>
+                    <li>\(P(A \cap B) = P(\{a\}) = \frac{1}{4} = P(A)P(B)\)</li>
+                    <li>\(P(A \cap C) = P(\{b\}) = \frac{1}{4} = P(A)P(C)\)</li>
+                    <li>\(P(B \cap C) = P(\{c\}) = \frac{1}{4} = P(B)P(C)\)</li>
+                    <li>\(P(A \cap B \cap C) = P(\emptyset) = 0 \neq \frac{1}{8} = P(A)P(B)P(C)\)</li>
+                </ul>
+                <p>Thus, \(A, B, C\) are pairwise independent but NOT mutually independent.</p>
+            </div>
+        </div>
+
+        <!-- Section 9: Comparison Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>9. Comparison Table: Pairwise vs Mutual Independence</h2>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>Property</th><th>Pairwise Independence</th><th>Mutual Independence</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>\(P(A_i \cap A_j) = P(A_i)P(A_j)\) for all \(i \neq j\)</td>
+                        <td>\(P(\bigcap_{i \in S} A_i) = \prod_{i \in S} P(A_i)\) for all subsets \(S\) with \(|S| \geq 2\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of conditions</strong></td>
+                        <td>\(\binom{n}{2}\)</td>
+                        <td>\(2^n - n - 1\)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>For n = 3</strong></td>
+                        <td>3 conditions</td>
+                        <td>4 conditions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Implies pairwise?</strong></td>
+                        <td>—</td>
+                        <td>✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Implies mutual?</strong></td>
+                        <td>✗ No (counterexample exists)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complement property</strong></td>
+                        <td>\(A_i\) and \(A_j^c\) are independent</td>
+                        <td>Any combination of \(A_i\) and \(A_i^c\) are independent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For the coin-toss example, verify that \(P(A^c \cap B^c \cap C^c) = P(A^c)P(B^c)P(C^c)\) or not?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(A^c \cap B^c \cap C^c\) means: first coin Tails, second coin Tails, and NOT both same face. But if both are Tails, they are the same face, so C occurs. Thus, the intersection is empty. \(P = 0\). \(P(A^c)P(B^c)P(C^c) = 0.5 \times 0.5 \times 0.5 = 0.125 \neq 0\). So the product rule fails for this combination, confirming lack of mutual independence.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Give an example of three events that are NOT pairwise independent.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Example: Tossing one fair coin. Let \(A\) = "Heads", \(B\) = "Heads", \(C\) = "Tails". Then \(P(A \cap B) = 0.5 \neq 0.5 \times 0.5 = 0.25\), so \(A\) and \(B\) are not independent. Thus, they are not pairwise independent.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> If \(A, B, C\) are mutually independent, prove that \(P((A \cap B) \cup C) \leq P(A)P(B) + P(C) - P(A)P(B)P(C)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P((A \cap B) \cup C) = P(A \cap B) + P(C) - P(A \cap B \cap C)\). By mutual independence, \(P(A \cap B) = P(A)P(B)\) and \(P(A \cap B \cap C) = P(A)P(B)P(C)\). Substituting gives the result.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Pairwise Independence:</strong> \(P(A_i \cap A_j) = P(A_i)P(A_j)\) for all \(i \neq j\)</li>
+                <li><strong>Mutual Independence:</strong> \(P(\bigcap_{i \in S} A_i) = \prod_{i \in S} P(A_i)\) for <strong>all</strong> subsets \(S\) with \(|S| \geq 2\)</li>
+                <li><strong>Key Result:</strong> Mutual independence ⟹ Pairwise independence, but the converse is FALSE</li>
+                <li><strong>Classical Counterexample:</strong> Two coin tosses with \(A\) = first Heads, \(B\) = second Heads, \(C\) = both same</li>
+                <li><strong>For n = 2:</strong> Pairwise and mutual independence are equivalent</li>
+                <li><strong>For n ≥ 3:</strong> Pairwise independence does NOT guarantee mutual independence</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="mutually_exclusive_vs_independent.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Mutually Exclusive vs Independent</a>
+            <a href="bayes_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Bayes' Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Pairwise Independent Events — understanding the hierarchy of independence concepts in probability theory.
+    </footer>
+</div>
+</body>
+</html>
