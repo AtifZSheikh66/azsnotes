@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Addition Theorem of Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- D3.js for Venn diagrams -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .axiom-ref {
+            font-family: monospace;
+            background: #e2e8f0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+        }
+        .venn-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        .venn-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+            flex: 1;
+            min-width: 260px;
+            position: relative;
+        }
+        .venn-card h4 {
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+        .venn-svg {
+            width: 220px;
+            height: 220px;
+            display: block;
+            margin: 0 auto;
+        }
+        .venn-label {
+            position: absolute;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.8);
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+        }
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .step-arrow {
+            display: inline-block;
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+        }
+        .arrow-label {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: -0.5rem;
+        }
+        @media (max-width: 768px) {
+            .venn-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Addition Theorem of Probability</span>
+        </div>
+        <h1>➕ Addition Theorem of Probability</h1>
+        <p>Probability of the union of events — from two events to n events</p>
+        <span class="badge">Probability Theory · Unit II · Addition Theorem</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Axioms Reminder -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Kolmogorov's Axioms (Foundation)</h2>
+            </div>
+            <div class="definition">
+                <p><strong>Axiom 1 (Non-negativity):</strong> \( P(E) \geq 0 \) for every event \( E \in \mathcal{F} \)</p>
+                <p><strong>Axiom 2 (Unit Measure):</strong> \( P(\Omega) = 1 \)</p>
+                <p><strong>Axiom 3 (Countable Additivity):</strong> For mutually exclusive events \( E_1, E_2, \ldots \),</p>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{\infty} E_i \right) = \sum_{i=1}^{\infty} P(E_i) \]
+                </div>
+            </div>
+            <p>All addition theorems are derived from these three axioms.</p>
+        </div>
+
+        <!-- Section 2: Addition Theorem for Two Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➕</span>
+                <h2>2. Addition Theorem for Two Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Addition Rule for Two Events)</h3>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                </div>
+                <p>The probability that either event A or event B (or both) occurs equals the sum of their individual probabilities minus the probability that both occur (to avoid double-counting).</p>
+            </div>
+            
+            <!-- Venn Diagram for Two Events -->
+            <div class="venn-row">
+                <div class="venn-card">
+                    <h4>Venn Diagram: \(A \cup B\)</h4>
+                    <div id="venn-union" class="venn-svg"></div>
+                    <div class="arrow-label">← Union (all shaded areas)</div>
+                </div>
+                <div class="venn-card">
+                    <h4>Venn Diagram: \(A \cap B\)</h4>
+                    <div id="venn-intersection" class="venn-svg"></div>
+                    <div class="arrow-label">← Intersection (overlap)</div>
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Addition Theorem for Two Events:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1:</strong> Express \(A \cup B\) as a union of mutually exclusive events.
+                    <div class="math-display">
+                        \[ A \cup B = (A \cap B^c) \cup (A \cap B) \cup (A^c \cap B) \]
+                    </div>
+                    <p>These three sets are pairwise mutually exclusive because:</p>
+                    <ul>
+                        <li>\((A \cap B^c) \cap (A \cap B) = \emptyset\)</li>
+                        <li>\((A \cap B^c) \cap (A^c \cap B) = \emptyset\)</li>
+                        <li>\((A \cap B) \cap (A^c \cap B) = \emptyset\)</li>
+                    </ul>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Apply Axiom 3 (finite additivity) to the union of mutually exclusive events.
+                    <div class="math-display">
+                        \[ P(A \cup B) = P(A \cap B^c) + P(A \cap B) + P(A^c \cap B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Express \(P(A)\) and \(P(B)\) as sums of appropriate parts.
+                    <div class="math-display">
+                        \[ P(A) = P(A \cap B) + P(A \cap B^c) \quad \text{(from Theorem 3a: difference rule)} \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(B) = P(A \cap B) + P(A^c \cap B) \quad \text{(from Theorem 3b: difference rule)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Add \(P(A)\) and \(P(B)\).
+                    <div class="math-display">
+                        \[ P(A) + P(B) = [P(A \cap B) + P(A \cap B^c)] + [P(A \cap B) + P(A^c \cap B)] \]
+                    </div>
+                    <div class="math-display">
+                        \[ P(A) + P(B) = P(A \cap B^c) + P(A^c \cap B) + 2P(A \cap B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5:</strong> Rearrange the equation from Step 2.
+                    <div class="math-display">
+                        \[ P(A \cup B) = [P(A \cap B^c) + P(A^c \cap B)] + P(A \cap B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6:</strong> Observe that \(P(A \cap B^c) + P(A^c \cap B) = P(A) + P(B) - 2P(A \cap B)\).
+                    <div class="math-display">
+                        \[ \text{Substitute: } P(A \cup B) = [P(A) + P(B) - 2P(A \cap B)] + P(A \cap B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7:</strong> Simplify to obtain the addition theorem.
+                    <div class="math-display">
+                        \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alternative simpler proof -->
+            <div class="proof-box">
+                <h4>📝 Alternative Shorter Proof:</h4>
+                <p>Write \(A \cup B\) as the union of two mutually exclusive events:</p>
+                <div class="math-display">
+                    \[ A \cup B = A \cup (B \cap A^c) \]
+                </div>
+                <p>Since \(A\) and \(B \cap A^c\) are mutually exclusive, by Axiom 3:</p>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B \cap A^c) \]
+                </div>
+                <p>But \(B \cap A^c = B - (A \cap B)\). Using the difference rule:</p>
+                <div class="math-display">
+                    \[ P(B \cap A^c) = P(B) - P(A \cap B) \]
+                </div>
+                <p>Therefore:</p>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1 (Mutually Exclusive Events):</strong> If \(A\) and \(B\) are mutually exclusive, then \(P(A \cap B) = 0\), so:
+                <div class="math-display">\[ P(A \cup B) = P(A) + P(B) \]</div>
+                
+                <strong>📌 Corollary 2.2 (Union of Complementary Events):</strong> Since \(A\) and \(A^c\) are mutually exclusive and \(A \cup A^c = \Omega\):
+                <div class="math-display">\[ P(A) + P(A^c) = P(\Omega) = 1 \Rightarrow P(A^c) = 1 - P(A) \]</div>
+                
+                <strong>📌 Corollary 2.3 (Boole's Inequality for Two Events):</strong> Since \(P(A \cap B) \geq 0\):
+                <div class="math-display">\[ P(A \cup B) \leq P(A) + P(B) \]</div>
+                
+                <strong>📌 Corollary 2.4 (Union Bound):</strong> For any events \(A\) and \(B\), the probability of their union is at most the sum of their individual probabilities.
+            </div>
+        </div>
+
+        <!-- Section 3: Venn Diagram Explanation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎨</span>
+                <h2>3. Intuitive Explanation via Venn Diagram</h2>
+            </div>
+            
+            <div class="venn-row">
+                <div class="venn-card">
+                    <h4>\(P(A) + P(B)\) counts overlap twice</h4>
+                    <div id="venn-double" class="venn-svg"></div>
+                    <div class="arrow-label">← The overlapping region is included in both \(P(A)\) and \(P(B)\)</div>
+                </div>
+                <div class="venn-card">
+                    <h4>Subtract \(P(A \cap B)\) once</h4>
+                    <div id="venn-subtract" class="venn-svg"></div>
+                    <div class="arrow-label">← Subtract one copy of the overlap to get correct count</div>
+                </div>
+            </div>
+            
+            <div class="principle-box" style="background:#f0fdf4; border-left-color:#10b981;">
+                <p><strong>Intuition:</strong> When we add \(P(A)\) and \(P(B)\), the outcomes in the intersection \(A \cap B\) are counted twice. The addition theorem subtracts one copy of \(P(A \cap B)\) to count them exactly once.</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Addition Theorem for Three Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➕➕</span>
+                <h2>4. Addition Theorem for Three Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Addition Rule for Three Events)</h3>
+                <div class="math-display">
+                    \[ P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C) \]
+                </div>
+                <p>The probability that at least one of A, B, or C occurs equals the sum of individual probabilities, minus sum of pairwise intersections, plus the triple intersection.</p>
+            </div>
+            
+            <!-- Venn Diagram for Three Events -->
+            <div class="venn-row">
+                <div class="venn-card">
+                    <h4>Venn Diagram: Three Events</h4>
+                    <div id="venn-three" class="venn-svg"></div>
+                    <div class="arrow-label">← All seven regions (union)</div>
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Addition Theorem for Three Events:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1:</strong> Let \(D = B \cup C\). Then \(A \cup B \cup C = A \cup D\).
+                    <div class="math-display">
+                        \[ P(A \cup B \cup C) = P(A \cup D) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2:</strong> Apply the two-event addition theorem to \(A\) and \(D\).
+                    <div class="math-display">
+                        \[ P(A \cup D) = P(A) + P(D) - P(A \cap D) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3:</strong> Apply the two-event addition theorem to \(D = B \cup C\).
+                    <div class="math-display">
+                        \[ P(D) = P(B) + P(C) - P(B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4:</strong> Note that \(A \cap D = A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\).
+                    <div class="math-display">
+                        \[ P(A \cap D) = P((A \cap B) \cup (A \cap C)) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5:</strong> Apply the two-event addition theorem to \((A \cap B)\) and \((A \cap C)\).
+                    <div class="math-display">
+                        \[ P((A \cap B) \cup (A \cap C)) = P(A \cap B) + P(A \cap C) - P((A \cap B) \cap (A \cap C)) \]
+                    </div>
+                    <div class="math-display">
+                        \[ \text{But } (A \cap B) \cap (A \cap C) = A \cap B \cap C \]
+                    </div>
+                    <div class="math-display">
+                        \[ \text{So } P(A \cap D) = P(A \cap B) + P(A \cap C) - P(A \cap B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6:</strong> Substitute the expressions from Steps 3 and 5 into Step 2.
+                    <div class="math-display">
+                        \[ P(A \cup B \cup C) = P(A) + [P(B) + P(C) - P(B \cap C)] - [P(A \cap B) + P(A \cap C) - P(A \cap B \cap C)] \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7:</strong> Simplify the expression.
+                    <div class="math-display">
+                        \[ P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(B \cap C) - P(A \cap B) - P(A \cap C) + P(A \cap B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8:</strong> Rearrange terms to obtain the final formula.
+                    <div class="math-display">
+                        \[ P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C) \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Pairwise Mutually Exclusive Events):</strong> If \(A, B, C\) are pairwise mutually exclusive, then all intersections have probability zero, so:
+                <div class="math-display">\[ P(A \cup B \cup C) = P(A) + P(B) + P(C) \]</div>
+                
+                <strong>📌 Corollary 3.2 (Boole's Inequality for Three Events):</strong> Since all intersection probabilities are non-negative:
+                <div class="math-display">\[ P(A \cup B \cup C) \leq P(A) + P(B) + P(C) \]</div>
+                
+                <strong>📌 Corollary 3.3 (Bonferroni Inequalities):</strong> The inclusion-exclusion principle gives alternating bounds.
+            </div>
+        </div>
+
+        <!-- Section 5: General Addition Theorem for n Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>5. General Addition Theorem for n Events (Inclusion-Exclusion Principle)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Inclusion-Exclusion Principle)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right) \]
+                </div>
+                <p>In compact form:</p>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{\emptyset \neq J \subseteq \{1,\ldots,n\}} (-1)^{|J|+1} P\left( \bigcap_{j \in J} A_j \right) \]
+                </div>
+                <p>The probability of the union of n events equals the sum of probabilities of single events, minus sum of pairwise intersections, plus sum of triple intersections, and so on, alternating signs until the n-fold intersection.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of General Addition Theorem (by Induction):</h4>
+                
+                <div class="proof-step">
+                    <strong>Base Case (n = 1):</strong> Trivially, \(P(A_1) = P(A_1)\). The formula holds.
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Base Case (n = 2):</strong> Already proved:
+                    <div class="math-display">
+                        \[ P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Inductive Hypothesis:</strong> Assume the inclusion-exclusion principle holds for any collection of \(k\) events, where \(2 \leq k < n\).
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Inductive Step:</strong> For \(n\) events, let \(B = \bigcup_{i=1}^{n-1} A_i\). Then:
+                    <div class="math-display">
+                        \[ \bigcup_{i=1}^{n} A_i = B \cup A_n \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Apply two-event addition theorem:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = P(B) + P(A_n) - P(B \cap A_n) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Note that:</strong>
+                    <div class="math-display">
+                        \[ B \cap A_n = \bigcup_{i=1}^{n-1} (A_i \cap A_n) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Apply the inductive hypothesis to \(P(B)\):</strong> (for \(n-1\) events)
+                    <div class="math-display">
+                        \[ P(B) = \sum_{i=1}^{n-1} P(A_i) - \sum_{1 \leq i < j \leq n-1} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq n-1} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-2} P\left( \bigcap_{i=1}^{n-1} A_i \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Apply the inductive hypothesis to \(P(B \cap A_n)\):</strong> (also for \(n-1\) events, since \(B \cap A_n = \bigcup_{i=1}^{n-1} (A_i \cap A_n)\))
+                    <div class="math-display">
+                        \[ P(B \cap A_n) = \sum_{i=1}^{n-1} P(A_i \cap A_n) - \sum_{1 \leq i < j \leq n-1} P(A_i \cap A_j \cap A_n) + \cdots + (-1)^{n-2} P\left( \bigcap_{i=1}^{n-1} A_i \cap A_n \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Combine the expressions:</strong> Adding \(P(B)\) and \(P(A_n)\) and subtracting \(P(B \cap A_n)\) gives terms of all orders:
+                    <ul>
+                        <li>First-order terms: \(\sum_{i=1}^{n-1} P(A_i) + P(A_n) = \sum_{i=1}^{n} P(A_i)\)</li>
+                        <li>Second-order terms: from \(P(B)\) we have \(-\sum_{1 \leq i < j \leq n-1} P(A_i \cap A_j)\); from subtracting \(P(B \cap A_n)\) we get \(-\sum_{i=1}^{n-1} P(A_i \cap A_n)\). Together: \(-\sum_{1 \leq i < j \leq n} P(A_i \cap A_j)\)</li>
+                        <li>Higher-order terms follow the same alternating pattern, with the n-fold intersection having coefficient \((-1)^{n-1}\)</li>
+                    </ul>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Therefore, by mathematical induction, the inclusion-exclusion principle holds for all \(n\).</strong>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1 (Mutually Exclusive Events):</strong> If \(A_1, A_2, \ldots, A_n\) are pairwise mutually exclusive, then all intersections have probability zero, so:
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) \]</div>
+                
+                <strong>📌 Corollary 5.2 (Boole's Inequality):</strong> For any finite collection of events:
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i) \]</div>
+                This follows because all intersection terms are subtracted in the inclusion-exclusion, making the right side an upper bound.
+                
+                <strong>📌 Corollary 5.3 (Bonferroni Inequalities):</strong> For any \(k\), the partial sums of the inclusion-exclusion series alternately provide upper and lower bounds:
+                <ul>
+                    <li>First sum (single events): upper bound</li>
+                    <li>First sum minus pairwise intersections: lower bound</li>
+                    <li>First sum minus pairwise intersections plus triple intersections: upper bound, etc.</li>
+                </ul>
+                
+                <strong>📌 Corollary 5.4 (Probability of Union from Complements):</strong>
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{n} A_i \right) = 1 - P\left( \bigcap_{i=1}^{n} A_i^c \right) \]</div>
+                This follows from De Morgan's law and the complement rule.
+            </div>
+        </div>
+
+        <!-- Section 6: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 1: Two Events</strong><br><br>
+                In a class of 100 students, 60 study Mathematics (M), 40 study Physics (P), and 20 study both. Find the probability that a randomly selected student studies at least one of the subjects.<br><br>
+                <strong>Solution:</strong><br>
+                \(P(M) = 0.6\), \(P(P) = 0.4\), \(P(M \cap P) = 0.2\)<br>
+                By addition theorem: \(P(M \cup P) = 0.6 + 0.4 - 0.2 = 0.8\) (80 students)
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 2: Three Events</strong><br><br>
+                In a survey of 200 people: 120 like tea (T), 100 like coffee (C), 80 like milk (M), 50 like both tea and coffee, 40 like both tea and milk, 30 like both coffee and milk, and 20 like all three. Find the probability that a randomly selected person likes at least one of the beverages.<br><br>
+                <strong>Solution:</strong><br>
+                \(P(T) = 0.6\), \(P(C) = 0.5\), \(P(M) = 0.4\)<br>
+                \(P(T \cap C) = 0.25\), \(P(T \cap M) = 0.20\), \(P(C \cap M) = 0.15\)<br>
+                \(P(T \cap C \cap M) = 0.10\)<br><br>
+                By addition theorem for three events:<br>
+                \(P(T \cup C \cup M) = 0.6 + 0.5 + 0.4 - 0.25 - 0.20 - 0.15 + 0.10\)<br>
+                \(P(T \cup C \cup M) = 1.5 - 0.6 + 0.10 = 1.0\) (all 200 people like at least one beverage)
+            </div>
+            
+            <div class="example-box" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem 1.25rem;">
+                <strong>📖 Example 3: Using Complement Form</strong><br><br>
+                If \(P(A) = 0.4\), \(P(B) = 0.3\), and \(P(A \cap B) = 0.1\), find \(P(A^c \cap B^c)\).<br><br>
+                <strong>Solution:</strong><br>
+                By De Morgan's law: \(A^c \cap B^c = (A \cup B)^c\)<br>
+                First find \(P(A \cup B) = 0.4 + 0.3 - 0.1 = 0.6\)<br>
+                Then \(P(A^c \cap B^c) = 1 - P(A \cup B) = 1 - 0.6 = 0.4\)
+            </div>
+        </div>
+
+        <!-- Section 7: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>7. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For events A and B, if \(P(A) = 0.5\), \(P(B) = 0.4\), and \(P(A \cup B) = 0.7\), find \(P(A \cap B)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(A \cup B) = P(A) + P(B) - P(A \cap B) \Rightarrow 0.7 = 0.5 + 0.4 - P(A \cap B) \Rightarrow P(A \cap B) = 0.9 - 0.7 = 0.2\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Three events A, B, C satisfy: \(P(A) = 0.3\), \(P(B) = 0.4\), \(P(C) = 0.5\), pairwise intersections are 0.1 each, and triple intersection is 0.05. Find \(P(A \cup B \cup C)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(A \cup B \cup C) = 0.3 + 0.4 + 0.5 - 0.1 - 0.1 - 0.1 + 0.05 = 1.2 - 0.3 + 0.05 = 0.95\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that \(P(A \cup B) = 1 - P(A^c \cap B^c)\) using the addition theorem (without using De Morgan's law).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\). Also, \(P(A^c \cap B^c) = 1 - P(A \cup B)\) by complement rule, so rearranging gives the result. Alternatively, directly from the complement of the union.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Addition Theorem for Two Events:</strong> \(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</li>
+                <li><strong>Mutually Exclusive Events:</strong> If \(A \cap B = \emptyset\), then \(P(A \cup B) = P(A) + P(B)\)</li>
+                <li><strong>Inclusion-Exclusion for Three Events:</strong> \(P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)\)</li>
+                <li><strong>General Inclusion-Exclusion:</strong> Alternating sum over all non-empty subsets: \(P(\bigcup_{i=1}^n A_i) = \sum_{\emptyset \neq J \subseteq \{1,\ldots,n\}} (-1)^{|J|+1} P(\bigcap_{j \in J} A_j)\)</li>
+                <li><strong>Boole's Inequality (Union Bound):</strong> \(P(\bigcup_{i=1}^n A_i) \leq \sum_{i=1}^n P(A_i)\)</li>
+                <li><strong>Bonferroni Inequalities:</strong> Partial sums of inclusion-exclusion provide alternating bounds</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="probability_theorems.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Probability Theorems</a>
+            <a href="total_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Total Probability Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Addition Theorem of Probability — rigorous derivation from Kolmogorov's axioms, with proofs, corollaries, and Venn diagram visualizations.
+    </footer>
+</div>
+
+<script>
+    // Function to create Venn diagrams using D3.js
+    function createVenn(containerId, type) {
+        const width = 220, height = 220;
+        const svg = d3.select(containerId)
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 220 220")
+            .append("g")
+            .attr("transform", "translate(110, 110)");
+        
+        const radius = 70;
+        const offset = 25;
+        
+        // Background rectangle (sample space)
+        svg.append("rect")
+            .attr("x", -110)
+            .attr("y", -110)
+            .attr("width", 220)
+            .attr("height", 220)
+            .attr("fill", "#f1f5f9")
+            .attr("stroke", "#cbd5e1")
+            .attr("stroke-width", 1);
+        
+        if (type === "union") {
+            // Union: shade entire area inside either circle
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#3b82f6")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#1e40af")
+                .attr("stroke-width", 2);
+            
+            svg.append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#10b981")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#065f46")
+                .attr("stroke-width", 2);
+            
+            svg.append("text")
+                .attr("x", -offset - 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("A");
+            svg.append("text")
+                .attr("x", offset + 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("B");
+        }
+        else if (type === "intersection") {
+            // Intersection: only the overlap region
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#e2e8f0")
+                .attr("fill-opacity", 0.4)
+                .attr("stroke", "#1e40af")
+                .attr("stroke-width", 2);
+            
+            svg.append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#e2e8f0")
+                .attr("fill-opacity", 0.4)
+                .attr("stroke", "#065f46")
+                .attr("stroke-width", 2);
+            
+            // Highlight intersection
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#8b5cf6")
+                .attr("fill-opacity", 0.6)
+                .attr("clip-path", "url(#clipB)");
+            
+            svg.append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#8b5cf6")
+                .attr("fill-opacity", 0.6)
+                .attr("clip-path", "url(#clipA)");
+            
+            // Define clip paths
+            svg.append("defs")
+                .append("clipPath")
+                .attr("id", "clipA")
+                .append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius);
+            
+            svg.append("defs")
+                .append("clipPath")
+                .attr("id", "clipB")
+                .append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius);
+            
+            svg.append("text")
+                .attr("x", -offset - 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("A");
+            svg.append("text")
+                .attr("x", offset + 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("B");
+        }
+        else if (type === "double") {
+            // Counted twice representation
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#3b82f6")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#1e40af")
+                .attr("stroke-width", 2);
+            
+            svg.append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#10b981")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#065f46")
+                .attr("stroke-width", 2);
+            
+            // Highlight intersection with special pattern
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "none")
+                .attr("stroke", "#ec489a")
+                .attr("stroke-width", 3)
+                .attr("stroke-dasharray", "5,5");
+            
+            svg.append("text")
+                .attr("x", -offset - 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("A");
+            svg.append("text")
+                .attr("x", offset + 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("B");
+            
+            // Add annotation for double count
+            svg.append("text")
+                .attr("x", 0)
+                .attr("y", -15)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "9")
+                .attr("fill", "#ec489a")
+                .text("counted twice");
+        }
+        else if (type === "subtract") {
+            // After subtraction
+            svg.append("circle")
+                .attr("cx", -offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#3b82f6")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#1e40af")
+                .attr("stroke-width", 2);
+            
+            svg.append("circle")
+                .attr("cx", offset)
+                .attr("cy", 0)
+                .attr("r", radius)
+                .attr("fill", "#10b981")
+                .attr("fill-opacity", 0.5)
+                .attr("stroke", "#065f46")
+                .attr("stroke-width", 2);
+            
+            svg.append("text")
+                .attr("x", -offset - 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("A");
+            svg.append("text")
+                .attr("x", offset + 18)
+                .attr("y", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "13")
+                .attr("font-weight", "bold")
+                .text("B");
+            
+            svg.append("text")
+                .attr("x", 0)
+                .attr("y", -15)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "9")
+                .attr("fill", "#10b981")
+                .text("counted once");
+        }
+        else if (type === "three") {
+            // Three circles
+            const r3 = 55;
+            const offsetX = 32;
+            const offsetY = 28;
+            
+            svg.append("circle")
+                .attr("cx", -offsetX)
+                .attr("cy", -offsetY)
+                .attr("r", r3)
+                .attr("fill", "#3b82f6")
+                .attr("fill-opacity", 0.35)
+                .attr("stroke", "#1e40af")
+                .attr("stroke-width", 1.5);
+            
+            svg.append("circle")
+                .attr("cx", offsetX)
+                .attr("cy", -offsetY)
+                .attr("r", r3)
+                .attr("fill", "#10b981")
+                .attr("fill-opacity", 0.35)
+                .attr("stroke", "#065f46")
+                .attr("stroke-width", 1.5);
+            
+            svg.append("circle")
+                .attr("cx", 0)
+                .attr("cy", offsetY)
+                .attr("r", r3)
+                .attr("fill", "#f59e0b")
+                .attr("fill-opacity", 0.35)
+                .attr("stroke", "#d97706")
+                .attr("stroke-width", 1.5);
+            
+            svg.append("text")
+                .attr("x", -offsetX - 15)
+                .attr("y", -offsetY - 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12")
+                .attr("font-weight", "bold")
+                .text("A");
+            svg.append("text")
+                .attr("x", offsetX + 15)
+                .attr("y", -offsetY - 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12")
+                .attr("font-weight", "bold")
+                .text("B");
+            svg.append("text")
+                .attr("x", 0)
+                .attr("y", offsetY + 20)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12")
+                .attr("font-weight", "bold")
+                .text("C");
+        }
+    }
+    
+    // Create all Venn diagrams
+    createVenn("#venn-union", "union");
+    createVenn("#venn-intersection", "intersection");
+    createVenn("#venn-double", "double");
+    createVenn("#venn-subtract", "subtract");
+    createVenn("#venn-three", "three");
+</script>
+</body>
+</html>
