@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Multiplication Theorem for Independent Events | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Multiplication Theorem for Independent Events</span>
+        </div>
+        <h1>✖️ Multiplication Theorem for Independent Events</h1>
+        <p>Computing the probability of the intersection of independent events</p>
+        <span class="badge">Probability Theory · Unit II · Independent Events</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                The <strong>Multiplication Theorem for Independent Events</strong> is a special case of the general multiplication theorem. When events are independent, the conditional probabilities simplify, and the probability of the intersection becomes the product of the individual probabilities.
+            </div>
+            <p>This theorem is widely used in probability calculations involving repeated independent trials, such as coin tosses, dice rolls, and sampling with replacement.</p>
+        </div>
+
+        <!-- Section 2: Definition of Independence (Review) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>2. Definition of Independence (Review)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition (Independence of Two Events)</h3>
+                <p>Two events \(A\) and \(B\) are said to be <strong>independent</strong> if and only if:</p>
+                <div class="math-display">
+                    \[ P(A \cap B) = P(A) \cdot P(B) \]
+                </div>
+                <p>If \(P(A) > 0\) and \(P(B) > 0\), this is equivalent to:</p>
+                <div class="math-display">
+                    \[ P(A \mid B) = P(A) \quad \text{and} \quad P(B \mid A) = P(B) \]
+                </div>
+            </div>
+            
+            <div class="definition">
+                <p>For \(n\) events \(A_1, A_2, \ldots, A_n\), they are said to be <strong>mutually independent</strong> if for every subset \( \{i_1, i_2, \ldots, i_k\} \subseteq \{1, 2, \ldots, n\} \) with \(k \geq 2\),</p>
+                <div class="math-display">
+                    \[ P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \prod_{j=1}^{k} P(A_{i_j}) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Multiplication Theorem for Two Independent Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>3. Multiplication Theorem for Two Independent Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Multiplication Theorem for Two Independent Events)</h3>
+                <div class="math-display">
+                    \[ P(A \cap B) = P(A) \cdot P(B) \]
+                </div>
+                <p>If events \(A\) and \(B\) are independent, then the probability of their intersection equals the product of their individual probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Multiplication Theorem for Two Independent Events:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Start with the definition of independence:</strong>
+                    <p>By definition, events \(A\) and \(B\) are independent if and only if:</p>
+                    <div class="math-display">
+                        \[ P(A \cap B) = P(A) \cdot P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — This is exactly the statement we need to prove:</strong>
+                    <p>The multiplication theorem for independent events is simply the definition of independence itself. However, we can also derive it from conditional probability:</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Alternative derivation using conditional probability:</strong>
+                    <p>If \(A\) and \(B\) are independent and \(P(B) > 0\), then by definition of independence:</p>
+                    <div class="math-display">
+                        \[ P(A \mid B) = P(A) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Apply the multiplication rule for conditional probability:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B) = P(A \mid B) \cdot P(B) = P(A) \cdot P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <p>Thus, for independent events, the joint probability simplifies to the product of the marginal probabilities.</p>
+                    <div class="math-display">
+                        \[ \boxed{P(A \cap B) = P(A) \cdot P(B)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Complements of Independent Events):</strong> If \(A\) and \(B\) are independent, then \(A\) and \(B^c\) are independent, \(A^c\) and \(B\) are independent, and \(A^c\) and \(B^c\) are independent. Therefore:
+                <div class="math-display">\[ P(A \cap B^c) = P(A)P(B^c), \quad P(A^c \cap B) = P(A^c)P(B), \quad P(A^c \cap B^c) = P(A^c)P(B^c) \]</div>
+                
+                <strong>📌 Corollary 3.2 (Union of Independent Events):</strong> For independent events \(A\) and \(B\):
+                <div class="math-display">\[ P(A \cup B) = P(A) + P(B) - P(A)P(B) \]</div>
+                
+                <strong>📌 Corollary 3.3 (Complement of Union):</strong> For independent events \(A\) and \(B\):
+                <div class="math-display">\[ P(A^c \cap B^c) = 1 - P(A \cup B) = P(A^c)P(B^c) \]</div>
+            </div>
+        </div>
+
+        <!-- Section 4: Extension to n Independent Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢🔢</span>
+                <h2>4. Extension to n Independent Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Multiplication Theorem for n Independent Events)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) = \prod_{i=1}^{n} P(A_i) \]
+                </div>
+                <p>If events \(A_1, A_2, \ldots, A_n\) are mutually independent, then the probability of their intersection equals the product of their individual probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Multiplication Theorem for n Independent Events (by Mathematical Induction):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Base Case (n = 2):</strong>
+                    <p>From the definition of independence for two events, we have:</p>
+                    <div class="math-display">
+                        \[ P(A_1 \cap A_2) = P(A_1) \cdot P(A_2) \]
+                    </div>
+                    <p>Thus, the base case holds.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Inductive Hypothesis:</strong>
+                    <p>Assume that for any collection of \(m\) mutually independent events (where \(m \geq 2\)), the multiplication theorem holds:</p>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m} A_i \right) = \prod_{i=1}^{m} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Inductive Step (prove for \(n = m+1\) events):</strong>
+                    <p>Consider \(m+1\) mutually independent events \(A_1, A_2, \ldots, A_m, A_{m+1}\).</p>
+                    <p>Let \(B = \bigcap_{i=1}^{m} A_i\). Then the intersection of all \(m+1\) events can be written as:</p>
+                    <div class="math-display">
+                        \[ \bigcap_{i=1}^{m+1} A_i = B \cap A_{m+1} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Use the definition of mutual independence:</strong>
+                    <p>Since the events are mutually independent, \(B\) and \(A_{m+1}\) are independent. More formally, by the definition of mutual independence, for any subset of events, the probability of the intersection equals the product of the individual probabilities. In particular:</p>
+                    <div class="math-display">
+                        \[ P(B \cap A_{m+1}) = P(B) \cdot P(A_{m+1}) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Apply the inductive hypothesis to \(P(B)\):</strong>
+                    <div class="math-display">
+                        \[ P(B) = P\left( \bigcap_{i=1}^{m} A_i \right) = \prod_{i=1}^{m} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Substitute the expression for \(P(B)\):</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{m+1} A_i \right) = \left( \prod_{i=1}^{m} P(A_i) \right) \cdot P(A_{m+1}) = \prod_{i=1}^{m+1} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Conclusion:</strong>
+                    <p>Therefore, by the principle of mathematical induction, the multiplication theorem holds for all positive integers \(n \geq 2\).</p>
+                    <div class="math-display">
+                        \[ \boxed{P\left( \bigcap_{i=1}^{n} A_i \right) = \prod_{i=1}^{n} P(A_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alternative Proof -->
+            <div class="proof-box">
+                <h4>📝 Alternative Direct Proof using Definition of Mutual Independence:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Recall the definition of mutual independence:</strong>
+                    <p>Events \(A_1, A_2, \ldots, A_n\) are mutually independent if for every subset \( \{i_1, i_2, \ldots, i_k\} \subseteq \{1, 2, \ldots, n\} \) with \(k \geq 2\),</p>
+                    <div class="math-display">
+                        \[ P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \prod_{j=1}^{k} P(A_{i_j}) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Take the subset containing all indices:</strong>
+                    <p>Consider the subset \( \{1, 2, \ldots, n\} \) (i.e., \(k = n\)). Then by the definition:</p>
+                    <div class="math-display">
+                        \[ P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2) \cdots P(A_n) = \prod_{i=1}^{n} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Conclusion:</strong>
+                    <p>Thus, the multiplication theorem for independent events follows directly from the definition of mutual independence.</p>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Probability that None of the Events Occur):</strong> If \(A_1, A_2, \ldots, A_n\) are mutually independent, then:
+                <div class="math-display">\[ P\left( \bigcap_{i=1}^{n} A_i^c \right) = \prod_{i=1}^{n} (1 - P(A_i)) \]</div>
+                This follows because complements of independent events are also independent.
+                
+                <strong>📌 Corollary 4.2 (Probability that at Least One Occurs):</strong> For mutually independent events:
+                <div class="math-display">\[ P\left( \bigcup_{i=1}^{n} A_i \right) = 1 - \prod_{i=1}^{n} (1 - P(A_i)) \]</div>
+                This follows from Corollary 4.1 and De Morgan's law.
+                
+                <strong>📌 Corollary 4.3 (Product Rule for Any Subset):</strong> For any subset \(S \subseteq \{1, 2, \ldots, n\}\) with \(|S| = k \geq 2\),
+                <div class="math-display">\[ P\left( \bigcap_{i \in S} A_i \right) = \prod_{i \in S} P(A_i) \]</div>
+                
+                <strong>📌 Corollary 4.4 (Repeated Independent Trials):</strong> If an experiment with probability of success \(p\) is repeated independently \(n\) times, the probability of \(n\) consecutive successes is \(p^n\).
+            </div>
+        </div>
+
+        <!-- Section 5: Relationship Between General and Independent Multiplication Theorems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>5. Comparison: General vs. Independent Multiplication Theorem</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>General Multiplication Theorem (Always True):</strong></p>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \cdots \cap A_{n-1}) \]
+                </div>
+                
+                <p><strong>Multiplication Theorem for Independent Events (When Independence Holds):</strong></p>
+                <div class="math-display">
+                    \[ P\left( \bigcap_{i=1}^{n} A_i \right) = \prod_{i=1}^{n} P(A_i) \]
+                </div>
+                <p>Note that the independent form is a special case where all conditional probabilities simplify to the marginal probabilities.</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Coin Tosses</strong><br>
+                A fair coin is tossed 5 times. Find the probability of getting heads on all 5 tosses.<br><br>
+                <strong>Solution:</strong> Let \(H_i\) be the event that the i-th toss shows heads. The tosses are independent, and \(P(H_i) = \frac{1}{2}\).<br>
+                <div class="math-display">
+                    \[ P(H_1 \cap H_2 \cap H_3 \cap H_4 \cap H_5) = \left(\frac{1}{2}\right)^5 = \frac{1}{32} = 0.03125 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Dice Rolls</strong><br>
+                A fair die is rolled 3 times. Find the probability of rolling a 6 on all three rolls.<br><br>
+                <strong>Solution:</strong> Each roll is independent with \(P(6) = \frac{1}{6}\).<br>
+                <div class="math-display">
+                    \[ P(6 \text{ on all three}) = \left(\frac{1}{6}\right)^3 = \frac{1}{216} \approx 0.00463 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: System Reliability</strong><br>
+                A system has 3 independent components in parallel. The probability that component i fails is \(p_1 = 0.1\), \(p_2 = 0.2\), \(p_3 = 0.3\). Find the probability that the system fails (all components fail).<br><br>
+                <strong>Solution:</strong> Let \(F_i\) be the event that component i fails. The events are independent.<br>
+                <div class="math-display">
+                    \[ P(F_1 \cap F_2 \cap F_3) = P(F_1) \cdot P(F_2) \cdot P(F_3) = 0.1 \times 0.2 \times 0.3 = 0.006 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 4: Probability of at Least One Success</strong><br>
+                A student takes 4 independent multiple-choice quizzes. The probability of passing each quiz is 0.7. Find the probability that the student passes at least one quiz.<br><br>
+                <strong>Solution:</strong> Let \(P_i\) be the event of passing quiz i. Using the complement rule and independence:<br>
+                <div class="math-display">
+                    \[ P(\text{at least one pass}) = 1 - P(\text{no passes}) = 1 - P(P_1^c \cap P_2^c \cap P_3^c \cap P_4^c) \]
+                </div>
+                <div class="math-display">
+                    \[ = 1 - (0.3)^4 = 1 - 0.0081 = 0.9919 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Common Misconceptions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>7. Common Misconceptions</h2>
+            </div>
+            
+            <div class="definition">
+                <strong>Misconception 1 — Using Product Form for Dependent Events:</strong> The product form \(P(A \cap B) = P(A)P(B)\) is ONLY valid when events are independent. For dependent events, the general multiplication rule with conditional probabilities must be used.
+            </div>
+            
+            <div class="definition">
+                <strong>Misconception 2 — Assuming Independence from Context:</strong> Do not assume events are independent just because they occur in sequence or in different trials. Independence must be verified or explicitly stated.
+            </div>
+            
+            <div class="definition">
+                <strong>Misconception 3 — Pairwise Independence = Mutual Independence:</strong> Pairwise independence does NOT guarantee mutual independence. The multiplication theorem for n events requires mutual independence, not just pairwise independence.
+            </div>
+        </div>
+
+        <!-- Section 8: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> A fair coin is tossed 10 times. What is the probability of getting heads on all 10 tosses?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P = \left(\frac{1}{2}\right)^{10} = \frac{1}{1024} \approx 0.0009766\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Three independent events have probabilities \(P(A)=0.2\), \(P(B)=0.3\), \(P(C)=0.4\). Find \(P(A \cap B \cap C^c)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Since complements are independent: \(P(A \cap B \cap C^c) = 0.2 \times 0.3 \times (1 - 0.4) = 0.2 \times 0.3 \times 0.6 = 0.036\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> A system has 5 independent components in series. Each component has reliability 0.95. What is the probability that the system works (all components work)?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P = (0.95)^5 = 0.95^5 \approx 0.7738\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 4:</strong> If \(P(A) = 0.4\) and \(P(B) = 0.5\), and \(A\) and \(B\) are independent, find \(P(A \cup B)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(A \cup B) = P(A) + P(B) - P(A)P(B) = 0.4 + 0.5 - (0.4 \times 0.5) = 0.9 - 0.2 = 0.7\)</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Multiplication Theorem for Two Independent Events:</strong> \(P(A \cap B) = P(A) \cdot P(B)\)</li>
+                <li><strong>Multiplication Theorem for n Independent Events:</strong> \(P\left( \bigcap_{i=1}^{n} A_i \right) = \prod_{i=1}^{n} P(A_i)\)</li>
+                <li><strong>Derived directly from the definition</strong> of independence (product form) or from conditional probability</li>
+                <li><strong>Proved by mathematical induction</strong> for the extension to n events</li>
+                <li><strong>Complements of independent events</strong> are also independent, leading to:
+                    <div class="math-display" style="margin: 0.5rem 0;">\[ P\left( \bigcap_{i=1}^{n} A_i^c \right) = \prod_{i=1}^{n} (1 - P(A_i)) \]</div>
+                </li>
+                <li><strong>Applications:</strong> Repeated trials, system reliability, sampling with replacement, probabilistic modeling</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="independent_events.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Independent Events</a>
+            <a href="total_probability_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Total Probability Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Multiplication Theorem for Independent Events — the joint probability of independent events is the product of their individual probabilities.
+    </footer>
+</div>
+</body>
+</html>
