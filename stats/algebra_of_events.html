@@ -551,18 +551,42 @@
                 break;
                 
             case "symdiff":
-    // Both circles light gray
-    circleAFill = "#e2e8f0";
-    circleBFill = "#e2e8f0";
-    circleAOpacity = 0.4;
-    circleBOpacity = 0.4;
-    // Draw pink only in A-only region
-    extraElements = `
-        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipB_${operationSymbol})"/>
-        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipA_${operationSymbol})"/>
-        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#e2e8f0" fill-opacity="0.8" clip-path="url(#clipA_${operationSymbol})" clip-path="url(#clipB_${operationSymbol})"/>
+    // Use same technique as complement: draw colored background first, then mask out intersection
+    vennHtml = `
+        <h3>${operation}</h3>
+        <div class="venn-container">
+            <svg width="200" height="200" viewBox="0 0 200 200" style="display:block; margin:0 auto;">
+                <defs>
+                    <clipPath id="clipA_${operationSymbol}">
+                        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
+                    </clipPath>
+                    <clipPath id="clipB_${operationSymbol}">
+                        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
+                    </clipPath>
+                    <clipPath id="intersection_${operationSymbol}">
+                        <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
+                        <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" clip-path="url(#clipA_${operationSymbol})"/>
+                    </clipPath>
+                </defs>
+                <rect x="0" y="0" width="200" height="200" fill="#f1f5f9"/>
+                <!-- Draw pink background for A-only region -->
+                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipB_${operationSymbol})"/>
+                <!-- Draw pink background for B-only region -->
+                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipA_${operationSymbol})"/>
+                <!-- Draw white circle to erase pink from intersection -->
+                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#f1f5f9" clip-path="url(#intersection_${operationSymbol})"/>
+                <!-- Draw circle outlines -->
+                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="none" stroke="#1e40af" stroke-width="2"/>
+                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="none" stroke="#065f46" stroke-width="2"/>
+                <text x="${centerX - offset - 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">A</text>
+                <text x="${centerX + offset + 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">B</text>
+            </svg>
+        </div>
+        <div class="venn-description">${formulaText}</div>
+        <div class="venn-formula">${operation}</div>
     `;
-    break;
+    card.innerHTML = vennHtml;
+    return card;
                 
             default:
                 circleAFill = "#3b82f6";
