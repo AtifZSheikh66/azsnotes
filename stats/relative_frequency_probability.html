@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Statistical (Empirical) Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .principle-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .formula-card h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-top: 3px solid;
+        }
+        .card-empirical { border-top-color: #10b981; }
+        .card-classical { border-top-color: #3b82f6; }
+        .card-lln { border-top-color: #8b5cf6; }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .data-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Statistical (Empirical) Probability</span>
+        </div>
+        <h1>📊 Statistical (Empirical) Probability</h1>
+        <p>The relative frequency interpretation — probability from observed data</p>
+        <span class="badge">Probability Theory · Unit I · Empirical Definition</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Defining Empirical Probability</h2>
+            </div>
+            <div class="definition">
+                <strong>Statistical (or Empirical) Probability</strong> is defined as the relative frequency of an event occurring when an experiment is repeated a large number of times. It is based on observed data rather than theoretical assumptions.
+            </div>
+            <p>Unlike classical probability, which assumes equally likely outcomes a priori, empirical probability is derived directly from experimentation or observation. The empirical probability of an event \(E\) is calculated as:</p>
+            
+            <div class="formula-card">
+                <h4>📌 Empirical Probability Formula</h4>
+                <div class="math-display">
+                    \[ P_n(E) = \frac{\text{Number of times } E \text{ occurs in } n \text{ trials}}{n} = \frac{f_n(E)}{n} \]
+                </div>
+                <div class="usage">
+                    Where:
+                    <ul>
+                        <li>\(n\) is the total number of trials or observations</li>
+                        <li>\(f_n(E)\) is the frequency (count) of event \(E\) occurring in \(n\) trials</li>
+                        <li>\(P_n(E)\) is the empirical probability based on \(n\) trials</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Key Insight:</strong> Empirical probability estimates the true (theoretical) probability by observing actual outcomes. As the number of trials increases, the empirical probability tends to stabilize around the true probability — this is the Law of Large Numbers.</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Relative Frequency Interpretation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>2. The Relative Frequency Interpretation</h2>
+            </div>
+            
+            <p>The relative frequency interpretation of probability is one of the major interpretations of probability alongside classical and subjective interpretations[citation:1]. According to this view, the probability of an event is the long-run proportion of times the event occurs when the experiment is repeated infinitely many times.</p>
+            
+            <div class="formula-card">
+                <h4>📌 Relative Frequency as Probability Limit</h4>
+                <div class="math-display">
+                    \[ P(E) = \lim_{n \to \infty} \frac{f_n(E)}{n} \]
+                </div>
+                <div class="usage">
+                    The true probability \(P(E)\) is the limit of the relative frequency as the number of trials approaches infinity.
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Rolling a Die</strong><br>
+                Suppose we roll a die 1000 times and observe the number 6 appearing 163 times. The empirical probability of rolling a 6 is:<br>
+                \[ P_{1000}(6) = \frac{163}{1000} = 0.163 \]<br>
+                If we continued rolling indefinitely, the relative frequency would approach the theoretical probability \( \frac{1}{6} \approx 0.1667 \)[citation:8]. The more trials we conduct, the closer we get to the true value.
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Terminology Note:</strong> "Statistical probability," "empirical probability," and "relative frequency probability" are used interchangeably. All refer to probabilities derived from observed data rather than theoretical assumptions[citation:4].
+            </div>
+        </div>
+
+        <!-- Section 3: Empirical Probability in Practice -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔬</span>
+                <h2>3. Calculating Empirical Probability</h2>
+            </div>
+            
+            <p>To calculate empirical probability, follow these steps:</p>
+            <ol class="property-list" style="list-style-type: decimal; padding-left: 1.5rem;">
+                <li style="margin: 0.5rem 0;">Define the experiment and the event of interest</li>
+                <li style="margin: 0.5rem 0;">Conduct \(n\) trials (observations) of the experiment</li>
+                <li style="margin: 0.5rem 0;">Record the frequency of the event occurring</li>
+                <li style="margin: 0.5rem 0;">Calculate the ratio \( \frac{\text{frequency}}{n} \)</li>
+            </ol>
+            
+            <div class="example-box">
+                <strong>📖 Example: Carnival Game</strong><br>
+                A carnival game requires contestants to throw a softball at a stack of three bottles. The goal is to knock over all three bottles. We want to find the probability that a randomly selected contestant wins.<br><br>
+                Since the outcomes are not equally likely (skill, throwing angle, etc. vary), we cannot use classical probability. Instead, we observe the game over a weekend: 582 games played, 32 winners.[citation:4]<br>
+                \[ P(\text{win}) = \frac{32}{582} \approx 0.055 \text{ or } 5.5\% \]
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Bottled Water Study</strong><br>
+                A study of bottled water revealed that among samples tested, 40% were merely tap water and 30% were contaminated by pollutants[citation:4].<br>
+                Let \(E\) = "A randomly selected bottled water sample is actually tap water"<br>
+                Let \(F\) = "A randomly selected bottled water sample is contaminated"<br>
+                Then based on the study data:<br>
+                \[ P(E) = 0.40 \quad \text{and} \quad P(F) = 0.30 \]
+            </div>
+        </div>
+
+        <!-- Section 4: Comparative Example Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>4. Convergence of Empirical Probability</h2>
+            </div>
+            
+            <p>The following table illustrates how empirical probability stabilizes as the number of trials increases[citation:8]:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Number of Trials (\(n\))</th>
+                        <th>Number of Times Event Occurs (\(f_n\))</th>
+                        <th>Empirical Probability \(P_n(E) = f_n/n\)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>10</td><td>2</td><td>0.200</td></tr>
+                    <tr><td>50</td><td>6</td><td>0.120</td></tr>
+                    <tr><td>100</td><td>18</td><td>0.180</td></tr>
+                    <tr><td>500</td><td>81</td><td>0.162</td></tr>
+                    <tr><td>1000</td><td>163</td><td>0.163</td></tr>
+                    <tr><td>\( \infty \)</td><td>—</td><td>\( \frac{1}{6} \approx 0.1667 \)</td></tr>
+                </tbody>
+            </table>
+            
+            <p>Notice that as \(n\) increases, the empirical probability approaches the theoretical probability of \( \frac{1}{6} \approx 0.1667 \)[citation:8].</p>
+        </div>
+
+        <!-- Section 5: The Law of Large Numbers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>5. The Law of Large Numbers</h2>
+            </div>
+            
+            <div class="definition">
+                The <strong>Law of Large Numbers (LLN)</strong> states that as the number of independent trials increases, the empirical probability (relative frequency) of an event converges to its true theoretical probability[citation:2][citation:6].
+            </div>
+            
+            <div class="formula-card">
+                <h4>📌 Weak Law of Large Numbers (WLLN)</h4>
+                <div class="math-display">
+                    \[ \lim_{n \to \infty} P\left( \left| \frac{S_n}{n} - p \right| > \varepsilon \right) = 0 \quad \text{for any } \varepsilon > 0 \]
+                </div>
+                <div class="usage">
+                    Where \(S_n\) is the number of successes in \(n\) trials and \(p\) is the true probability of success. This means that for large \(n\), the empirical probability is close to \(p\) with high probability[citation:3].
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Key Implications of the Law of Large Numbers</h3>
+                <ul class="property-list">
+                    <li>Empirical probabilities become more reliable as sample size increases</li>
+                    <li>It justifies using relative frequencies as estimates of true probabilities</li>
+                    <li>It explains why insurance companies can predict losses accurately despite individual uncertainty</li>
+                    <li>It does NOT imply that past outcomes affect future outcomes (the gambler's fallacy)</li>
+                </ul>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Important Clarification — Gambler's Fallacy:</strong> The Law of Large Numbers does NOT say that if an event hasn't occurred as often as expected, it is "due" to occur. Being "due" suggests the probability has increased for later trials, which is incorrect. The law describes long-term convergence, not short-term compensation[citation:2].</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Strong Law vs Weak Law -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚖️</span>
+                <h2>6. Weak Law vs. Strong Law of Large Numbers</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-empirical">
+                    <h3>Weak Law of Large Numbers (WLLN)</h3>
+                    <p>Convergence "in probability": The probability that the empirical average deviates from the true value becomes arbitrarily small as \(n\) increases.</p>
+                    <div class="math-display">\[ \frac{S_n}{n} \xrightarrow{P} p \]</div>
+                </div>
+                <div class="comparison-card card-lln">
+                    <h3>Strong Law of Large Numbers (SLLN)</h3>
+                    <p>Convergence "almost surely": The empirical average converges to the true value with probability 1.</p>
+                    <div class="math-display">\[ \frac{S_n}{n} \xrightarrow{a.s.} p \]</div>
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Practical Difference:</strong> The Weak Law tells us that for any given margin of error, large enough samples will make large deviations rare. The Strong Law tells us that with probability 1, the sample average will eventually stay arbitrarily close to the true value and never deviate again. Both support the use of empirical probabilities[citation:3].
+            </div>
+        </div>
+
+        <!-- Section 7: Empirical vs Classical Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚔️</span>
+                <h2>7. Comparison: Empirical vs. Classical Probability</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-classical">
+                    <h3>📐 Classical (A Priori) Probability</h3>
+                    <ul>
+                        <li>Based on deductive reasoning</li>
+                        <li>Assumes equally likely outcomes</li>
+                        <li>No experimentation required</li>
+                        <li>Example: Fair coin → \(P(H) = 0.5\)</li>
+                        <li>Limited to symmetric situations</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-empirical">
+                    <h3>📊 Empirical (A Posteriori) Probability</h3>
+                    <ul>
+                        <li>Based on observed data</li>
+                        <li>No assumption of equal likelihood</li>
+                        <li>Requires repeated experimentation</li>
+                        <li>Example: Observed 32 wins in 582 games → \(P \approx 0.055\)</li>
+                        <li>Applicable to any repeatable experiment[citation:4]</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 When to Use Each Approach:</strong><br><br>
+                <strong>Classical:</strong> Rolling a fair die, drawing from a shuffled deck, tossing a fair coin — situations where physical symmetry ensures equally likely outcomes.<br><br>
+                <strong>Empirical:</strong> Estimating the probability that a randomly selected person has a certain disease, the probability a machine fails, the probability a student passes an exam — situations where equally likely outcomes cannot be assumed[citation:4].
+            </div>
+        </div>
+
+        <!-- Section 8: Properties of Empirical Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>8. Properties of Empirical Probability</h2>
+            </div>
+            
+            <div class="law-box">
+                <p>Empirical probabilities satisfy the same fundamental properties as classical probabilities:</p>
+                <div class="math-display">
+                    \[ 0 \leq P_n(E) \leq 1 \]
+                    \[ P_n(S) = 1 \quad \text{(the event always occurs in all trials)} \]
+                    \[ P_n(\emptyset) = 0 \quad \text{(the impossible event never occurs)} \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Additivity Property</h3>
+                <p>For mutually exclusive events \(A\) and \(B\) (they cannot occur simultaneously):</p>
+                <div class="math-display">
+                    \[ P_n(A \cup B) = P_n(A) + P_n(B) \]
+                </div>
+                <p>This follows directly from counting: the frequency of \(A \cup B\) is the sum of individual frequencies when \(A\) and \(B\) are mutually exclusive[citation:2].</p>
+            </div>
+        </div>
+
+        <!-- Section 9: Applications of Empirical Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">💼</span>
+                <h2>9. Real-World Applications</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Insurance and Risk Assessment</strong><br>
+                Insurance companies use historical data to estimate the probability of claims. For example, if 5,000 out of 100,000 insured drivers had accidents in a year, the empirical probability of a claim is \( \frac{5000}{100000} = 0.05 \). This 5% rate is used to set premiums.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Quality Control</strong><br>
+                A factory tests a sample of 1,000 light bulbs and finds 15 defective. The empirical probability of a defective bulb is \( \frac{15}{1000} = 0.015 \) or 1.5%. This estimate guides quality assurance decisions.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Medical Studies</strong><br>
+                In a clinical trial of 500 patients, 350 show improvement after treatment. The empirical probability of improvement is \( \frac{350}{500} = 0.70 \) or 70%. This empirical evidence supports the treatment's effectiveness.
+            </div>
+        </div>
+
+        <!-- Section 10: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>10. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Dice Roll Experiment</strong><br>
+                A die is rolled 60 times. The results are:<br>
+                Face value: 1 | 2 | 3 | 4 | 5 | 6<br>
+                Frequency:  8 | 10 | 9 | 11 | 12 | 10<br><br>
+                Find the empirical probability of:<br>
+                (a) Rolling a 5 (b) Rolling an even number (c) Rolling a number greater than 4<br><br>
+                <strong>Solution:</strong><br>
+                Total rolls: \(n = 60\)<br>
+                (a) \(P(5) = \frac{12}{60} = 0.2\)<br>
+                (b) Even numbers: 2, 4, 6 → frequencies: 10 + 11 + 10 = 31 → \(P = \frac{31}{60} \approx 0.517\)<br>
+                (c) Numbers > 4: 5, 6 → frequencies: 12 + 10 = 22 → \(P = \frac{22}{60} = \frac{11}{30} \approx 0.367\)
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Cowboy Study</strong><br>
+                According to a medical study, 63% of cowboys suffer from saddle sores, 52% suffer from bowed legs, and 40% suffer from both conditions[citation:4]. Let \(E\) = "cowboy has saddle sores," \(F\) = "cowboy has bowed legs."<br>
+                Find: (a) \(P(E)\) (b) \(P(F)\) (c) \(P(E \cap F)\) (d) \(P(E \cup F)\)<br><br>
+                <strong>Solution:</strong><br>
+                (a) \(P(E) = 0.63\) (b) \(P(F) = 0.52\) (c) \(P(E \cap F) = 0.40\)<br>
+                (d) Using addition rule: \(P(E \cup F) = 0.63 + 0.52 - 0.40 = 0.75\)
+            </div>
+        </div>
+
+        <!-- Section 11: Common Misconceptions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>11. Common Misconceptions</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Misconception 1 — The Gambler's Fallacy:</strong> Believing that past outcomes affect future independent trials. For example, after a long streak of heads, thinking tails is "due" to occur. This is false; each trial is independent with the same probability[citation:2].</p>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Misconception 2 — Small Sample Reliability:</strong> Believing that empirical probabilities from small samples are reliable estimates. In reality, small samples can produce highly variable results; the Law of Large Numbers requires many trials to achieve stability[citation:8].</p>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Misconception 3 — Exactness:</strong> Thinking empirical probability exactly equals the theoretical probability. Empirical probability is an estimate that converges to the true value but rarely equals it exactly for finite \(n\).</p>
+            </div>
+        </div>
+
+        <!-- Section 12: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>12. Practice Problems</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 1:</strong> A coin is tossed 200 times and lands heads 112 times. What is the empirical probability of heads? Based on this, would you suspect the coin is fair?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(H) = \frac{112}{200} = 0.56\). A fair coin would give 0.50. While 0.56 is different, with only 200 trials this difference could be due to chance. More trials would be needed to determine if the coin is truly biased.</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 2:</strong> Over three years, a factory produced 50,000 widgets. Of these, 425 were defective. What is the empirical probability that a randomly selected widget is defective?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{defective}) = \frac{425}{50000} = 0.0085 = 0.85\%\)</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 3:</strong> A survey of 1,000 households found that 320 had a pet dog, 280 had a pet cat, and 120 had both. What is the empirical probability that a household has a dog or a cat?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(D) = 0.32\), \(P(C) = 0.28\), \(P(D \cap C) = 0.12\)<br>
+                    \(P(D \cup C) = 0.32 + 0.28 - 0.12 = 0.48\)</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Empirical (Statistical) Probability:</strong> \(P_n(E) = \frac{\text{frequency of } E}{n}\) — based on observed data</li>
+                <li><strong>The Law of Large Numbers (LLN):</strong> As \(n \to \infty\), the empirical probability converges to the true theoretical probability</li>
+                <li>Empirical probability is essential when equally likely outcomes cannot be assumed</li>
+                <li>The Weak Law deals with convergence in probability; the Strong Law with almost sure convergence</li>
+                <li>Common applications include quality control, insurance, medicine, and social sciences</li>
+                <li><strong>Important:</strong> Empirical probability estimates improve with more trials; small samples may be unreliable</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="classical_probability.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Classical Probability</a>
+            <a href="axiomatic_probability.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Axiomatic Probability →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Statistical (Empirical) Probability — the relative frequency interpretation of probability, grounded in the Law of Large Numbers.
+    </footer>
+</div>
+</body>
+</html>
