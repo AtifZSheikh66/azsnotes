@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Axiomatic Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .axiom-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.25rem 0;
+            border-radius: 0.75rem;
+        }
+        .axiom-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .formula-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .formula-card h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-top: 3px solid;
+        }
+        .card-axiom { border-top-color: #3b82f6; }
+        .card-classical { border-top-color: #10b981; }
+        .card-kolmogorov { border-top-color: #8b5cf6; }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .law-box {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+        @media (max-width: 640px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .kolmogorov-quote {
+            background: #eef2ff;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin: 1.25rem 0;
+            font-style: italic;
+            border: 1px solid #c7d2fe;
+        }
+        .special-case-box {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin: 1.25rem 0;
+            border-left: 4px solid #eab308;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Axiomatic Probability</span>
+        </div>
+        <h1>📐 Axiomatic Probability</h1>
+        <p>The modern mathematical foundation of probability theory — Kolmogorov's axioms</p>
+        <span class="badge">Probability Theory · Unit I · Axiomatic Definition</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. The Need for an Axiomatic Foundation</h2>
+            </div>
+            <div class="definition">
+                The <strong>axiomatic approach to probability</strong> was developed by the Russian mathematician <strong>Andrey Kolmogorov</strong> in 1933 in his seminal work "Foundations of the Theory of Probability." It provides a rigorous mathematical foundation that unifies all previous interpretations of probability.
+            </div>
+            <p>Before Kolmogorov, probability theory lacked a solid mathematical basis. The classical definition was limited to equally likely outcomes, and the empirical definition required repeatable experiments. Kolmogorov's axiomatic approach:</p>
+            <ul>
+                <li>Places probability on firm mathematical ground using measure theory</li>
+                <li>Provides a unified framework for all probability interpretations</li>
+                <li>Makes probability a branch of mathematics rather than a purely empirical science</li>
+                <li>Allows for infinite sample spaces and continuous distributions</li>
+            </ul>
+            <div class="kolmogorov-quote">
+                "Probability theory is a branch of mathematics that deals with the study of random phenomena. Its basic concepts are formulated axiomatically."
+            </div>
+        </div>
+
+        <!-- Section 2: The Probability Space -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎯</span>
+                <h2>2. The Probability Space — The Mathematical Framework</h2>
+            </div>
+            <div class="definition">
+                A <strong>probability space</strong> is a mathematical triple \( (\Omega, \mathcal{F}, P) \) consisting of:
+                <ul>
+                    <li>\( \Omega \) — the sample space (set of all possible outcomes)</li>
+                    <li>\( \mathcal{F} \) — a sigma-algebra of events (subsets of \( \Omega \))</li>
+                    <li>\( P \) — a probability measure (assigns probabilities to events)</li>
+                </ul>
+            </div>
+            
+            <div class="formula-card">
+                <h4>📌 Components of a Probability Space</h4>
+                <div class="math-display">
+                    \[ \Omega = \{\omega_1, \omega_2, \omega_3, \ldots\} \]
+                </div>
+                <div class="math-display">
+                    \[ \mathcal{F} \subseteq \mathcal{P}(\Omega) \quad \text{(collection of events)} \]
+                </div>
+                <div class="math-display">
+                    \[ P : \mathcal{F} \to [0, 1] \quad \text{(probability measure)} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Kolmogorov's Three Axioms -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>3. Kolmogorov's Three Axioms of Probability</h2>
+            </div>
+            
+            <div class="axiom-box">
+                <h3>Axiom 1: Non-negativity</h3>
+                <div class="math-display">
+                    \[ P(E) \geq 0 \quad \text{for every event } E \in \mathcal{F} \]
+                </div>
+                <p>The probability of any event is a non-negative real number.</p>
+            </div>
+            
+            <div class="axiom-box">
+                <h3>Axiom 2: Unit Measure (Normalization)</h3>
+                <div class="math-display">
+                    \[ P(\Omega) = 1 \]
+                </div>
+                <p>The probability of the entire sample space (the certain event) is 1.</p>
+            </div>
+            
+            <div class="axiom-box">
+                <h3>Axiom 3: Countable Additivity (Sigma-additivity)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{\infty} E_i \right) = \sum_{i=1}^{\infty} P(E_i) \]
+                </div>
+                <p>For any countable sequence of mutually exclusive events \(E_1, E_2, E_3, \ldots\) (i.e., \(E_i \cap E_j = \emptyset\) for \(i \neq j\)), the probability of their union equals the sum of their individual probabilities.</p>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Note:</strong> For finite sample spaces, the third axiom simplifies to finite additivity:</p>
+                <div class="math-display">
+                    \[ P(E_1 \cup E_2 \cup \cdots \cup E_n) = P(E_1) + P(E_2) + \cdots + P(E_n) \quad \text{for mutually exclusive } E_i \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Derived Properties -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚙️</span>
+                <h2>4. Important Properties Derived from the Axioms</h2>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 1: Probability of the Impossible Event</h3>
+                <div class="math-display">
+                    \[ P(\emptyset) = 0 \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 2: Complement Rule</h3>
+                <div class="math-display">
+                    \[ P(E^c) = 1 - P(E) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 3: Monotonicity</h3>
+                <div class="math-display">
+                    \[ \text{If } A \subseteq B \text{, then } P(A) \leq P(B) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 4: Finite Additivity (special case of Axiom 3)</h3>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B) \quad \text{if } A \cap B = \emptyset \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 5: General Addition Rule (Union)</h3>
+                <div class="math-display">
+                    \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 6: Inclusion-Exclusion Principle for Three Events</h3>
+                <div class="math-display">
+                    \[ P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 7: Boole's Inequality (Union Bound)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) \leq \sum_{i=1}^{n} P(A_i) \]
+                </div>
+            </div>
+            
+            <div class="law-box">
+                <h3>Property 8: Continuity of Probability</h3>
+                <div class="math-display">
+                    \[ \text{If } A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots \text{, then } P\left( \bigcup_{i=1}^{\infty} A_i \right) = \lim_{n \to \infty} P(A_n) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Classical Probability as a Special Case -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎲</span>
+                <h2>5. Classical Probability as a Special Case of Axiomatic Probability</h2>
+            </div>
+            
+            <div class="special-case-box">
+                <p><strong>Classical probability is a special case of axiomatic probability</strong> where the sample space is finite and all outcomes are equally likely.</p>
+            </div>
+            
+            <div class="formula-card">
+                <h4>📌 Classical Probability Derivation from Axioms</h4>
+                <div class="math-display">
+                    \[ \text{Let } \Omega = \{\omega_1, \omega_2, \ldots, \omega_n\} \text{ with } |\Omega| = n \]
+                </div>
+                <div class="math-display">
+                    \[ \text{By Axiom 1: } P(\{\omega_i\}) \geq 0 \quad \forall i \]
+                </div>
+                <div class="math-display">
+                    \[ \text{By Axiom 2: } \sum_{i=1}^{n} P(\{\omega_i\}) = 1 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{If equally likely: } P(\{\omega_i\}) = \frac{1}{n} \quad \forall i \]
+                </div>
+                <div class="math-display">
+                    \[ \text{Then for any event } A \subseteq \Omega: P(A) = \sum_{\omega_i \in A} P(\{\omega_i\}) = \frac{|A|}{n} \]
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-classical">
+                    <h3>📐 Classical Probability</h3>
+                    <ul>
+                        <li>Assumes equally likely outcomes</li>
+                        <li>Finite sample space only</li>
+                        <li>\( P(A) = \frac{|A|}{|\Omega|} \)</li>
+                        <li>Based on symmetry/indifference</li>
+                    </ul>
+                </div>
+                <div class="comparison-card card-axiom">
+                    <h3>📊 Axiomatic Probability</h3>
+                    <ul>
+                        <li>No assumption of equally likely outcomes</li>
+                        <li>Works for finite, countably infinite, and uncountable spaces</li>
+                        <li>\( P \) is any measure satisfying three axioms</li>
+                        <li>Classical is a special case when \( P \) is uniform</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Classical Probability as a Special Case</strong><br>
+                Consider rolling a fair die. Sample space: \( \Omega = \{1, 2, 3, 4, 5, 6\} \).<br>
+                Classical approach: \( P(1) = P(2) = \cdots = P(6) = \frac{1}{6} \) (by symmetry).<br>
+                Axiomatic approach: Define \( P(\{i\}) = \frac{1}{6} \). Then:
+                <ul>
+                    <li>Axiom 1: \( \frac{1}{6} \geq 0 \) ✓</li>
+                    <li>Axiom 2: \( \sum_{i=1}^6 \frac{1}{6} = 1 \) ✓</li>
+                    <li>Axiom 3: For any mutually exclusive events, additivity holds ✓</li>
+                </ul>
+                Thus the classical assignment satisfies all three axioms, making classical probability a valid probability measure within the axiomatic framework.
+            </div>
+        </div>
+
+        <!-- Section 6: Other Probability Definitions as Special Cases -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔍</span>
+                <h2>6. Empirical and Subjective Probabilities in the Axiomatic Framework</h2>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>📊 Empirical (Statistical) Probability</h3>
+                    <p>Within the axiomatic framework, empirical probability is viewed as an <strong>estimate</strong> of the true probability measure \(P\). The Law of Large Numbers ensures that the empirical relative frequency converges to \(P(E)\).</p>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} \frac{\text{Number of times } E \text{ occurs}}{n} = P(E) \]
+                    </div>
+                </div>
+                <div class="comparison-card card-kolmogorov">
+                    <h3>🧠 Subjective (Bayesian) Probability</h3>
+                    <p>Subjective probabilities (degrees of belief) also satisfy Kolmogorov's axioms if they are coherent. A person's subjective probability assignments must obey the axioms to avoid Dutch book (sure loss).</p>
+                    <div class="math-display">
+                        \[ \text{Coherence} \iff \text{Satisfies Axioms 1-3} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Unification:</strong> The beauty of the axiomatic approach is that it provides a single mathematical framework that encompasses all valid probability assignments — whether derived from classical symmetry, empirical frequency, or subjective belief — as long as they satisfy the three axioms.</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Beyond Finite Sample Spaces -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">∞</span>
+                <h2>7. Axiomatic Probability for Infinite Sample Spaces</h2>
+            </div>
+            
+            <p>The axiomatic approach is essential for dealing with infinite sample spaces, where classical probability fails. For example, consider selecting a random real number between 0 and 1.</p>
+            
+            <div class="formula-card">
+                <h4>📌 Uniform Distribution on [0, 1]</h4>
+                <div class="math-display">
+                    \[ \Omega = [0, 1] \quad \text{(uncountably infinite)} \]
+                </div>
+                <div class="math-display">
+                    \[ P([a, b]) = b - a \quad \text{for } 0 \leq a \leq b \leq 1 \]
+                </div>
+                <div class="math-display">
+                    \[ P(\{\omega\}) = 0 \quad \text{for any single point } \omega \]
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Key Insight:</strong> In continuous sample spaces, individual outcomes can have probability zero while intervals have positive probability. This is perfectly valid within the axiomatic framework but cannot be captured by classical probability.
+            </div>
+        </div>
+
+        <!-- Section 8: Countable Additivity vs. Finite Additivity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>8. Countable Additivity vs. Finite Additivity</h2>
+            </div>
+            
+            <div class="definition">
+                Kolmogorov's third axiom requires <strong>countable additivity</strong> (sigma-additivity), which is stronger than finite additivity. This distinction is crucial for infinite sample spaces.
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card card-axiom">
+                    <h3>Finite Additivity</h3>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) \quad \text{for mutually exclusive } A_i \]
+                    </div>
+                    <p>Valid for finite collections of events.</p>
+                </div>
+                <div class="comparison-card card-kolmogorov">
+                    <h3>Countable Additivity (Sigma-additivity)</h3>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i) \quad \text{for mutually exclusive } A_i \]
+                    </div>
+                    <p>Required for infinite collections; essential for continuous distributions and limit theorems.</p>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Why Countable Additivity Matters:</strong><br>
+                Consider choosing a random integer. If we only require finite additivity, we could assign zero probability to each integer but still have \(P(\mathbb{Z}) = 1\). This leads to paradoxes. Countable additivity prevents such inconsistencies by requiring:
+                \[ 1 = P(\mathbb{Z}) = P\left( \bigcup_{i=1}^{\infty} \{i\} \right) = \sum_{i=1}^{\infty} P(\{i\}) \]
+                Thus the sum of probabilities over all integers must be 1, which is impossible if each has probability zero. This shows that a uniform distribution over a countable infinite set is impossible in the axiomatic framework.
+            </div>
+        </div>
+
+        <!-- Section 9: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>9. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Verifying Axioms</strong><br>
+                Let \( \Omega = \{1, 2, 3, 4\} \). Define \( P(\{1\}) = 0.1, P(\{2\}) = 0.2, P(\{3\}) = 0.3, P(\{4\}) = 0.4 \). Verify the axioms.<br><br>
+                <strong>Solution:</strong><br>
+                Axiom 1: All probabilities ≥ 0 ✓<br>
+                Axiom 2: \( \sum P = 0.1 + 0.2 + 0.3 + 0.4 = 1.0 \) ✓<br>
+                Axiom 3: For any mutually exclusive events, additivity holds (by construction) ✓<br>
+                This is a valid probability measure.
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Classical as Axiomatic</strong><br>
+                Show that the classical probability definition satisfies Kolmogorov's axioms.<br><br>
+                <strong>Solution:</strong><br>
+                Let \( \Omega = \{\omega_1, \ldots, \omega_n\} \) with \( P(\{\omega_i\}) = \frac{1}{n} \).<br>
+                Axiom 1: \( \frac{1}{n} \geq 0 \) ✓<br>
+                Axiom 2: \( \sum_{i=1}^n \frac{1}{n} = 1 \) ✓<br>
+                Axiom 3: If \( A \) and \( B \) are mutually exclusive, \( |A \cup B| = |A| + |B| \), so:
+                \[ P(A \cup B) = \frac{|A \cup B|}{n} = \frac{|A| + |B|}{n} = \frac{|A|}{n} + \frac{|B|}{n} = P(A) + P(B) \]
+                For more than two disjoint events, additivity extends by induction.
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: Using Axioms to Find Probability</strong><br>
+                Let \( A \) and \( B \) be events with \( P(A) = 0.4 \), \( P(B) = 0.6 \), and \( P(A \cup B) = 0.8 \). Find \( P(A \cap B) \).<br><br>
+                <strong>Solution:</strong><br>
+                Using the addition rule (derived from the axioms):
+                \[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]
+                \[ 0.8 = 0.4 + 0.6 - P(A \cap B) \]
+                \[ 0.8 = 1.0 - P(A \cap B) \]
+                \[ P(A \cap B) = 0.2 \]
+            </div>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 1:</strong> A probability measure is defined on a sample space with three outcomes. \( P(a) = 0.2 \), \( P(b) = 0.5 \). What is \( P(c) \)?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">By Axiom 2: \( P(a) + P(b) + P(c) = 1 \Rightarrow 0.2 + 0.5 + P(c) = 1 \Rightarrow P(c) = 0.3 \)</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 2:</strong> For events \( A \) and \( B \), prove that \( P(A \cup B) + P(A \cap B) = P(A) + P(B) \).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">By the addition rule: \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \). Rearranging gives \( P(A \cup B) + P(A \cap B) = P(A) + P(B) \).</p>
+                </details>
+            </div>
+            
+            <div class="principle-box">
+                <p><strong>Problem 3:</strong> Is it possible to have \( P(A) = 0.6 \), \( P(B) = 0.5 \), and \( P(A \cap B) = 0.2 \)? Explain.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\( P(A \cup B) = 0.6 + 0.5 - 0.2 = 0.9 \). Since probabilities must be ≤ 1, and 0.9 ≤ 1, this is possible. The only constraint is that \( P(A \cap B) \leq \min(P(A), P(B)) = 0.5 \), and 0.2 ≤ 0.5 ✓.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Kolmogorov's Three Axioms:</strong> Non-negativity, Unit Measure, and Countable Additivity form the foundation of modern probability theory</li>
+                <li><strong>Axiomatic probability</strong> provides a rigorous mathematical framework applicable to any valid probability assignment</li>
+                <li><strong>Classical probability</strong> is a special case where \( P(\{\omega_i\}) = \frac{1}{n} \) for all outcomes in a finite sample space</li>
+                <li><strong>Empirical and subjective probabilities</strong> also fit within the axiomatic framework as long as they satisfy the axioms</li>
+                <li>The axioms allow probability theory to handle finite, countably infinite, and uncountably infinite sample spaces</li>
+                <li>Countable additivity (not just finite additivity) is essential for infinite sample spaces and limit theorems</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="relative_frequency_probability.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Empirical Probability</a>
+            <a href="addition_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Addition Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Axiomatic Probability — the modern mathematical foundation established by Andrey Kolmogorov in 1933.<br>
+        All valid probability assignments must satisfy the three axioms: non-negativity, unit measure, and countable additivity.
+    </footer>
+</div>
+</body>
+</html>
