@@ -452,182 +452,144 @@
 </div>
 
 <script>
-    // D3.js Venn diagram renderer
-    function drawVenn(containerId, operation, setAName = "A", setBName = "B", fillArea = null) {
-        const width = 200, height = 200;
-        const svg = d3.select(containerId)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("class", "venn-svg")
-            .append("g")
-            .attr("transform", `translate(${width/2}, ${height/2})`);
-        
-        // Circle parameters
-        const radius = 70;
-        const offset = 28;
-        
-        // Draw circle A (left)
-        svg.append("circle")
-            .attr("cx", -offset)
-            .attr("cy", 0)
-            .attr("r", radius)
-            .attr("fill", fillArea === "A" ? "#3b82f6" : (fillArea === "A_only" ? "#3b82f6" : "#e2e8f0"))
-            .attr("fill-opacity", (fillArea === "A" || fillArea === "A_only" || fillArea === "union" || fillArea === "symdiff_A") ? 0.6 : 0.3)
-            .attr("stroke", "#1e40af")
-            .attr("stroke-width", 2);
-        
-        // Draw circle B (right)
-        svg.append("circle")
-            .attr("cx", offset)
-            .attr("cy", 0)
-            .attr("r", radius)
-            .attr("fill", fillArea === "B" ? "#10b981" : (fillArea === "B_only" ? "#10b981" : (fillArea === "union" ? "#10b981" : "#e2e8f0")))
-            .attr("fill-opacity", (fillArea === "B" || fillArea === "B_only" || fillArea === "union" || fillArea === "symdiff_B") ? 0.6 : 0.3)
-            .attr("stroke", "#065f46")
-            .attr("stroke-width", 2);
-        
-        // Draw intersection overlay if needed
-        if (fillArea === "intersection" || fillArea === "symdiff_both") {
-            // Create a clip path for intersection
-            svg.append("circle")
-                .attr("cx", -offset)
-                .attr("cy", 0)
-                .attr("r", radius)
-                .attr("fill", "#8b5cf6")
-                .attr("fill-opacity", 0.6)
-                .attr("clip-path", "url(#clipB)");
-        }
-        
-        // For A - B (A only)
-        if (fillArea === "A_only") {
-            svg.append("circle")
-                .attr("cx", -offset)
-                .attr("cy", 0)
-                .attr("r", radius)
-                .attr("fill", "#3b82f6")
-                .attr("fill-opacity", 0.6)
-                .attr("mask", "url(#maskB)");
-        }
-        
-        // For B - A (B only)
-        if (fillArea === "B_only") {
-            svg.append("circle")
-                .attr("cx", offset)
-                .attr("cy", 0)
-                .attr("r", radius)
-                .attr("fill", "#10b981")
-                .attr("fill-opacity", 0.6)
-                .attr("mask", "url(#maskA)");
-        }
-        
-        // Labels
-        svg.append("text")
-            .attr("x", -offset - 15)
-            .attr("y", -5)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "14px")
-            .attr("font-weight", "bold")
-            .text(setAName);
-        
-        svg.append("text")
-            .attr("x", offset + 15)
-            .attr("y", -5)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "14px")
-            .attr("font-weight", "bold")
-            .text(setBName);
-        
-        return svg;
-    }
-    
-    // Define the Venn diagram data
-    const operations = [
-        { name: "Union (A ∪ B)", operation: "A ∪ B", formula: "A occurs OR B occurs", area: "union", color: "#3b82f6, #10b981" },
-        { name: "Intersection (A ∩ B)", operation: "A ∩ B", formula: "A AND B both occur", area: "intersection", color: "#8b5cf6" },
-        { name: "Complement of A (Aᶜ)", operation: "A^c", formula: "A does NOT occur", area: "complement", color: "#f59e0b" },
-        { name: "Difference (A - B)", operation: "A - B", formula: "A occurs but B does NOT", area: "A_only", color: "#3b82f6" },
-        { name: "Difference (B - A)", operation: "B - A", formula: "B occurs but A does NOT", area: "B_only", color: "#10b981" },
-        { name: "Symmetric Difference (A △ B)", operation: "A \\triangle B", formula: "Exactly one occurs (XOR)", area: "symdiff", color: "#ec489a" }
-    ];
-    
-    // Simple text-based Venn representation using HTML/CSS
+    // D3.js not heavily used - pure SVG approach
     const gridContainer = document.getElementById("venn-grid");
     
     function createSimpleVenn(operation, formulaText, operationSymbol) {
         const card = document.createElement("div");
         card.className = "venn-card";
         
-        let vennHtml = `
-            <h3>${operation}</h3>
-            <div class="venn-container">
-                <svg width="200" height="200" viewBox="0 0 200 200" style="display:block; margin:0 auto;">
-        `;
-        
         const radius = 70;
         const offset = 28;
         const centerX = 100, centerY = 100;
         
-        // Default styles
-        let fillA = "#e2e8f0", fillB = "#e2e8f0", fillInter = "none", opacityA = 0.3, opacityB = 0.3;
-        let strokeA = "#1e40af", strokeB = "#065f46";
+        let vennHtml = `
+            <h3>${operation}</h3>
+            <div class="venn-container">
+                <svg width="200" height="200" viewBox="0 0 200 200" style="display:block; margin:0 auto;">
+                    <defs>
+                        <clipPath id="clipA_${operationSymbol}">
+                            <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
+                        </clipPath>
+                        <clipPath id="clipB_${operationSymbol}">
+                            <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
+                        </clipPath>
+                    </defs>
+        `;
+        
+        // Draw outer rectangle (sample space) - light gray background
+        vennHtml += `<rect x="0" y="0" width="200" height="200" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>`;
+        
+        // Default: both circles light gray
+        let circleAFill = "#e2e8f0";
+        let circleBFill = "#e2e8f0";
+        let circleAOpacity = 0.5;
+        let circleBOpacity = 0.5;
+        let extraElements = "";
         
         switch(operationSymbol) {
             case "union":
-                fillA = "#3b82f6"; fillB = "#10b981"; opacityA = 0.6; opacityB = 0.6;
+                circleAFill = "#3b82f6";
+                circleBFill = "#10b981";
+                circleAOpacity = 0.7;
+                circleBOpacity = 0.7;
                 break;
+                
             case "intersection":
-                fillA = "#e2e8f0"; fillB = "#e2e8f0"; fillInter = "#8b5cf6";
+                // Both circles gray, overlap filled with purple
+                circleAFill = "#e2e8f0";
+                circleBFill = "#e2e8f0";
+                circleAOpacity = 0.5;
+                circleBOpacity = 0.5;
+                // Purple overlap: draw a circle clipped by B, and another clipped by A
+                extraElements = `
+                    <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#8b5cf6" fill-opacity="0.8" clip-path="url(#clipB_${operationSymbol})"/>
+                    <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#8b5cf6" fill-opacity="0.8" clip-path="url(#clipA_${operationSymbol})"/>
+                `;
                 break;
+                
             case "complement":
-                // For complement, we show A with lighter fill and add pattern or note
-                fillA = "#e2e8f0"; fillB = "#f59e0b"; opacityB = 0.6;
-                break;
+                // Complement of A: everything OUTSIDE circle A
+                // First fill entire rectangle with complement color
+                vennHtml = `
+                    <h3>${operation}</h3>
+                    <div class="venn-container">
+                        <svg width="200" height="200" viewBox="0 0 200 200" style="display:block; margin:0 auto;">
+                            <defs>
+                                <clipPath id="clipA_${operationSymbol}">
+                                    <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
+                                </clipPath>
+                                <clipPath id="clipB_${operationSymbol}">
+                                    <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
+                                </clipPath>
+                            </defs>
+                            <rect x="0" y="0" width="200" height="200" fill="#f59e0b" fill-opacity="0.7"/>
+                            <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="white" fill-opacity="0.9" stroke="#1e40af" stroke-width="2"/>
+                            <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#e2e8f0" fill-opacity="0.4" stroke="#065f46" stroke-width="1.5"/>
+                            <text x="${centerX - offset - 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">A</text>
+                            <text x="${centerX + offset + 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">B</text>
+                        </svg>
+                    </div>
+                    <div class="venn-description">${formulaText}</div>
+                    <div class="venn-formula">${operation}</div>
+                `;
+                card.innerHTML = vennHtml;
+                return card;
+                
             case "A_minus_B":
-                fillA = "#3b82f6"; opacityA = 0.6; fillB = "#e2e8f0";
+                circleAFill = "#3b82f6";
+                circleBFill = "#e2e8f0";
+                circleAOpacity = 0.7;
+                circleBOpacity = 0.4;
                 break;
+                
             case "B_minus_A":
-                fillA = "#e2e8f0"; fillB = "#10b981"; opacityB = 0.6;
+                circleAFill = "#e2e8f0";
+                circleBFill = "#10b981";
+                circleAOpacity = 0.4;
+                circleBOpacity = 0.7;
                 break;
+                
             case "symdiff":
-                fillA = "#e2e8f0"; fillB = "#e2e8f0";
+                // Symmetric difference: A-only + B-only (exclude intersection)
+                circleAFill = "#e2e8f0";
+                circleBFill = "#e2e8f0";
+                circleAOpacity = 0.4;
+                circleBOpacity = 0.4;
+                // Show pink in A-only and B-only regions
+                extraElements = `
+                    <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipB_${operationSymbol})"/>
+                    <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.7" clip-path="url(#clipA_${operationSymbol})"/>
+                `;
                 break;
+                
             default:
-                fillA = "#3b82f6"; fillB = "#10b981"; opacityA = 0.6; opacityB = 0.6;
+                circleAFill = "#3b82f6";
+                circleBFill = "#10b981";
+                circleAOpacity = 0.6;
+                circleBOpacity = 0.6;
         }
         
-        vennHtml += `
-            <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="${fillA}" fill-opacity="${opacityA}" stroke="${strokeA}" stroke-width="2"/>
-            <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="${fillB}" fill-opacity="${opacityB}" stroke="${strokeB}" stroke-width="2"/>
-        `;
-        
-        if (fillInter !== "none") {
-            vennHtml += `<circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="${fillInter}" fill-opacity="0.6" clip-path="url(#clipB)"/>`;
-        }
-        
-        if (operationSymbol === "symdiff") {
+        // For non-complement cases, build standard SVG
+        if (operationSymbol !== "complement") {
             vennHtml += `
-                <clipPath id="clipSymA">
-                    <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}"/>
-                </clipPath>
-                <clipPath id="clipSymB">
-                    <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}"/>
-                </clipPath>
-                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.6" clip-path="url(#clipSymB)"/>
-                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="#ec489a" fill-opacity="0.6" clip-path="url(#clipSymA)"/>
+                <circle cx="${centerX - offset}" cy="${centerY}" r="${radius}" fill="${circleAFill}" fill-opacity="${circleAOpacity}" stroke="#1e40af" stroke-width="2"/>
+                <circle cx="${centerX + offset}" cy="${centerY}" r="${radius}" fill="${circleBFill}" fill-opacity="${circleBOpacity}" stroke="#065f46" stroke-width="2"/>
+                ${extraElements}
+                <text x="${centerX - offset - 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">A</text>
+                <text x="${centerX + offset + 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">B</text>
             `;
-        }
-        
-        vennHtml += `
-            <text x="${centerX - offset - 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">A</text>
-            <text x="${centerX + offset + 15}" y="${centerY - 5}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">B</text>
-        </svg>
+            
+            vennHtml += `
+                </svg>
             </div>
             <div class="venn-description">${formulaText}</div>
             <div class="venn-formula">${operation}</div>
         `;
         
         card.innerHTML = vennHtml;
+        }
+        
         return card;
     }
     
@@ -635,19 +597,19 @@
     gridContainer.innerHTML = "";
     
     const operationsList = [
-        { name: "Union (A ∪ B)", formula: "A occurs OR B occurs (or both)", symbol: "union", latex: "A \\cup B" },
-        { name: "Intersection (A ∩ B)", formula: "A AND B both occur", symbol: "intersection", latex: "A \\cap B" },
-        { name: "Complement (Aᶜ)", formula: "A does NOT occur", symbol: "complement", latex: "A^c" },
-        { name: "Difference (A - B)", formula: "A occurs but B does NOT", symbol: "A_minus_B", latex: "A - B" },
-        { name: "Difference (B - A)", formula: "B occurs but A does NOT", symbol: "B_minus_A", latex: "B - A" },
-        { name: "Symmetric Difference (A △ B)", formula: "Exactly one occurs (exclusive OR)", symbol: "symdiff", latex: "A \\triangle B" }
+        { name: "Union (A ∪ B)", formula: "A occurs OR B occurs (or both)", symbol: "union" },
+        { name: "Intersection (A ∩ B)", formula: "A AND B both occur", symbol: "intersection" },
+        { name: "Complement (Aᶜ)", formula: "A does NOT occur (everything outside A)", symbol: "complement" },
+        { name: "Difference (A - B)", formula: "A occurs but B does NOT", symbol: "A_minus_B" },
+        { name: "Difference (B - A)", formula: "B occurs but A does NOT", symbol: "B_minus_A" },
+        { name: "Symmetric Difference (A △ B)", formula: "Exactly one occurs (exclusive OR)", symbol: "symdiff" }
     ];
     
     operationsList.forEach(op => {
         gridContainer.appendChild(createSimpleVenn(op.name, op.formula, op.symbol));
     });
     
-    // Add a note about Venn diagrams
+    // Add a note card about Venn diagrams
     const noteCard = document.createElement("div");
     noteCard.className = "venn-card";
     noteCard.style.background = "#f0fdf4";
@@ -658,8 +620,10 @@
             <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
                 <li style="margin: 0.25rem 0;"><strong style="color:#3b82f6;">Blue circle</strong> = Event A</li>
                 <li style="margin: 0.25rem 0;"><strong style="color:#10b981;">Green circle</strong> = Event B</li>
-                <li style="margin: 0.25rem 0;"><strong>Shaded regions</strong> = The resulting event</li>
-                <li style="margin: 0.25rem 0;">The rectangle represents the entire sample space Ω</li>
+                <li style="margin: 0.25rem 0;"><strong style="color:#8b5cf6;">Purple region</strong> = Intersection (A ∩ B)</li>
+                <li style="margin: 0.25rem 0;"><strong style="color:#ec489a;">Pink region</strong> = Symmetric difference (A △ B)</li>
+                <li style="margin: 0.25rem 0;"><strong style="color:#f59e0b;">Orange region</strong> = Complement (outside A)</li>
+                <li style="margin: 0.25rem 0;">The light gray rectangle represents the entire sample space Ω</li>
             </ul>
         </div>
         <div class="venn-formula">Visual probability intuition</div>
