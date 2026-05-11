@@ -228,7 +228,7 @@
                 <div class="proof-step">
                     <strong>Step 3 — Group the terms after pairwise intersections:</strong>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \left[ \sum_{i=1}^{n} P(A_i) - \mathop{\sum\sum}_{i < j} P(A_i \cap A_j) \right] + \left[\mathop{\sum\sum\sum}_{i<j<k} P(A_i \cap A_j \cap A_k) - \mathop{\sum\sum\sum\sum}_{i<j<k<l} P(A_i \cap A_j \cap A_k \cap A_l) + \cdots \right] \]
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \left[ \sum_{i=1}^{n} P(A_i) - \mathop{\sum\sum}_{i < j} P(A_i \cap A_j) \right] + \left[\mathop{\sum\sum\sum}_{i < j < k} P(A_i \cap A_j \cap A_k) - \mathop{\sum\sum\sum\sum}_{i<j<k<l} P(A_i \cap A_j \cap A_k \cap A_l) + \cdots \right] \]
                     </div>
                 </div>
                 
@@ -240,7 +240,7 @@
                     </div>
                     <p>Since the left-hand side is a probability, it is \( \geq 0 \). This property extends to higher orders. More generally, the partial sums of the inclusion-exclusion series alternate as upper and lower bounds. In particular, the sum up to pairwise intersections gives a lower bound because the next term (sum over triple intersections) is added with a positive sign, and the subsequent alternating terms have decreasing magnitudes. Formally:</p>
                     <div class="math-display">
-                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) \geq \sum_{i=1}^{n} P(A_i) - \mathop{\sum\sum}_{i<j} P(A_i \cap A_j) \]
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) \geq \sum_{i=1}^{n} P(A_i) - \mathop{\sum\sum}_{i < j} P(A_i \cap A_j) \]
                     </div>
                 </div>
                 
@@ -308,7 +308,7 @@
             <div class="corollary-box">
                 <strong>📌 Corollary 3.3 (Multiple Testing Context):</strong> In hypothesis testing with m tests, if each individual test has significance level α, the probability of at least one false rejection is at most mα by Boole. The complementary (lower bound) form is also useful for bounding the probability of no rejections.
             </div>
-        </div>
+            </div>
 
         <!-- Section 4: Relationship Between Bonferroni and Boole -->
         <div class="section">
