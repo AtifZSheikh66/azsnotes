@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Probability of "At Least One" Event | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.85rem 1rem;
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Probability of "At Least One" Event</span>
+        </div>
+        <h1>📊 Probability of "At Least One" Event</h1>
+        <p>Computing the probability that at least one of several independent events occurs</p>
+        <span class="badge">Probability Theory · Unit II · Independent Events Applications</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                A common problem in probability is finding the probability that <strong>at least one</strong> of several events occurs. This is equivalent to \(P(A_1 \cup A_2 \cup \cdots \cup A_n)\). When the events are independent, this probability has a particularly simple form using complements.
+            </div>
+            <p>The complement of "at least one event occurs" is the event that <strong>none</strong> of the events occur. Thus, we have the fundamental relationship:</p>
+            <div class="math-display">
+                \[ P(\text{at least one}) = 1 - P(\text{none}) \]
+            </div>
+            <p>When events are independent, the probability that none occur is simply the product of the probabilities that each does not occur.</p>
+        </div>
+
+        <!-- Section 2: Basic Setup and Notation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Notation and Setup</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Given:</h3>
+                <ul>
+                    <li>\(A_1, A_2, \ldots, A_n\) are \(n\) independent events</li>
+                    <li>\(P(A_i) = p_i\) for \(i = 1, 2, \ldots, n\)</li>
+                    <li>\(0 \leq p_i \leq 1\) for all \(i\)</li>
+                </ul>
+                <p>We want to find:</p>
+                <ul>
+                    <li>\(P(\text{at least one of } A_1, A_2, \ldots, A_n \text{ occurs})\)</li>
+                    <li>\(P(\text{none of the events occur}) = P(A_1^c \cap A_2^c \cap \cdots \cap A_n^c)\)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: Probability of None Occurring -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>3. Probability That None of the Events Occur</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Probability of None Occurring)</h3>
+                <p>For \(n\) independent events \(A_1, A_2, \ldots, A_n\) with probabilities \(P(A_i) = p_i\),</p>
+                <div class="math-display">
+                    \[ P(\text{none occur}) = P\left( \bigcap_{i=1}^{n} A_i^c \right) = \prod_{i=1}^{n} (1 - p_i) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Express "none occur" as the intersection of complements:</strong>
+                    <div class="math-display">
+                        \[ \text{None occur} = A_1^c \cap A_2^c \cap \cdots \cap A_n^c \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use the independence of the events:</strong>
+                    <p>Since \(A_1, A_2, \ldots, A_n\) are independent, their complements \(A_1^c, A_2^c, \ldots, A_n^c\) are also independent.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply the multiplication theorem for independent events:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcap_{i=1}^{n} A_i^c \right) = \prod_{i=1}^{n} P(A_i^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Use the complement rule:</strong>
+                    <div class="math-display">
+                        \[ P(A_i^c) = 1 - P(A_i) = 1 - p_i \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(\text{none occur}) = \prod_{i=1}^{n} (1 - p_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1:</strong> If all events have the same probability \(p\) (i.e., \(p_i = p\) for all \(i\)), then:
+                <div class="math-display">\[ P(\text{none occur}) = (1 - p)^n \]</div>
+                
+                <strong>📌 Corollary 3.2:</strong> The probability that at least one event occurs is:
+                <div class="math-display">\[ P(\text{at least one}) = 1 - \prod_{i=1}^{n} (1 - p_i) \]</div>
+                
+                <strong>📌 Corollary 3.3:</strong> If the events are not independent, the probability of none occurring cannot be simplified to a product; one must use inclusion-exclusion or other methods.
+            </div>
+        </div>
+
+        <!-- Section 4: Probability of At Least One Occurring -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>4. Probability That At Least One Event Occurs</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Probability of At Least One Occurring)</h3>
+                <p>For \(n\) independent events \(A_1, A_2, \ldots, A_n\) with probabilities \(P(A_i) = p_i\),</p>
+                <div class="math-display">
+                    \[ P(\text{at least one occurs}) = P\left( \bigcup_{i=1}^{n} A_i \right) = 1 - \prod_{i=1}^{n} (1 - p_i) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Note the complement relationship:</strong>
+                    <p>The event "at least one event occurs" is the complement of "none of the events occur".</p>
+                    <div class="math-display">
+                        \[ \bigcup_{i=1}^{n} A_i = \left( \bigcap_{i=1}^{n} A_i^c \right)^c \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply the complement rule:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = 1 - P\left( \bigcap_{i=1}^{n} A_i^c \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Substitute the result from Theorem 3:</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{n} A_i \right) = 1 - \prod_{i=1}^{n} (1 - p_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(\text{at least one}) = 1 - \prod_{i=1}^{n} (1 - p_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Equal Probabilities):</strong> If all events have the same probability \(p\), then:
+                <div class="math-display">\[ P(\text{at least one}) = 1 - (1 - p)^n \]</div>
+                
+                <strong>📌 Corollary 4.2 (Asymptotic Behavior):</strong> As \(n \to \infty\), if \(p_i\) are bounded away from 0, \(P(\text{at least one}) \to 1\) (almost surely at least one occurs).<br><br>
+                
+                <strong>📌 Corollary 4.3 (Rare Events):</strong> If \(p_i\) are small, then by the binomial approximation:
+                <div class="math-display">\[ P(\text{at least one}) \approx \sum_{i=1}^{n} p_i \]</div>
+                This is the Poisson approximation for rare events.
+            </div>
+        </div>
+
+        <!-- Section 5: Bijection Between "At Least One" and "None" -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>5. Finding "None" from "At Least One"</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Reciprocal Relationship)</h3>
+                <p>Given \(P(\text{at least one})\), the probability that none occur is:</p>
+                <div class="math-display">
+                    \[ P(\text{none}) = 1 - P(\text{at least one}) \]
+                </div>
+                <p>And conversely, if we know \(P(\text{none})\), then:</p>
+                <div class="math-display">
+                    \[ P(\text{at least one}) = 1 - P(\text{none}) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Establish the complement relationship:</strong>
+                    <p>Let \(E = \bigcup_{i=1}^{n} A_i\) be the event that at least one occurs. Then \(E^c = \bigcap_{i=1}^{n} A_i^c\) is the event that none occur.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply the complement rule:</strong>
+                    <div class="math-display">
+                        \[ P(E) = 1 - P(E^c) \quad \text{and} \quad P(E^c) = 1 - P(E) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(\text{none}) = 1 - P(\text{at least one})} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1:</strong> For independent events, if we know \(P(\text{at least one}) = \alpha\), then:
+                <div class="math-display">\[ \prod_{i=1}^{n} (1 - p_i) = 1 - \alpha \]</div>
+                
+                <strong>📌 Corollary 5.2:</strong> If all \(p_i\) are equal, say \(p\), then:
+                <div class="math-display">\[ p = 1 - (1 - \alpha)^{1/n} \]</div>
+                This allows us to solve for \(p\) given \(P(\text{at least one})\) and \(n\).
+            </div>
+        </div>
+
+        <!-- Section 6: Inclusion-Exclusion Alternative Approach -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>6. Inclusion-Exclusion Alternative (For Comparison)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Alternative Formula (Inclusion-Exclusion)</h3>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i \cap A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} P\left( \bigcap_{i=1}^{n} A_i \right) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 For Independent Events, Simplification Occurs:</h4>
+                <p>Since \(P(A_i \cap A_j) = p_i p_j\), \(P(A_i \cap A_j \cap A_k) = p_i p_j p_k\), etc., the inclusion-exclusion formula becomes:</p>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{n} A_i \right) = \sum_{i=1}^{n} p_i - \sum_{1 \leq i < j \leq n} p_i p_j + \sum_{1 \leq i < j < k \leq n} p_i p_j p_k - \cdots + (-1)^{n-1} \prod_{i=1}^{n} p_i \]
+                </div>
+                <p>Note that this is exactly the expansion of \(1 - \prod_{i=1}^{n} (1 - p_i)\) by the binomial theorem for independent events, confirming our earlier result.</p>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Verification for n = 2:</strong>
+                <p>Inclusion-Exclusion: \(P(A_1 \cup A_2) = p_1 + p_2 - p_1 p_2\)</p>
+                <p>Our formula: \(P(\text{at least one}) = 1 - (1 - p_1)(1 - p_2) = 1 - (1 - p_1 - p_2 + p_1 p_2) = p_1 + p_2 - p_1 p_2\)</p>
+                <p>Both formulas match. ✓</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: Simple Case (Two Independent Events)</strong><br>
+                The probability that it rains on Monday is 0.3. The probability that it rains on Tuesday is 0.4. The events are independent. Find the probability that it rains on at least one of the two days.<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(\text{at least one}) = 1 - (1 - 0.3)(1 - 0.4) = 1 - (0.7 \times 0.6) = 1 - 0.42 = 0.58 \]
+                </div>
+                Alternative: \(P(M \cup T) = 0.3 + 0.4 - 0.3 \times 0.4 = 0.7 - 0.12 = 0.58\) ✓
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: Three Independent Events</strong><br>
+                Three independent components have reliabilities (probabilities of working) 0.9, 0.8, and 0.7. The system works if at least one component works. Find the probability that the system works.<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ p_1 = 0.9, \; p_2 = 0.8, \; p_3 = 0.7 \]
+                </div>
+                <div class="math-display">
+                    \[ P(\text{system works}) = 1 - (1 - 0.9)(1 - 0.8)(1 - 0.7) \]
+                </div>
+                <div class="math-display">
+                    \[ = 1 - (0.1 \times 0.2 \times 0.3) = 1 - 0.006 = 0.994 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: Probability of "At Least One" Over Trials</strong><br>
+                A die is rolled 3 times. Find the probability of getting at least one six.<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ p = \frac{1}{6}, \quad n = 3 \]
+                </div>
+                <div class="math-display">
+                    \[ P(\text{at least one six}) = 1 - \left(1 - \frac{1}{6}\right)^3 = 1 - \left(\frac{5}{6}\right)^3 = 1 - \frac{125}{216} = \frac{91}{216} \approx 0.4213 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 4: Finding Individual Probability from "At Least One"</strong><br>
+                Three independent events have equal probability \(p\). The probability that at least one occurs is 0.875. Find \(p\).<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ 1 - (1 - p)^3 = 0.875 \implies (1 - p)^3 = 0.125 \]
+                </div>
+                <div class="math-display">
+                    \[ 1 - p = \sqrt[3]{0.125} = 0.5 \implies p = 0.5 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Special Cases and Applications -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔬</span>
+                <h2>8. Special Cases and Applications</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Case 1: All Events Have the Same Probability \(p\)</h3>
+                <div class="math-display">
+                    \[ P(\text{at least one}) = 1 - (1 - p)^n \]
+                </div>
+                <div class="math-display">
+                    \[ P(\text{none}) = (1 - p)^n \]
+                </div>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Case 2: Extremely Reliable Events (1 - p is small)</h3>
+                <p>If \(p\) is close to 1, \((1 - p)^n\) is very small, so \(P(\text{at least one})\) is very close to 1.</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Case 3: Extremely Rare Events (p is small)</h3>
+                <p>If \(p\) is small and \(n\) is not too large, by Poisson approximation:</p>
+                <div class="math-display">
+                    \[ P(\text{at least one}) \approx np - \frac{n(n-1)}{2}p^2 + \cdots \approx np \quad \text{(first order)} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Summary Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>9. Summary Table</h2>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>Quantity</th><th>Formula (General Case)</th><th>Formula (Equal Probabilities \(p_i = p\))</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>\(P(\text{none occur})\)</td>
+                        <td>\(\displaystyle \prod_{i=1}^{n} (1 - p_i)\)</td>
+                        <td>\((1 - p)^n\)</td>
+                    </tr>
+                    <tr>
+                        <td>\(P(\text{at least one occurs})\)</td>
+                        <td>\(\displaystyle 1 - \prod_{i=1}^{n} (1 - p_i)\)</td>
+                        <td>\(1 - (1 - p)^n\)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> Four independent shots are fired at a target with probabilities of hitting 0.4, 0.5, 0.6, and 0.7 respectively. Find the probability that at least one shot hits the target.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{at least one}) = 1 - (0.6 \times 0.5 \times 0.4 \times 0.3) = 1 - (0.6 \times 0.5 \times 0.4 \times 0.3) = 1 - 0.036 = 0.964\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> A coin is tossed 5 times. Find the probability of getting at least one head.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{at least one head}) = 1 - (1 - 0.5)^5 = 1 - (0.5)^5 = 1 - \frac{1}{32} = \frac{31}{32} = 0.96875\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Two independent events have probabilities \(p_1 = 0.6\) and \(p_2 = 0.7\). Find \(P(\text{at least one occurs})\) and \(P(\text{none occurs})\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{none}) = (0.4)(0.3) = 0.12\), \(P(\text{at least one}) = 1 - 0.12 = 0.88\) (or directly \(0.6 + 0.7 - 0.42 = 0.88\))</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 4:</strong> A device has 4 independent redundant components. Each component has a failure probability of 0.1. The device fails only if all components fail. Find the probability that the device works.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{device works}) = P(\text{at least one component works}) = 1 - (0.1)^4 = 1 - 0.0001 = 0.9999\)</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Probability of None Occurring:</strong> \(P(\bigcap A_i^c) = \prod_{i=1}^{n} (1 - p_i)\) for independent events</li>
+                <li><strong>Probability of At Least One Occurring:</strong> \(P(\bigcup A_i) = 1 - \prod_{i=1}^{n} (1 - p_i)\)</li>
+                <li><strong>These formulas work because:</strong> The complement of "at least one" is "none", and complements of independent events are independent</li>
+                <li><strong>For equal probabilities \(p\):</strong> \(P(\text{at least one}) = 1 - (1 - p)^n\)</li>
+                <li><strong>Applications:</strong> System reliability (parallel systems), repeated trials, probability of success in multiple attempts, quality control</li>
+                <li><strong>Key Relationship:</strong> \(P(\text{at least one}) + P(\text{none}) = 1\)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="other_theorems.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Other Theorems </a>
+            <a href="bayes_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Bayes' Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Probability of "At Least One" Event — a fundamental result for independent events, derived using the complement rule.
+    </footer>
+</div>
+</body>
+</html>
