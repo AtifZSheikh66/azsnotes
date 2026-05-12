@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Other Theorems in Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Other Theorems in Probability</span>
+        </div>
+        <h1>📚 Other Theorems in Probability</h1>
+        <p>Conditional probability as a probability function, properties, and independence results</p>
+        <span class="badge">Probability Theory · Unit II · Advanced Theorems</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Conditional Probability as a Probability Function -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>1. For Fixed B with \(P(B) > 0\), \(P(A \mid B)\) is a Probability Function</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>For a fixed event \(B\) with \(P(B) > 0\), the function \(P(\cdot \mid B)\) defined by:</p>
+                <div class="math-display">
+                    \[ P(A \mid B) = \frac{P(A \cap B)}{P(B)} \]
+                </div>
+                <p>satisfies all three Kolmogorov probability axioms. Hence, \(P(\cdot \mid B)\) is a valid probability measure on the same sample space.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Verify Axiom 1 (Non-negativity):</strong>
+                    <p>Since \(P(A \cap B) \geq 0\) and \(P(B) > 0\), we have:</p>
+                    <div class="math-display">
+                        \[ P(A \mid B) = \frac{P(A \cap B)}{P(B)} \geq 0 \quad \text{for any event } A \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Verify Axiom 2 (Unit measure):</strong>
+                    <div class="math-display">
+                        \[ P(\Omega \mid B) = \frac{P(\Omega \cap B)}{P(B)} = \frac{P(B)}{P(B)} = 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Verify Axiom 3 (Countable additivity):</strong>
+                    <p>Let \(A_1, A_2, \ldots\) be mutually exclusive events. Then:</p>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{\infty} A_i \;\middle|\; B \right) = \frac{P\left( \left( \bigcup_{i=1}^{\infty} A_i \right) \cap B \right)}{P(B)} \]
+                    </div>
+                    <div class="math-display">
+                        \[ = \frac{P\left( \bigcup_{i=1}^{\infty} (A_i \cap B) \right)}{P(B)} \]
+                    </div>
+                    <p>Since the \(A_i\) are mutually exclusive, \(A_i \cap B\) are also mutually exclusive. By Axiom 3 of probability:</p>
+                    <div class="math-display">
+                        \[ = \frac{\sum_{i=1}^{\infty} P(A_i \cap B)}{P(B)} = \sum_{i=1}^{\infty} \frac{P(A_i \cap B)}{P(B)} = \sum_{i=1}^{\infty} P(A_i \mid B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <p>Thus, \(P(\cdot \mid B)\) satisfies all three probability axioms and is therefore a valid probability measure.</p>
+                    <div class="math-display">
+                        \[ \boxed{P(\cdot \mid B) \text{ is a probability function}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 1.1:</strong> All theorems of probability (addition theorem, complement rule, etc.) hold for conditional probabilities. For example:
+                <div class="math-display">\[ P(A^c \mid B) = 1 - P(A \mid B) \]</div>
+                <div class="math-display">\[ P(A \cup C \mid B) = P(A \mid B) + P(C \mid B) - P(A \cap C \mid B) \]</div>
+                
+                <strong>📌 Corollary 1.2:</strong> The law of total probability can be expressed in terms of conditional probabilities using this property.
+            </div>
+        </div>
+
+        <!-- Section 2: Addition Theorem for Conditional Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➕</span>
+                <h2>2. Addition Theorem for Conditional Probability</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>For any three events \(A, B, C\) with \(P(C) > 0\),</p>
+                <div class="math-display">
+                    \[ P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Write the left-hand side using the definition of conditional probability:</strong>
+                    <div class="math-display">
+                        \[ P(A \cup B \mid C) = \frac{P((A \cup B) \cap C)}{P(C)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use the distributive law of sets:</strong>
+                    <div class="math-display">
+                        \[ (A \cup B) \cap C = (A \cap C) \cup (B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply the addition theorem for ordinary probability:</strong>
+                    <div class="math-display">
+                        \[ P((A \cap C) \cup (B \cap C)) = P(A \cap C) + P(B \cap C) - P((A \cap C) \cap (B \cap C)) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Simplify the intersection term:</strong>
+                    <div class="math-display">
+                        \[ (A \cap C) \cap (B \cap C) = A \cap B \cap C \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Substitute back:</strong>
+                    <div class="math-display">
+                        \[ P(A \cup B \mid C) = \frac{P(A \cap C) + P(B \cap C) - P(A \cap B \cap C)}{P(C)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Separate the fraction:</strong>
+                    <div class="math-display">
+                        \[ = \frac{P(A \cap C)}{P(C)} + \frac{P(B \cap C)}{P(C)} - \frac{P(A \cap B \cap C)}{P(C)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Recognize each term as a conditional probability:</strong>
+                    <div class="math-display">
+                        \[ = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> If \(A\) and \(B\) are conditionally independent given \(C\) (i.e., \(P(A \cap B \mid C) = P(A \mid C)P(B \mid C)\)), then:
+                <div class="math-display">\[ P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \mid C)P(B \mid C) \]</div>
+                
+                <strong>📌 Corollary 2.2:</strong> The complement rule for conditional probability follows as a special case:
+                <div class="math-display">\[ P(A^c \mid C) = 1 - P(A \mid C) \]</div>
+            </div>
+        </div>
+
+        <!-- Section 3: Monotonicity of Conditional Probability -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>3. Monotonicity of Conditional Probability</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>For any three events \(A, B, C\) defined on the sample space \(S\) such that \(B \subseteq C\) and \(P(A) > 0\),</p>
+                <div class="math-display">
+                    \[ P(B \mid A) \leq P(C \mid A) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Write the conditional probabilities explicitly:</strong>
+                    <div class="math-display">
+                        \[ P(B \mid A) = \frac{P(B \cap A)}{P(A)}, \quad P(C \mid A) = \frac{P(C \cap A)}{P(A)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Since \(B \subseteq C\), we have \(B \cap A \subseteq C \cap A\):</strong>
+                    <p>If \(B\) is a subset of \(C\), then any outcome in \(B \cap A\) is also in \(C \cap A\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply monotonicity of probability (if \(X \subseteq Y\), then \(P(X) \leq P(Y)\)):</strong>
+                    <div class="math-display">
+                        \[ P(B \cap A) \leq P(C \cap A) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Divide both sides by \(P(A) > 0\):</strong>
+                    <div class="math-display">
+                        \[ \frac{P(B \cap A)}{P(A)} \leq \frac{P(C \cap A)}{P(A)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(B \mid A) \leq P(C \mid A)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1:</strong> For any events \(A, B, C\) with \(P(A) > 0\), if \(B \subseteq C\), then:
+                <div class="math-display">\[ P(B \mid A) \leq P(C \mid A) \]</div>
+                
+                <strong>📌 Corollary 3.2:</strong> Since \(\emptyset \subseteq B \subseteq S\), we have:
+                <div class="math-display">\[ 0 = P(\emptyset \mid A) \leq P(B \mid A) \leq P(S \mid A) = 1 \]</div>
+            </div>
+        </div>
+
+        <!-- Section 4: Independence of Complements -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>4. Independence of Complements</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>If \(A\) and \(B\) are independent events, then:</p>
+                <div class="math-display">
+                    \[ \text{(i) } A \text{ and } B^c \text{ are independent} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii) } A^c \text{ and } B \text{ are independent} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii) } A^c \text{ and } B^c \text{ are independent} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i): \(A\) and \(B^c\) are independent:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Write \(A\) as the union of two mutually exclusive events:</strong>
+                    <div class="math-display">
+                        \[ A = (A \cap B) \cup (A \cap B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply the addition rule (since the two sets are mutually exclusive):</strong>
+                    <div class="math-display">
+                        \[ P(A) = P(A \cap B) + P(A \cap B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Since \(A\) and \(B\) are independent, \(P(A \cap B) = P(A)P(B)\):</strong>
+                    <div class="math-display">
+                        \[ P(A) = P(A)P(B) + P(A \cap B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Solve for \(P(A \cap B^c)\):</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B^c) = P(A) - P(A)P(B) = P(A)[1 - P(B)] = P(A)P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion for (i):</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(A \cap B^c) = P(A)P(B^c)} \]
+                    </div>
+                    <p>Thus, \(A\) and \(B^c\) are independent.</p>
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (ii): \(A^c\) and \(B\) are independent:</h4>
+                <p>By symmetry, swapping the roles of \(A\) and \(B\) in the proof of (i) gives:</p>
+                <div class="math-display">
+                    \[ P(A^c \cap B) = P(A^c)P(B) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (iii): \(A^c\) and \(B^c\) are independent:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Apply the result of (i) to the events \(A^c\) and \(B\):</strong>
+                    <p>From (ii), \(A^c\) and \(B\) are independent. Then by (i) applied to \(A^c\) and \(B\), we get that \(A^c\) and \(B^c\) are independent.</p>
+                    <p>Alternatively, directly:</p>
+                    <div class="math-display">
+                        \[ P(A^c \cap B^c) = P((A \cup B)^c) = 1 - P(A \cup B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use the addition theorem and independence:</strong>
+                    <div class="math-display">
+                        \[ P(A \cup B) = P(A) + P(B) - P(A)P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Substitute and simplify:</strong>
+                    <div class="math-display">
+                        \[ P(A^c \cap B^c) = 1 - P(A) - P(B) + P(A)P(B) \]
+                    </div>
+                    <div class="math-display">
+                        \[ = (1 - P(A))(1 - P(B)) = P(A^c)P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion for (iii):</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(A^c \cap B^c) = P(A^c)P(B^c)} \]
+                    </div>
+                    <p>Thus, \(A^c\) and \(B^c\) are independent.</p>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1:</strong> If \(A\) and \(B\) are independent, then any combination of \(A\) or \(A^c\) with \(B\) or \(B^c\) yields independent events.<br><br>
+                <strong>📌 Corollary 4.2:</strong> This property extends to \(n\) mutually independent events: any combination of each event or its complement yields independent events.
+            </div>
+        </div>
+
+        <!-- Section 5: Union with Independent Event -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>5. \(A \cup B\) and \(C\) are Independent when \(A,B,C\) are Mutually Independent</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>If \(A, B, C\) are mutually independent events, then \(A \cup B\) and \(C\) are also independent.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — We need to show:</strong>
+                    <div class="math-display">
+                        \[ P((A \cup B) \cap C) = P(A \cup B) \cdot P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Expand the left-hand side using the distributive law:</strong>
+                    <div class="math-display">
+                        \[ (A \cup B) \cap C = (A \cap C) \cup (B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply the addition theorem:</strong>
+                    <div class="math-display">
+                        \[ P((A \cup B) \cap C) = P(A \cap C) + P(B \cap C) - P((A \cap C) \cap (B \cap C)) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Simplify the intersection:</strong>
+                    <div class="math-display">
+                        \[ (A \cap C) \cap (B \cap C) = A \cap B \cap C \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Use mutual independence of \(A, B, C\):</strong>
+                    <p>Since \(A, B, C\) are mutually independent, we have:</p>
+                    <div class="math-display">
+                        \[ P(A \cap C) = P(A)P(C), \quad P(B \cap C) = P(B)P(C), \quad P(A \cap B \cap C) = P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Substitute these into the expression:</strong>
+                    <div class="math-display">
+                        \[ P((A \cup B) \cap C) = P(A)P(C) + P(B)P(C) - P(A)P(B)P(C) \]
+                    </div>
+                    <div class="math-display">
+                        \[ = P(C)[P(A) + P(B) - P(A)P(B)] \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Recognize the bracket as \(P(A \cup B)\) (since \(A\) and \(B\) are independent):</strong>
+                    <div class="math-display">
+                        \[ P(A \cup B) = P(A) + P(B) - P(A)P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ P((A \cup B) \cap C) = P(A \cup B) \cdot P(C) \]
+                    </div>
+                    <p>Therefore, \(A \cup B\) and \(C\) are independent.</p>
+                    <div class="math-display">
+                        \[ \boxed{(A \cup B) \text{ and } C \text{ are independent}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1:</strong> If \(A, B, C\) are mutually independent, then \(A \cap B\) and \(C\) are also independent.<br><br>
+                <strong>📌 Corollary 5.2:</strong> If \(A_1, A_2, \ldots, A_n\) are mutually independent, then any event formed by Boolean operations (union, intersection, complement) on a subset of these events is independent of any event formed on the disjoint complement subset.
+            </div>
+        </div>
+
+        <!-- Section 6: Condition for Mutual Independence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>6. Condition for Mutual Independence of Three Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem</h3>
+                <p>If \(A, B, C\) are pairwise independent and \(A\) is independent of \(B \cup C\), then \(A, B, C\) are mutually independent.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Given conditions:</strong>
+                    <p>We are given:</p>
+                    <ul>
+                        <li>Pairwise independence: \(P(A \cap B) = P(A)P(B)\), \(P(A \cap C) = P(A)P(C)\), \(P(B \cap C) = P(B)P(C)\)</li>
+                        <li>\(A\) is independent of \(B \cup C\): \(P(A \cap (B \cup C)) = P(A)P(B \cup C)\)</li>
+                    </ul>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — We need to show mutual independence:</strong>
+                    <p>We already have pairwise independence. The only remaining condition for mutual independence of three events is:</p>
+                    <div class="math-display">
+                        \[ P(A \cap B \cap C) = P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Expand \(P(A \cap (B \cup C))\) in two ways:</strong>
+                    <p>First, using the distributive law:</p>
+                    <div class="math-display">
+                        \[ A \cap (B \cup C) = (A \cap B) \cup (A \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Apply the addition theorem to the right-hand side:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap (B \cup C)) = P(A \cap B) + P(A \cap C) - P(A \cap B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Substitute the given independence conditions:</strong>
+                    <p>From pairwise independence: \(P(A \cap B) = P(A)P(B)\) and \(P(A \cap C) = P(A)P(C)\).</p>
+                    <div class="math-display">
+                        \[ P(A \cap (B \cup C)) = P(A)P(B) + P(A)P(C) - P(A \cap B \cap C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Also, from the independence of \(A\) and \(B \cup C\):</strong>
+                    <div class="math-display">
+                        \[ P(A \cap (B \cup C)) = P(A)P(B \cup C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Apply the addition theorem to \(P(B \cup C)\):</strong>
+                    <div class="math-display">
+                        \[ P(B \cup C) = P(B) + P(C) - P(B \cap C) \]
+                    </div>
+                    <p>Since \(B\) and \(C\) are pairwise independent, \(P(B \cap C) = P(B)P(C)\). Therefore:</p>
+                    <div class="math-display">
+                        \[ P(B \cup C) = P(B) + P(C) - P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Equate the two expressions for \(P(A \cap (B \cup C))\):</strong>
+                    <div class="math-display">
+                        \[ P(A)P(B) + P(A)P(C) - P(A \cap B \cap C) = P(A)[P(B) + P(C) - P(B)P(C)] \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 9 — Simplify the right-hand side:</strong>
+                    <div class="math-display">
+                        \[ P(A)P(B) + P(A)P(C) - P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 10 — Cancel common terms:</strong>
+                    <p>Subtract \(P(A)P(B) + P(A)P(C)\) from both sides:</p>
+                    <div class="math-display">
+                        \[ - P(A \cap B \cap C) = - P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 11 — Multiply both sides by \(-1\):</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B \cap C) = P(A)P(B)P(C) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 12 — Conclusion:</strong>
+                    <p>Since we already have pairwise independence and now have triple independence, \(A, B, C\) are mutually independent.</p>
+                    <div class="math-display">
+                        \[ \boxed{A, B, C \text{ are mutually independent}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 6.1:</strong> This theorem provides a sufficient condition to check mutual independence given pairwise independence and independence of \(A\) with \(B \cup C\).<br><br>
+                <strong>📌 Corollary 6.2:</strong> For \(n\) events, similar sufficient conditions can be derived using inclusion-exclusion and the concept of independence of an event with the union of others.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example: Verifying Mutual Independence</strong><br>
+                Suppose \(P(A) = P(B) = P(C) = \frac{1}{2}\), \(P(A \cap B) = P(A \cap C) = P(B \cap C) = \frac{1}{4}\) (pairwise independence holds), and also \(P(A \cap (B \cup C)) = \frac{1}{2} \times \frac{3}{4} = \frac{3}{8}\). Then by the theorem, \(A, B, C\) must be mutually independent, which would require \(P(A \cap B \cap C) = \frac{1}{8}\). One can verify that this holds.
+            </div>
+        </div>
+
+        <!-- Section 7: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>7. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> Prove that \(P(A \cap B \mid C) = P(A \mid B \cap C) \cdot P(B \mid C)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(A \cap B \mid C) = \frac{P(A \cap B \cap C)}{P(C)}\). Also, \(P(A \mid B \cap C) = \frac{P(A \cap B \cap C)}{P(B \cap C)}\) and \(P(B \mid C) = \frac{P(B \cap C)}{P(C)}\). Multiplying: \(P(A \mid B \cap C) \cdot P(B \mid C) = \frac{P(A \cap B \cap C)}{P(B \cap C)} \cdot \frac{P(B \cap C)}{P(C)} = \frac{P(A \cap B \cap C)}{P(C)} = P(A \cap B \mid C)\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> If \(A\) and \(B\) are independent, prove that \(P(A \cup B) = 1 - P(A^c)P(B^c)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Since \(A\) and \(B\) are independent, \(A^c\) and \(B^c\) are also independent. Then \(P(A \cup B) = 1 - P(A^c \cap B^c) = 1 - P(A^c)P(B^c)\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> For any three events \(A, B, C\) with \(P(C) > 0\), prove that \(P(A \cup B \mid C) \leq P(A \mid C) + P(B \mid C)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">From the addition theorem for conditional probability: \(P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C)\). Since \(P(A \cap B \mid C) \geq 0\), the result follows.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>\(P(\cdot \mid B)\) is a probability function:</strong> For fixed \(B\) with \(P(B) > 0\), conditional probability satisfies all three Kolmogorov axioms</li>
+                <li><strong>Addition theorem for conditional probability:</strong> \(P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C)\)</li>
+                <li><strong>Monotonicity:</strong> If \(B \subseteq C\), then \(P(B \mid A) \leq P(C \mid A)\) (for \(P(A) > 0\))</li>
+                <li><strong>Independence of complements:</strong> If \(A\) and \(B\) are independent, then \(A\) and \(B^c\), \(A^c\) and \(B\), and \(A^c\) and \(B^c\) are all independent</li>
+                <li><strong>Union with independent event:</strong> If \(A, B, C\) are mutually independent, then \(A \cup B\) is independent of \(C\)</li>
+                <li><strong>Condition for mutual independence:</strong> Pairwise independence plus independence of \(A\) from \(B \cup C\) implies mutual independence of \(A, B, C\)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="pairwise_independence.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Pairwise Independence</a>
+            <a href="bayes_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Bayes' Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Advanced Theorems in Probability — conditional probability as a probability function, addition theorem for conditional probability, monotonicity, independence of complements, and conditions for mutual independence.
+    </footer>
+</div>
+</body>
+</html>
