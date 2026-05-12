@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Matching Problem (Derangements) | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.85rem 1rem;
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Matching Problem (Derangements)</span>
+        </div>
+        <h1>🎭 Matching Problem (Derangements)</h1>
+        <p>The classic problem of matching hats, letters, or cards — finding the probability of no matches and exactly r matches</p>
+        <span class="badge">Probability Theory · Unit II · Combinatorial Probability</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction to the Matching Problem</h2>
+            </div>
+            <div class="definition">
+                The <strong>Matching Problem</strong> (also known as the <strong>Derangement Problem</strong>, <strong>Problem of Coincidences</strong>, or <strong>Rencontres Problem</strong>) is a classic problem in probability and combinatorics. It asks: If n letters are randomly placed into n addressed envelopes, what is the probability that no letter is placed in its correct envelope? What is the probability that exactly r letters are in their correct envelopes?
+            </div>
+            <p>Versions of this problem appear in various contexts:</p>
+            <ul>
+                <li>Hats returned randomly to n people</li>
+                <li>Rifling through a shuffled deck of cards</li>
+                <li>Re-arranging a set of objects in a random order</li>
+                <li>Secret Santa gift exchange</li>
+            </ul>
+            <p>The solution involves the concept of <strong>derangements</strong> — permutations with no fixed points.</p>
+        </div>
+
+        <!-- Section 2: Problem Setup and Notation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Problem Setup and Notation</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Problem Statement</h3>
+                <p>Consider n distinct items (e.g., letters) numbered \(1, 2, \ldots, n\) and n corresponding positions (e.g., envelopes) also numbered \(1, 2, \ldots, n\). The items are randomly arranged (permuted) into the positions. Each of the \(n!\) possible permutations is equally likely.</p>
+                <p>Define:</p>
+                <ul>
+                    <li>\(A_i\) = event that item i is placed in its correct position (i.e., a match at position i)</li>
+                    <li>\(P(\text{no match}) = P(\text{none of } A_1, A_2, \ldots, A_n \text{ occur})\)</li>
+                    <li>\(P(\text{exactly r matches}) = P(\text{exactly r of the events } A_1, \ldots, A_n \text{ occur})\)</li>
+                </ul>
+            </div>
+            
+            <div class="note-tip">
+                💡 <strong>Key Insight:</strong> This is an application of the inclusion-exclusion principle to events that are not independent.
+            </div>
+        </div>
+
+        <!-- Section 3: Number of Derangements (!n) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>3. Number of Derangements — \(!n\) (Subfactorial)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition of Derangements</h3>
+                <p>A <strong>derangement</strong> is a permutation of n elements in which no element appears in its original position. The number of derangements of n elements is denoted by \(!n\) (read as "subfactorial n") or \(D_n\).</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Formula for the Number of Derangements (Inclusion-Exclusion):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Total number of permutations:</strong>
+                    <div class="math-display">
+                        \[ N = n! \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use inclusion-exclusion to count permutations with no fixed points:</strong>
+                    <p>Let \(B_i\) be the set of permutations in which element i is in its correct position. Then the number of derangements is:</p>
+                    <div class="math-display">
+                        \[ !n = n! - \left| \bigcup_{i=1}^{n} B_i \right| \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply inclusion-exclusion to \(\left| \bigcup_{i=1}^{n} B_i \right|\):</strong>
+                    <p>For any fixed set of k positions, the number of permutations where those specific k elements are fixed is \((n-k)!\). The number of ways to choose which k elements are fixed is \(\binom{n}{k}\).</p>
+                    <div class="math-display">
+                        \[ \left| \bigcup_{i=1}^{n} B_i \right| = \sum_{k=1}^{n} (-1)^{k+1} \binom{n}{k} (n-k)! \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Substitute into the expression for \(!n\):</strong>
+                    <div class="math-display">
+                        \[ !n = n! - \sum_{k=1}^{n} (-1)^{k+1} \binom{n}{k} (n-k)! \]
+                    </div>
+                    <div class="math-display">
+                        \[ !n = n! + \sum_{k=1}^{n} (-1)^{k} \binom{n}{k} (n-k)! \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Write the binomial coefficient explicitly:</strong>
+                    <div class="math-display">
+                        \[ \binom{n}{k} (n-k)! = \frac{n!}{k!(n-k)!} \cdot (n-k)! = \frac{n!}{k!} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Obtain the compact formula:</strong>
+                    <div class="math-display">
+                        \[ !n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} \]
+                    </div>
+                    <p>Note: The term \(k = 0\) gives \(n! \cdot 1 = n!\), which cancels with the subsequent terms.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Final formula:</strong>
+                    <div class="math-display">
+                        \[ \boxed{!n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} = \left[ \frac{n!}{e} \right] \text{(rounded to nearest integer)}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Recurrence Relation):</strong> Derangements satisfy:
+                <div class="math-display">\[ !n = (n-1)(!(n-1) + !(n-2)) \quad \text{for } n \geq 2 \]</div>
+                with initial conditions \(!0 = 1\) and \(!1 = 0\).<br><br>
+                
+                <strong>📌 Corollary 3.2 (First few values):</strong>
+                <div class="math-display">\[ !0 = 1, \quad !1 = 0, \quad !2 = 1, \quad !3 = 2, \quad !4 = 9, \quad !5 = 44, \quad !6 = 265, \quad !7 = 1854, \quad !8 = 14833 \]</div>
+                
+                <strong>📌 Corollary 3.3 (Asymptotic behavior):</strong> As \(n \to \infty\),
+                <div class="math-display">\[ !n \approx \frac{n!}{e} \]</div>
+                because \(\sum_{k=0}^{\infty} \frac{(-1)^k}{k!} = e^{-1}\).
+            </div>
+        </div>
+
+        <!-- Section 4: Probability of No Match -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>4. Probability of No Match (No Fixed Points)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Probability of No Match)</h3>
+                <p>For n randomly arranged items, the probability that no item is in its correct position is:</p>
+                <div class="math-display">
+                    \[ P(\text{no match}) = \frac{!n}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Total number of equally likely permutations:</strong>
+                    <div class="math-display">
+                        \[ \text{Total permutations} = n! \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Number of derangements (no fixed points) is \(!n\):</strong>
+                    <p>From Theorem 3, \(!n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Probability is favorable outcomes divided by total outcomes:</strong>
+                    <div class="math-display">
+                        \[ P(\text{no match}) = \frac{!n}{n!} = \frac{n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(\text{no match}) = \sum_{k=0}^{n} \frac{(-1)^k}{k!} = 1 - 1 + \frac{1}{2!} - \frac{1}{3!} + \cdots + \frac{(-1)^n}{n!}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (As n → ∞):</strong>
+                <div class="math-display">\[ \lim_{n \to \infty} P(\text{no match}) = \sum_{k=0}^{\infty} \frac{(-1)^k}{k!} = e^{-1} \approx 0.367879 \]</div>
+                So for large n, the probability of no match approaches approximately 0.3679.
+                
+                <strong>📌 Corollary 4.2 (Values for small n):</strong>
+                <div class="math-display">\[ P(\text{no match}) = 0,\; 0.5,\; 0.333\ldots,\; 0.375,\; 0.3667,\; 0.3681 \text{ for } n = 1,2,3,4,5,6 \text{ respectively} \]</div>
+                
+                <strong>📌 Corollary 4.3:</strong> The probability of at least one match is:
+                <div class="math-display">\[ P(\text{at least one match}) = 1 - P(\text{no match}) = 1 - \sum_{k=0}^{n} \frac{(-1)^k}{k!} \]</div>
+            </div>
+        </div>
+
+        <!-- Section 5: Probability of Exactly r Matches -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>5. Probability of Exactly r Matches (r ≤ n-2)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Probability of Exactly r Matches)</h3>
+                <p>For n randomly arranged items, the probability that exactly r items are in their correct positions (and the remaining n-r are in incorrect positions) is:</p>
+                <div class="math-display">
+                    \[ P(\text{exactly r matches}) = \frac{1}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \]
+                </div>
+                <p>More explicitly:</p>
+                <div class="math-display">
+                    \[ P(\text{exactly r matches}) = \frac{1}{r!} \left( 1 - 1 + \frac{1}{2!} - \frac{1}{3!} + \cdots + \frac{(-1)^{n-r}}{(n-r)!} \right) \]
+                </div>
+                <p>This formula holds for \(0 \leq r \leq n-2\). For \(r = n-1\), the probability is 0 (since if n-1 are correct, the last must also be correct). For \(r = n\), the probability is \(\frac{1}{n!}\).</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Choose which r positions are correct:</strong>
+                    <p>The number of ways to choose which r items are fixed in their correct positions is \(\binom{n}{r}\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Fix those r items in place:</strong>
+                    <p>Once the r correct positions are chosen, these r items are fixed. The remaining \(n-r\) items must be deranged among the remaining \(n-r\) positions (no matches allowed for these).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Number of derangements for the remaining items:</strong>
+                    <p>The number of derangements of \(n-r\) items is \(!(n-r)\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Total favorable permutations:</strong>
+                    <div class="math-display">
+                        \[ \text{Favorable} = \binom{n}{r} \cdot !(n-r) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Use the formula for \(!(n-r)\):</strong>
+                    <div class="math-display">
+                        \[ !(n-r) = (n-r)! \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Substitute into favorable count:</strong>
+                    <div class="math-display">
+                        \[ \text{Favorable} = \binom{n}{r} \cdot (n-r)! \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \]
+                    </div>
+                    <div class="math-display">
+                        \[ \text{Favorable} = \frac{n!}{r!(n-r)!} \cdot (n-r)! \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} = \frac{n!}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Probability = favorable / total permutations:</strong>
+                    <div class="math-display">
+                        \[ P(\text{exactly r matches}) = \frac{\frac{n!}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!}}{n!} = \frac{1}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Special cases:</strong>
+                    <p>For \(r = n\): The formula gives \(\frac{1}{n!} \sum_{k=0}^{0} \frac{(-1)^k}{k!} = \frac{1}{n!} \cdot 1 = \frac{1}{n!}\), which is correct (only one permutation has all matches).</p>
+                    <p>For \(r = n-1\): The formula would involve \(!(1) = 0\), so the probability is 0 — correct because if n-1 are correct, the last must also be correct.</p>
+                    <p>For \(r = 0\): The formula reduces to \(\sum_{k=0}^{n} \frac{(-1)^k}{k!}\), matching Theorem 4.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 9 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(\text{exactly r matches}) = \frac{1}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!} \quad \text{for } 0 \leq r \leq n-2} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1 (Sum of probabilities):</strong>
+                <div class="math-display">\[ \sum_{r=0}^{n} P(\text{exactly r matches}) = 1 \]</div>
+                This can be verified by expanding the series.
+                
+                <strong>📌 Corollary 5.2 (Expectation of number of matches):</strong> The expected number of matches is:
+                <div class="math-display">\[ E[\text{matches}] = 1 \]</div>
+                This is independent of n! Proof: Let \(I_i\) be the indicator that position i has a match. Then \(E[I_i] = \frac{1}{n}\), so \(E[\text{total}] = n \cdot \frac{1}{n} = 1\).
+                
+                <strong>📌 Corollary 5.3 (Variance of matches):</strong> For large n,
+                <div class="math-display">\[ \text{Var}(\text{matches}) \approx 1 \]</div>
+            </div>
+        </div>
+
+        <!-- Section 6: Alternative Derivation Using Inclusion-Exclusion -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>6. Alternative Derivation Using Inclusion-Exclusion</h2>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Direct Inclusion-Exclusion for Exactly r Matches:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Define indicator variables:</strong>
+                    <p>Let \(X\) = number of matches. Exactly r matches means \(X = r\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use the identity for the binomial transform:</strong>
+                    <p>The probability of exactly r matches can also be obtained by considering the probability that a specific set of r positions are correct, then applying inclusion-exclusion to ensure the remaining are all incorrect:</p>
+                    <div class="math-display">
+                        \[ P(\text{exactly r matches}) = \binom{n}{r} \cdot \frac{1}{n(n-1)\cdots(n-r+1)} \cdot P(\text{remaining } n-r \text{ have no matches}) \]
+                    </div>
+                    <p>which gives the same result as above.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 1: n = 3 (3 hats returned at random)</strong><br>
+                Find the probability of no matches and exactly 1 match.<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(\text{no match}) = 1 - 1 + \frac{1}{2} - \frac{1}{6} = \frac{1}{3} \approx 0.3333 \]
+                </div>
+                <div class="math-display">
+                    \[ P(\text{exactly 1 match}) = \frac{1}{1!} \sum_{k=0}^{2} \frac{(-1)^k}{k!} = 1 \cdot \left(1 - 1 + \frac{1}{2}\right) = \frac{1}{2} \]
+                </div>
+                Check: Total permutations = 6. Derangements = 2, so P(no match) = 2/6 = 1/3. With exactly 1 match: choose which one is correct (3 choices), then the remaining 2 must be swapped (1 derangement for 2 items). So 3 × 1 = 3 favorable → 3/6 = 1/2 ✓
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 2: n = 4 (4 letters into 4 envelopes)</strong><br>
+                Find the probability of exactly 2 matches.<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(\text{exactly 2 matches}) = \frac{1}{2!} \sum_{k=0}^{2} \frac{(-1)^k}{k!} = \frac{1}{2} \left(1 - 1 + \frac{1}{2}\right) = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4} \]
+                </div>
+                Verification: Choose 2 correct positions: \(\binom{4}{2} = 6\). The remaining 2 must be swapped (1 derangement for 2). So 6 × 1 = 6 favorable permutations. Total = 24, so probability = 6/24 = 1/4 ✓
+            </div>
+            
+            <div class="example-box">
+                <strong>Example 3: n = 5</strong><br>
+                Find P(no match) and P(exactly 3 matches).<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(\text{no match}) = \sum_{k=0}^{5} \frac{(-1)^k}{k!} = 1 - 1 + \frac{1}{2} - \frac{1}{6} + \frac{1}{24} - \frac{1}{120} = 0.366666\ldots \]
+                </div>
+                <div class="math-display">
+                    \[ P(\text{exactly 3 matches}) = \frac{1}{3!} \sum_{k=0}^{2} \frac{(-1)^k}{k!} = \frac{1}{6} \left(1 - 1 + \frac{1}{2}\right) = \frac{1}{6} \cdot \frac{1}{2} = \frac{1}{12} \approx 0.08333 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Applications -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">💼</span>
+                <h2>8. Applications of the Matching Problem</h2>
+            </div>
+            
+            <div class="definition">
+                <strong>Secret Santa / Gift Exchange:</strong> When n people draw names to give gifts, the probability that no one draws their own name is approximately 1/e ≈ 0.3679 for large n.
+            </div>
+            
+            <div class="definition">
+                <strong>Quality Control / Inspection:</strong> If q out of n items are defective and we randomly inspect them, the matching problem can model coincidences.
+            </div>
+            
+            <div class="definition">
+                <strong>DNA Matching / Forensics:</strong> The probability of random matches in DNA profiles involves similar reasoning.
+            </div>
+            
+            <div class="definition">
+                <strong>Card Guessing / Clairvoyance Tests:</strong> The probability of guessing at least c cards correctly in a shuffled deck uses the matching distribution.
+            </div>
+        </div>
+
+        <!-- Section 9: Summary Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>9. Summary Table of Probabilities for Small n</h2>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>n</th><th>P(no match)</th><th>P(exactly 1)</th><th>P(exactly 2)</th><th>P(exactly 3)</th><th>P(exactly 4)</th><th>P(exactly 5)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>0</td><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>2</td><td>1/2 = 0.5</td><td>0</td><td>1/2 = 0.5</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>3</td><td>2/6 ≈ 0.3333</td><td>3/6 = 0.5</td><td>0</td><td>1/6 ≈ 0.1667</td><td>—</td><td>—</td></tr>
+                    <tr><td>4</td><td>9/24 = 0.375</td><td>8/24 ≈ 0.3333</td><td>6/24 = 0.25</td><td>0</td><td>1/24 ≈ 0.04167</td><td>—</td></tr>
+                    <tr><td>5</td><td>44/120 ≈ 0.3667</td><td>45/120 = 0.375</td><td>20/120 ≈ 0.1667</td><td>10/120 ≈ 0.08333</td><td>0</td><td>1/120 ≈ 0.00833</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> Four people check their hats at a restaurant. The hats are returned randomly. What is the probability that no one gets their own hat back?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(!4 = 9\), total = 24, P = 9/24 = 3/8 = 0.375</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> For n = 6, find P(exactly 2 matches).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P = \frac{1}{2!} \sum_{k=0}^{4} \frac{(-1)^k}{k!} = \frac{1}{2} (1 - 1 + 1/2 - 1/6 + 1/24) = \frac{1}{2} \times 0.375 = 0.1875\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that P(exactly n-1 matches) = 0 for n ≥ 2.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">If n-1 items are in their correct positions, the remaining item must also be in its correct position because there is only one spot left. So it's impossible to have exactly n-1 matches.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 4:</strong> For n = 5, what is the probability that at least one person gets their own hat?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(\text{at least one}) = 1 - P(\text{no match}) = 1 - 44/120 = 76/120 = 19/30 \approx 0.6333\)</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Number of Derangements:</strong> \(!n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} \approx \frac{n!}{e}\)</li>
+                <li><strong>Probability of No Match:</strong> \(P(\text{no match}) = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \xrightarrow{n \to \infty} e^{-1} \approx 0.367879\)</li>
+                <li><strong>Probability of Exactly r Matches:</strong> \(P(\text{exactly r}) = \frac{1}{r!} \sum_{k=0}^{n-r} \frac{(-1)^k}{k!}\) for \(0 \leq r \leq n-2\)</li>
+                <li>For \(r = n\), \(P = \frac{1}{n!}\); for \(r = n-1\), \(P = 0\)</li>
+                <li><strong>Expected number of matches = 1</strong> for any n ≥ 1</li>
+                <li>The matching problem has applications in derangements, secret Santa, quality control, and forensic science</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="atleast_one.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: At Least One </a>
+            <a href="random_variables_discrete.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Random Variables →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Matching Problem (Derangements) — the probability that no items are in their correct positions and the probability of exactly r matches.
+    </footer>
+</div>
+</body>
+</html>
