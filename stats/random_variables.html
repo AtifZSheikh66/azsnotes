@@ -181,169 +181,235 @@
             </div>
         </div>
 
-        <!-- Section 3: Fundamental Theorems on Random Variables -->
-        <div class="section">
-            <div class="section-header">
-                <span class="icon">📐</span>
-                <h2>3. Fundamental Theorems on Random Variables</h2>
-            </div>
-            
-            <!-- Theorem 1: CDF Properties -->
-            <div class="theorem-box">
-                <h3>📌 Theorem 1 (Properties of Cumulative Distribution Function)</h3>
-                <p>For any random variable \(X\) with CDF \(F_X(x) = P(X \leq x)\), the following properties hold:</p>
-                <div class="math-display">
-                    \[ \text{(i)} \quad \lim_{x \to -\infty} F_X(x) = 0 \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(ii)} \quad \lim_{x \to \infty} F_X(x) = 1 \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iii)} \quad F_X \text{ is non-decreasing: } x_1 < x_2 \Rightarrow F_X(x_1) \leq F_X(x_2) \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iv)} \quad F_X \text{ is right-continuous: } \lim_{h \to 0^+} F_X(x+h) = F_X(x) \]
-                </div>
-            </div>
-            
-            <div class="proof-box">
-                <h4>📝 Proof of (i):</h4>
-                <div class="proof-step">
-                    <strong>Step 1 — Consider the event \(X \leq x\) as \(x \to -\infty\):</strong>
-                    <p>As \(x \to -\infty\), the event \(X \leq x\) becomes the empty set \(\emptyset\).</p>
-                </div>
-                <div class="proof-step">
-                    <strong>Step 2 — Apply continuity of probability:</strong>
-                    <div class="math-display">
-                        \[ \lim_{x \to -\infty} F_X(x) = P(\emptyset) = 0 \]
-                    </div>
-                </div>
-                
-                <h4>📝 Proof of (ii):</h4>
-                <div class="proof-step">
-                    <strong>Step 1 — Consider the event \(X \leq x\) as \(x \to \infty\):</strong>
-                    <p>As \(x \to \infty\), the event \(X \leq x\) becomes the entire sample space \(\Omega\).</p>
-                </div>
-                <div class="proof-step">
-                    <strong>Step 2 — Apply continuity of probability:</strong>
-                    <div class="math-display">
-                        \[ \lim_{x \to \infty} F_X(x) = P(\Omega) = 1 \]
-                    </div>
-                </div>
-                
-                <h4>📝 Proof of (iii):</h4>
-                <div class="proof-step">
-                    <strong>Step 1 — If \(x_1 < x_2\), then \(\{X \leq x_1\} \subseteq \{X \leq x_2\}\):</strong>
-                    <p>Because if \(X \leq x_1\), then automatically \(X \leq x_2\) since \(x_1 < x_2\).</p>
-                </div>
-                <div class="proof-step">
-                    <strong>Step 2 — Apply monotonicity of probability:</strong>
-                    <div class="math-display">
-                        \[ F_X(x_1) = P(X \leq x_1) \leq P(X \leq x_2) = F_X(x_2) \]
-                    </div>
-                </div>
-                
-                <h4>📝 Proof of (iv) — Right-continuity:</h4>
-                <div class="proof-step">
-                    <strong>Step 1 — Use the continuity of probability for a decreasing sequence:</strong>
-                    <p>Let \(h_n \downarrow 0\). Then the events \(\{X \leq x + h_n\}\) decrease to \(\{X \leq x\}\).</p>
-                </div>
-                <div class="proof-step">
-                    <strong>Step 2 — Apply continuity from above:</strong>
-                    <div class="math-display">
-                        \[ \lim_{h \to 0^+} F_X(x+h) = P\left( \bigcap_{n=1}^{\infty} \{X \leq x + h_n\} \right) = P(X \leq x) = F_X(x) \]
-                    </div>
-                </div>
-            </div>
-            
-            <div class="corollary-box">
-                <strong>📌 Corollary 1.1:</strong> \(P(a < X \leq b) = F_X(b) - F_X(a)\)<br>
-                <strong>📌 Corollary 1.2:</strong> \(P(X = x) = F_X(x) - \lim_{t \to x^-} F_X(t)\) (the size of the jump at x)<br>
-                <strong>📌 Corollary 1.3:</strong> For a continuous RV, \(P(X = x) = 0\) for all x.
-            </div>
-            
-            <!-- Theorem 2: Expectation Properties -->
-            <div class="theorem-box">
-                <h3>📌 Theorem 2 (Properties of Expectation)</h3>
-                <p>For random variables \(X\) and \(Y\) and constants \(a, b \in \mathbb{R}\):</p>
-                <div class="math-display">
-                    \[ \text{(i)} \quad E[a] = a \quad \text{(Expectation of a constant)} \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(ii)} \quad E[aX] = a E[X] \quad \text{(Homogeneity)} \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iii)} \quad E[X + Y] = E[X] + E[Y] \quad \text{(Additivity)} \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iv)} \quad E[aX + bY] = aE[X] + bE[Y] \quad \text{(Linearity)} \]
-                </div>
-            </div>
-            
-            <div class="proof-box">
-                <h4>📝 Proof of (i):</h4>
-                <div class="math-display">
-                    \[ E[c] = \sum_{i} c \cdot P(X = c) = c \cdot 1 = c \]
-                </div>
-                
-                <h4>📝 Proof of (ii):</h4>
-                <div class="math-display">
-                    \[ E[aX] = \sum_x a x \cdot P(X = x) = a \sum_x x P(X = x) = a E[X] \]
-                </div>
-                
-                <h4>📝 Proof of (iii):</h4>
-                <div class="math-display">
-                    \[ E[X+Y] = \sum_x \sum_y (x+y) P(X=x, Y=y) = \sum_x x \sum_y P(X=x, Y=y) + \sum_y y \sum_x P(X=x, Y=y) \]
-                </div>
-                <div class="math-display">
-                    \[ = \sum_x x P(X=x) + \sum_y y P(Y=y) = E[X] + E[Y] \]
-                </div>
-                
-                <h4>📝 Proof of (iv):</h4>
-                <p>Combines (ii) and (iii): \(E[aX + bY] = aE[X] + bE[Y]\).</p>
-            </div>
-            
-            <!-- Theorem 3: Variance Properties -->
-            <div class="theorem-box">
-                <h3>📌 Theorem 3 (Properties of Variance)</h3>
-                <p>Variance is defined as \(\text{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2\). Properties:</p>
-                <div class="math-display">
-                    \[ \text{(i)} \quad \text{Var}(c) = 0 \quad \text{(constant has zero variance)} \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(ii)} \quad \text{Var}(aX) = a^2 \text{Var}(X) \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iii)} \quad \text{Var}(X + c) = \text{Var}(X) \]
-                </div>
-                <div class="math-display">
-                    \[ \text{(iv)} \quad \text{Var}(aX + b) = a^2 \text{Var}(X) \]
-                </div>
-            </div>
-            
-            <div class="proof-box">
-                <h4>📝 Proof of (i):</h4>
-                <div class="math-display">
-                    \[ \text{Var}(c) = E[(c - E[c])^2] = E[(c - c)^2] = E[0] = 0 \]
-                </div>
-                
-                <h4>📝 Proof of (ii):</h4>
-                <div class="math-display">
-                    \[ \text{Var}(aX) = E[(aX - E[aX])^2] = E[a^2(X - E[X])^2] = a^2 \text{Var}(X) \]
-                </div>
-                
-                <h4>📝 Proof of (iii):</h4>
-                <div class="math-display">
-                    \[ \text{Var}(X + c) = E[(X + c - E[X + c])^2] = E[(X - E[X])^2] = \text{Var}(X) \]
-                </div>
-                
-                <h4>📝 Proof of (iv):</h4>
-                <div class="math-display">
-                    \[ \text{Var}(aX + b) = a^2 \text{Var}(X) \]
-                </div>
-            </div>
+        
+            <!-- Section 3: Fundamental Theorems on Random Variables -->
+<div class="section">
+    <div class="section-header">
+        <span class="icon">📐</span>
+        <h2>3. Fundamental Theorems on Random Variables</h2>
+    </div>
+    
+    <!-- Theorem 3.1 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.1 (Characterization of Random Variables)</h3>
+        <p>A function \(X(\omega)\) from \(S\) to \(\mathbb{R} = (-\infty, \infty)\) is a random variable if and only if:</p>
+        <div class="math-display">
+            \[ \{\omega : X(\omega) < a\} \in \mathcal{B} \quad \text{for every } a \in \mathbb{R} \]
         </div>
+        <p>where \(\mathcal{B}\) is the sigma-algebra of events (Borel sets). Equivalently, \(X^{-1}((-\infty, a))\) is an event for all \(a\).</p>
+    </div>
 
+    <!-- Theorem 3.2 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.2 (Closure under Algebraic Operations)</h3>
+        <p>If \(X_1\) and \(X_2\) are random variables and \(c\) is a constant, then:</p>
+        <div class="math-display">
+            \[ cX_1,\quad X_1 + X_2,\quad X_1 X_2 \text{ are also random variables.} \]
+        </div>
+        <p><strong>Remark:</strong> It follows that \(c_1 X_1 + c_2 X_2\) is a random variable for constants \(c_1, c_2\). In particular, \(X_1 - X_2\) is a random variable.</p>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.2:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — For \(cX_1\):</strong>
+            <p>If \(c = 0\), then \(cX_1 = 0\) is trivially a random variable. If \(c > 0\):</p>
+            <div class="math-display">
+                \[ \{\omega : cX_1(\omega) < a\} = \{\omega : X_1(\omega) < a/c\} \in \mathcal{B} \]
+            </div>
+            <p>If \(c < 0\):</p>
+            <div class="math-display">
+                \[ \{\omega : cX_1(\omega) < a\} = \{\omega : X_1(\omega) > a/c\} \in \mathcal{B} \]
+            </div>
+            <p>Thus, \(cX_1\) is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — For \(X_1 + X_2\):</strong>
+            <p>Note that \(\{X_1 + X_2 < a\} = \bigcup_{r \in \mathbb{Q}} \{X_1 < r\} \cap \{X_2 < a - r\}\). Since this is a countable union of events, it is an event. Hence, \(X_1 + X_2\) is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 3 — For \(X_1 X_2\):</strong>
+            <p>Using the identity \(X_1 X_2 = \frac{1}{4}[(X_1 + X_2)^2 - (X_1 - X_2)^2]\) and the fact that squares of random variables are random variables, the result follows.</p>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.2.1:</strong> Any linear combination \(c_1 X_1 + c_2 X_2 + \cdots + c_n X_n\) is a random variable.<br>
+        <strong>📌 Corollary 3.2.2:</strong> \(X_1 - X_2\) is a random variable.
+    </div>
+
+    <!-- Theorem 3.3 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.3 (Closure under Limits)</h3>
+        <p>If \(\{X_n(\omega), n \geq 1\}\) are random variables, then:</p>
+        <div class="math-display">
+            \[ \sup_n X_n(\omega),\quad \inf_n X_n(\omega),\quad \limsup_{n \to \infty} X_n(\omega),\quad \liminf_{n \to \infty} X_n(\omega) \]
+        </div>
+        <p>are all random variables, whenever they are finite for all \(\omega\).</p>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.3:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — For \(\sup_n X_n\):</strong>
+            <div class="math-display">
+                \[ \{\omega : \sup_n X_n(\omega) \leq a\} = \bigcap_{n=1}^{\infty} \{\omega : X_n(\omega) \leq a\} \in \mathcal{B} \]
+            </div>
+            <p>Thus, \(\sup_n X_n\) is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — For \(\inf_n X_n\):</strong>
+            <p>Note that \(\inf_n X_n = -\sup_n (-X_n)\). Since \(-X_n\) are random variables, the result follows.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 3 — For \(\limsup\) and \(\liminf\):</strong>
+            <div class="math-display">
+                \[ \limsup_{n \to \infty} X_n = \inf_{n \geq 1} \sup_{k \geq n} X_k \]
+            </div>
+            <div class="math-display">
+                \[ \liminf_{n \to \infty} X_n = \sup_{n \geq 1} \inf_{k \geq n} X_k \]
+            </div>
+            <p>Since these are combinations of sup and inf operations, they are random variables.</p>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.3.1:</strong> If \(X_n \to X\) pointwise (or almost surely), then \(X\) is a random variable.<br>
+        <strong>📌 Corollary 3.3.2:</strong> \(\limsup\) and \(\liminf\) are always defined (possibly infinite) and are measurable.
+    </div>
+
+    <!-- Theorem 3.4 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.4 (Transformations of Random Variables)</h3>
+        <p>If \(X\) is a random variable, then the following are also random variables:</p>
+        <div class="math-display">
+            \[ \text{(i)} \quad \frac{1}{X} \quad \text{where } \frac{1}{X}(\omega) = \infty \text{ if } X(\omega) = 0 \]
+        </div>
+        <div class="math-display">
+            \[ \text{(ii)} \quad X^+(\omega) = \max[0, X(\omega)] \]
+        </div>
+        <div class="math-display">
+            \[ \text{(iii)} \quad X^-(\omega) = -\min[0, X(\omega)] \]
+        </div>
+        <div class="math-display">
+            \[ \text{(iv)} \quad |X| \]
+        </div>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.4:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — For \(1/X\):</strong>
+            <p>For \(a > 0\): \(\{1/X < a\} = \{X > 1/a\} \cup \{X < 0\}\). For \(a < 0\): \(\{1/X < a\} = \{1/a < X < 0\}\). Both are events. Hence, \(1/X\) is a random variable (with the convention \(1/0 = \infty\)).</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — For \(X^+ = \max[0, X]\):</strong>
+            <p>\(X^+ = \frac{X + |X|}{2}\). Since \(X\) and \(|X|\) are random variables, \(X^+\) is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 3 — For \(X^- = -\min[0, X]\):</strong>
+            <p>\(X^- = \frac{|X| - X}{2}\). Since \(X\) and \(|X|\) are random variables, \(X^-\) is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 4 — For \(|X|\):</strong>
+            <p>\(|X| = X^+ + X^-\). Since \(X^+\) and \(X^-\) are random variables, \(|X|\) is a random variable.</p>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.4.1:</strong> \(X = X^+ - X^-\) (decomposition into positive and negative parts).<br>
+        <strong>📌 Corollary 3.4.2:</strong> \(|X| = X^+ + X^-\).
+    </div>
+
+    <!-- Theorem 3.5 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.5 (Max and Min of Two Random Variables)</h3>
+        <p>If \(X_1\) and \(X_2\) are random variables, then:</p>
+        <div class="math-display">
+            \[ \text{(i)} \quad \max[X_1, X_2] \quad \text{and} \quad \text{(ii)} \quad \min[X_1, X_2] \]
+        </div>
+        <p>are also random variables.</p>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.5:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — For \(\max[X_1, X_2]\):</strong>
+            <div class="math-display">
+                \[ \max[X_1, X_2] = \frac{X_1 + X_2 + |X_1 - X_2|}{2} \]
+            </div>
+            <p>Since \(X_1 + X_2\) and \(|X_1 - X_2|\) are random variables, their sum divided by 2 is a random variable.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — For \(\min[X_1, X_2]\):</strong>
+            <div class="math-display">
+                \[ \min[X_1, X_2] = \frac{X_1 + X_2 - |X_1 - X_2|}{2} \]
+            </div>
+            <p>Similarly, this is a random variable.</p>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.5.1:</strong> By induction, \(\max[X_1, X_2, \ldots, X_n]\) and \(\min[X_1, X_2, \ldots, X_n]\) are random variables.
+    </div>
+
+    <!-- Theorem 3.6 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.6 (Continuous Functions of Random Variables)</h3>
+        <p>If \(X\) is a random variable and \(f(\cdot)\) is a continuous function, then \(f(X)\) is a random variable.</p>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.6:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — For a continuous function \(f\), the preimage of any open set is open:</strong>
+            <p>For any \(a \in \mathbb{R}\), the set \(\{f(X) < a\} = X^{-1}(f^{-1}((-\infty, a)))\).</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — Since \(f\) is continuous, \(f^{-1}((-\infty, a))\) is an open set in \(\mathbb{R}\).</strong>
+        </div>
+        <div class="proof-step">
+            <strong>Step 3 — Every open set is a countable union of intervals of the form \((-\infty, b)\).</strong>
+            <p>Thus, \(X^{-1}(f^{-1}((-\infty, a)))\) is a countable union of events, hence an event.</p>
+        </div>
+        <div class="proof-step">
+            <strong>Step 4 — Therefore, \(f(X)\) is a random variable.</strong>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.6.1:</strong> Polynomials, exponentials, trigonometric functions, and absolute value are all random variables when applied to a random variable.<br>
+        <strong>📌 Corollary 3.6.2:</strong> \(e^X\), \(\sin X\), \(\cos X\), \(X^2\), \(\sqrt{X}\) (for \(X \geq 0\)) are all random variables.
+    </div>
+
+    <!-- Theorem 3.7 -->
+    <div class="theorem-box">
+        <h3>📌 Theorem 3.7 (Increasing Functions of Random Variables)</h3>
+        <p>If \(X\) is a random variable and \(f(\cdot)\) is an increasing function (monotone non-decreasing), then \(f(X)\) is a random variable.</p>
+    </div>
+
+    <div class="proof-box">
+        <h4>📝 Proof of Theorem 3.7:</h4>
+        <div class="proof-step">
+            <strong>Step 1 — Since \(f\) is increasing, the set \(\{f(X) < a\} = \{X < f^{-1}(a)\}\) (with appropriate conventions).</strong>
+        </div>
+        <div class="proof-step">
+            <strong>Step 2 — The right-hand side is an event because \(X\) is a random variable.</strong>
+        </div>
+        <div class="proof-step">
+            <strong>Step 3 — Thus, \(f(X)\) satisfies the measurability condition and is a random variable.</strong>
+        </div>
+    </div>
+
+    <div class="corollary-box">
+        <strong>📌 Corollary 3.7.1 (Generalization — Functions of Bounded Variation):</strong><br>
+        If \(f\) is a function of bounded variation on every finite interval \([a, b]\), and \(X\) is a random variable, then \(f(X)\) is a random variable.<br>
+        <br>
+        <strong>Reason:</strong> Any function of bounded variation can be expressed as the difference of two increasing functions: \(f = f_1 - f_2\) where \(f_1, f_2\) are increasing. Hence, \(f(X) = f_1(X) - f_2(X)\) is a random variable.<br>
+        <br>
+        <strong>Examples:</strong> Monotone functions, step functions, and functions with finitely many discontinuities are all of bounded variation on finite intervals.
+    </div>
+</div>
         <!-- Section 4: Bernoulli Random Variable -->
         <div class="section">
             <div class="section-header">
