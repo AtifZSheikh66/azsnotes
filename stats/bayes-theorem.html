@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Bayes' Theorem | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- D3.js for Venn diagrams -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .venn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        .venn-svg {
+            width: 300px;
+            height: 300px;
+            display: block;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .uses-card {
+            background: #ecfdf5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-left: 4px solid #10b981;
+        }
+        .limits-card {
+            background: #fef2f2;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-left: 4px solid #ef4444;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Bayes' Theorem</span>
+        </div>
+        <h1>🧠 Bayes' Theorem</h1>
+        <p>Updating probabilities in light of new evidence — the foundation of Bayesian inference</p>
+        <span class="badge">Probability Theory · Unit II · Bayes' Theorem</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                <strong>Bayes' Theorem</strong> (also called <strong>Bayes' Rule</strong> or <strong>Bayes' Law</strong>) is a fundamental result in probability theory that describes how to update the probability of a hypothesis based on observed evidence. It was first formulated by the Reverend Thomas Bayes (1701-1761) and later developed by Pierre-Simon Laplace.
+            </div>
+            <p>Bayes' Theorem allows us to "reverse" conditional probabilities: given \(P(A \mid B)\), we can compute \(P(B \mid A)\) using prior knowledge. This is the foundation of Bayesian statistics, machine learning, medical diagnosis, and many other fields.</p>
+        </div>
+
+        <!-- Section 2: Bayes' Theorem for Two Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Bayes' Theorem for Two Events</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Bayes' Theorem — Two Events)</h3>
+                <p>For any two events \(A\) and \(B\) with \(P(A) > 0\) and \(P(B) > 0\),</p>
+                <div class="math-display">
+                    \[ P(B \mid A) = \frac{P(A \mid B) \cdot P(B)}{P(A)} \]
+                </div>
+                <p>Using the Law of Total Probability, this can be expanded as:</p>
+                <div class="math-display">
+                    \[ P(B \mid A) = \frac{P(A \mid B) P(B)}{P(A \mid B)P(B) + P(A \mid B^c)P(B^c)} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Start with the definition of conditional probability:</strong>
+                    <div class="math-display">
+                        \[ P(B \mid A) = \frac{P(A \cap B)}{P(A)} \quad \text{and} \quad P(A \mid B) = \frac{P(A \cap B)}{P(B)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Express \(P(A \cap B)\) from the second equation:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B) = P(A \mid B) \cdot P(B) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Substitute into the first equation:</strong>
+                    <div class="math-display">
+                        \[ P(B \mid A) = \frac{P(A \mid B) \cdot P(B)}{P(A)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Expand \(P(A)\) using the Law of Total Probability:</strong>
+                    <div class="math-display">
+                        \[ P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(B \mid A) = \frac{P(A \mid B) P(B)}{P(A \mid B)P(B) + P(A \mid B^c)P(B^c)}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1 (Odds Form):</strong>
+                <div class="math-display">\[ \frac{P(B \mid A)}{P(B^c \mid A)} = \frac{P(A \mid B)}{P(A \mid B^c)} \cdot \frac{P(B)}{P(B^c)} \]</div>
+                Posterior odds = Likelihood ratio × Prior odds.
+                
+                <strong>📌 Corollary 2.2 (Discrete Case):</strong> For a partition \(\{B_1, B_2, \ldots, B_n\}\),
+                <div class="math-display">\[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \]</div>
+            </div>
+        </div>
+
+        <!-- Section 3: Visual Illustration -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎨</span>
+                <h2>3. Venn Diagram Illustration</h2>
+            </div>
+            <div class="venn-container">
+                <div id="venn-bayes" class="venn-svg"></div>
+            </div>
+            <div class="arrow-label" style="text-align: center;">← Bayes' Theorem relates the purple region (A ∩ B) to the areas of A and B</div>
+        </div>
+
+        <!-- Section 4: Bayes' Theorem for Partition of Events -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>4. Bayes' Theorem for a Partition (General Form)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Bayes' Theorem — General Form)</h3>
+                <p>Let \(\{B_1, B_2, \ldots, B_n\}\) be a partition of the sample space \(\Omega\) with \(P(B_i) > 0\) for all \(i\). Then for any event \(A\) with \(P(A) > 0\),</p>
+                <div class="math-display">
+                    \[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — By definition of conditional probability:</strong>
+                    <div class="math-display">
+                        \[ P(B_i \mid A) = \frac{P(A \cap B_i)}{P(A)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply the multiplication rule:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B_i) = P(A \mid B_i) P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply the Law of Total Probability to \(P(A)\):</strong>
+                    <div class="math-display">
+                        \[ P(A) = \sum_{j=1}^{n} P(A \mid B_j) P(B_j) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Substitute into Step 1:</strong>
+                    <div class="math-display">
+                        \[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Countable Partition):</strong> For a countably infinite partition,
+                <div class="math-display">\[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{\infty} P(A \mid B_j) P(B_j)} \]</div>
+                
+                <strong>📌 Corollary 4.2 (Normalizing Constant):</strong> The denominator \(\sum P(A \mid B_j)P(B_j) = P(A)\) is the normalizing constant that ensures the posterior probabilities sum to 1.
+            </div>
+        </div>
+
+        <!-- Section 5: Bayes' Theorem for Future Events (Predictive Distribution) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔮</span>
+                <h2>5. Bayes' Theorem for Future Events (Predictive Distribution)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Bayesian Prediction — Posterior Predictive Distribution)</h3>
+                <p>Let \(B_1, B_2, \ldots, B_n\) be a partition representing different hypotheses or states. After observing data \(A\), the probability of a future event \(F\) is given by:</p>
+                <div class="math-display">
+                    \[ P(F \mid A) = \sum_{i=1}^{n} P(F \mid B_i) \cdot P(B_i \mid A) \]
+                </div>
+                <p>This is the <strong>posterior predictive distribution</strong> — it averages the predictions of each hypothesis weighted by their posterior probabilities.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Apply the Law of Total Probability conditional on A:</strong>
+                    <div class="math-display">
+                        \[ P(F \mid A) = \sum_{i=1}^{n} P(F \cap B_i \mid A) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Use the chain rule for conditional probability:</strong>
+                    <div class="math-display">
+                        \[ P(F \cap B_i \mid A) = P(F \mid B_i \cap A) \cdot P(B_i \mid A) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Note that \(P(F \mid B_i \cap A) = P(F \mid B_i)\) if future event \(F\) is independent of past \(A\) given \(B_i\):</strong>
+                    <div class="math-display">
+                        \[ P(F \mid A) = \sum_{i=1}^{n} P(F \mid B_i) \cdot P(B_i \mid A) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(F \mid A) = \sum_{i=1}^{n} P(F \mid B_i) P(B_i \mid A)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example — Predicting a Future Event:</strong><br>
+                Two coins: Coin 1 is fair (\(P(H)=0.5\)). Coin 2 is biased (\(P(H)=0.8\)). A coin is chosen with equal probability and tossed, showing Heads. What is the probability that the next toss also shows Heads?<br><br>
+                <strong>Solution:</strong> Let \(B_1\) = "fair coin", \(B_2\) = "biased coin". Prior: \(P(B_1)=P(B_2)=0.5\). Likelihood: \(P(H \mid B_1)=0.5\), \(P(H \mid B_2)=0.8\).<br>
+                First, compute posteriors:
+                <div class="math-display">
+                    \[ P(B_1 \mid H) = \frac{0.5 \times 0.5}{0.5 \times 0.5 + 0.8 \times 0.5} = \frac{0.25}{0.65} = \frac{5}{13} \approx 0.3846 \]
+                </div>
+                <div class="math-display">
+                    \[ P(B_2 \mid H) = 1 - \frac{5}{13} = \frac{8}{13} \approx 0.6154 \]
+                </div>
+                Then, predictive probability for next head:
+                <div class="math-display">
+                    \[ P(H_2 \mid H_1) = 0.5 \times \frac{5}{13} + 0.8 \times \frac{8}{13} = \frac{2.5}{13} + \frac{6.4}{13} = \frac{8.9}{13} \approx 0.6846 \]
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1 (Sequential Updating):</strong> Bayes' theorem can be applied sequentially as new data arrives:
+                <div class="math-display">\[ P(B \mid A_1, A_2) = \frac{P(A_2 \mid B, A_1) P(B \mid A_1)}{P(A_2 \mid A_1)} \]</div>
+                
+                <strong>📌 Corollary 5.2 (Posterior as a New Prior):</strong> The posterior distribution from one experiment becomes the prior for the next experiment.
+            </div>
+        </div>
+
+        <!-- Section 6: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Medical Test (Classic)</strong><br>
+                A disease affects 1 in 1000 people. A test has 99% sensitivity and 95% specificity. If a person tests positive, what is the probability they have the disease?<br><br>
+                <strong>Solution:</strong> Let D = "has disease", T = "tests positive".<br>
+                Prior: \(P(D) = 0.001\), \(P(D^c) = 0.999\)<br>
+                Likelihood: \(P(T \mid D) = 0.99\), \(P(T \mid D^c) = 0.05\)<br>
+                <div class="math-display">
+                    \[ P(D \mid T) = \frac{0.99 \times 0.001}{0.99 \times 0.001 + 0.05 \times 0.999} = \frac{0.00099}{0.00099 + 0.04995} = \frac{0.00099}{0.05094} \approx 0.01944 \]
+                </div>
+                So only about 1.94% of positive tests actually indicate disease — a classic result showing the importance of base rates.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 2: Email Spam Classification</strong><br>
+                In a set of emails, 20% are spam. The word "free" appears in 80% of spam emails and in 10% of non-spam emails. If an email contains the word "free", what is the probability it is spam?<br><br>
+                <strong>Solution:</strong> Let S = "spam", F = "contains 'free'".<br>
+                \(P(S) = 0.2\), \(P(F \mid S) = 0.8\), \(P(F \mid S^c) = 0.1\)<br>
+                <div class="math-display">
+                    \[ P(S \mid F) = \frac{0.8 \times 0.2}{0.8 \times 0.2 + 0.1 \times 0.8} = \frac{0.16}{0.16 + 0.08} = \frac{0.16}{0.24} = \frac{2}{3} \approx 0.6667 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Uses of Bayes' Theorem -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">💼</span>
+                <h2>7. Uses of Bayes' Theorem</h2>
+            </div>
+            <div class="two-col">
+                <div class="uses-card">
+                    <h3>📊 Bayesian Statistics</h3>
+                    <p>Foundation of modern Bayesian inference. Combines prior beliefs with data to obtain posterior distributions.</p>
+                </div>
+                <div class="uses-card">
+                    <h3>🩺 Medical Diagnosis</h3>
+                    <p>Interpreting test results correctly, accounting for disease prevalence and test accuracy.</p>
+                </div>
+                <div class="uses-card">
+                    <h3>🤖 Machine Learning</h3>
+                    <p>Naive Bayes classifiers, Bayesian networks, and probabilistic graphical models.</p>
+                </div>
+                <div class="uses-card">
+                    <h3>📧 Spam Filtering</h3>
+                    <p>Classifying emails as spam or ham based on word frequencies.</p>
+                </div>
+                <div class="uses-card">
+                    <h3>⚖️ Legal Reasoning</h3>
+                    <p>Evaluating evidence and updating beliefs in court cases (avoiding prosecutor's fallacy).</p>
+                </div>
+                <div class="uses-card">
+                    <h3>🔬 Scientific Research</h3>
+                    <p>Updating hypotheses as new experimental data becomes available.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Limitations of Bayes' Theorem -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>8. Limitations of Bayes' Theorem</h2>
+            </div>
+            <div class="two-col">
+                <div class="limits-card">
+                    <h3>🎯 Prior Specification</h3>
+                    <p>Bayes' theorem requires a prior distribution. In the absence of objective prior information, selecting an appropriate prior can be subjective and controversial.</p>
+                </div>
+                <div class="limits-card">
+                    <h3>🧮 Computational Complexity</h3>
+                    <p>For complex models with many parameters, computing the denominator (marginal likelihood) can be computationally intensive or intractable.</p>
+                </div>
+                <div class="limits-card">
+                    <h3>📉 Sensitivity to Priors</h3>
+                    <p>Results can be sensitive to the choice of prior, especially with limited data. This can lead to different conclusions from different priors.</p>
+                </div>
+                <div class="limits-card">
+                    <h3>🔢 Disagreement on Priors</h3>
+                    <p>Different experts may have different prior beliefs, leading to different posterior probabilities even with the same data.</p>
+                </div>
+                <div class="limits-card">
+                    <h3>📏 Proper Scoring</h3>
+                    <p>For continuous parameters, defining a proper prior that adequately represents ignorance can be challenging (e.g., Jeffreys priors).</p>
+                </div>
+                <div class="limits-card">
+                    <h3>📊 Data Dependence</h3>
+                    <p>Assumes the likelihood model is correctly specified. Model misspecification can lead to poor inference.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Common Fallacies -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>9. Common Fallacies</h2>
+            </div>
+            <div class="definition">
+                <strong>Prosecutor's Fallacy:</strong> Confusing \(P(\text{evidence} \mid \text{innocence})\) with \(P(\text{innocence} \mid \text{evidence})\). Bayes' theorem shows these are generally different.
+            </div>
+            <div class="definition">
+                <strong>Base Rate Fallacy:</strong> Ignoring prior probabilities (base rates) when interpreting conditional probabilities. The medical test example demonstrates this.
+            </div>
+            <div class="definition">
+                <strong>Confusion of the Inverse:</strong> Assuming \(P(A \mid B) = P(B \mid A)\). This is only true when \(P(A) = P(B)\).
+            </div>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> In a city, 2% of drivers are drunk. A breathalyzer test has 98% accuracy (correctly identifies drunk drivers 98% of the time and correctly identifies sober drivers 98% of the time). If a driver tests positive, what is the probability they are actually drunk?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(D)=0.02\), \(P(T \mid D)=0.98\), \(P(T \mid D^c)=0.02\). \(P(D \mid T) = \frac{0.98 \times 0.02}{0.98 \times 0.02 + 0.02 \times 0.98} = \frac{0.0196}{0.0196 + 0.0196} = 0.5\) (50%)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Prove that \(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A \mid B)P(B) + P(A \mid B^c)P(B^c)}\) from first principles.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Start from definition: \(P(B \mid A) = P(A \cap B)/P(A)\). Then \(P(A \cap B) = P(A \mid B)P(B)\). Expand \(P(A)\) using total probability: \(P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c)\). Substituting gives the result.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Three urns: Urn A has 2 red, 3 blue; Urn B has 4 red, 1 blue; Urn C has 1 red, 4 blue. An urn is chosen at random, then a ball is drawn and found to be red. What is the probability it came from Urn B?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(U_i) = 1/3\), \(P(R \mid U_A)=2/5=0.4\), \(P(R \mid U_B)=4/5=0.8\), \(P(R \mid U_C)=1/5=0.2\). Denominator = \(0.4+0.8+0.2)/3 = 1.4/3\). \(P(U_B \mid R) = (0.8/3) / (1.4/3) = 0.8/1.4 = 4/7 ≈ 0.5714\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Bayes' Theorem (Two Events):</strong> \(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A)}\)</li>
+                <li><strong>General Form (Partition):</strong> \(P(B_i \mid A) = \frac{P(A \mid B_i)P(B_i)}{\sum_{j} P(A \mid B_j)P(B_j)}\)</li>
+                <li><strong>Future Events (Posterior Predictive):</strong> \(P(F \mid A) = \sum_i P(F \mid B_i) P(B_i \mid A)\)</li>
+                <li><strong>Bayes' theorem allows us to:</strong> Update beliefs (prior → posterior); reverse conditional probabilities; make predictions</li>
+                <li><strong>Uses:</strong> Medical diagnosis, spam filtering, machine learning, scientific inference, legal reasoning</li>
+                <li><strong>Limitations:</strong> Requires prior specification; computationally intensive for complex models; sensitivity to priors</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="total_probability.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Total Probability</a>
+            <a href="random_variables_discrete.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Random Variables →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Bayes' Theorem — updating probabilities with new evidence, from Thomas Bayes to modern Bayesian statistics.
+    </footer>
+</div>
+
+<script>
+    // Create Venn diagram for Bayes' theorem
+    function createBayesVenn() {
+        const container = d3.select("#venn-bayes");
+        container.html("");
+        const width = 300, height = 300;
+        const svg = container.append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 300 300");
+        
+        const radius = 90;
+        const offset = 40;
+        
+        // Draw circle A (right)
+        svg.append("circle")
+            .attr("cx", 150 + offset)
+            .attr("cy", 150)
+            .attr("r", radius)
+            .attr("fill", "#3b82f6")
+            .attr("fill-opacity", 0.3)
+            .attr("stroke", "#1e40af")
+            .attr("stroke-width", 2);
+        
+        // Draw circle B (left)
+        svg.append("circle")
+            .attr("cx", 150 - offset)
+            .attr("cy", 150)
+            .attr("r", radius)
+            .attr("fill", "#10b981")
+            .attr("fill-opacity", 0.3)
+            .attr("stroke", "#065f46")
+            .attr("stroke-width", 2);
+        
+        // Highlight intersection
+        svg.append("circle")
+            .attr("cx", 150 - offset)
+            .attr("cy", 150)
+            .attr("r", radius)
+            .attr("fill", "#8b5cf6")
+            .attr("fill-opacity", 0.5)
+            .attr("clip-path", "url(#clipB)");
+        
+        svg.append("circle")
+            .attr("cx", 150 + offset)
+            .attr("cy", 150)
+            .attr("r", radius)
+            .attr("fill", "#8b5cf6")
+            .attr("fill-opacity", 0.5)
+            .attr("clip-path", "url(#clipA)");
+        
+        // Define clip paths
+        const defs = svg.append("defs");
+        defs.append("clipPath")
+            .attr("id", "clipA")
+            .append("circle")
+            .attr("cx", 150 - offset)
+            .attr("cy", 150)
+            .attr("r", radius);
+        
+        defs.append("clipPath")
+            .attr("id", "clipB")
+            .append("circle")
+            .attr("cx", 150 + offset)
+            .attr("cy", 150)
+            .attr("r", radius);
+        
+        // Labels
+        svg.append("text")
+            .attr("x", 80)
+            .attr("y", 145)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "16")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B");
+        
+        svg.append("text")
+            .attr("x", 220)
+            .attr("y", 145)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "16")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("A");
+        
+        // Label the intersection
+        svg.append("text")
+            .attr("x", 150)
+            .attr("y", 145)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("fill", "#6d28d9")
+            .text("A ∩ B");
+        
+        // Add arrows pointing to regions
+        svg.append("text")
+            .attr("x", 150)
+            .attr("y", 195)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10")
+            .attr("fill", "#64748b")
+            .text("← Intersection →");
+    }
+    
+    createBayesVenn();
+</script>
+</body>
+</html>
