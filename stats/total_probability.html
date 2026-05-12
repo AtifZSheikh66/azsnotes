@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Law of Total Probability | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- D3.js for Venn diagrams -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .venn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        .venn-svg {
+            width: 300px;
+            height: 300px;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Law of Total Probability</span>
+        </div>
+        <h1>📊 Law of Total Probability</h1>
+        <p>Computing unconditional probabilities by conditioning on a partition of the sample space</p>
+        <span class="badge">Probability Theory · Unit II · Total Probability Theorem</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                The <strong>Law of Total Probability</strong> (also called the <strong>Theorem of Total Probability</strong>) is a fundamental result in probability theory that expresses the probability of an event in terms of its conditional probabilities given a partition of the sample space. It is the foundation of Bayesian inference and is used extensively in applications ranging from medical testing to machine learning.
+            </div>
+            <p>If we have a set of mutually exclusive and exhaustive events \(B_1, B_2, \ldots, B_n\) that cover the entire sample space, then the probability of any event \(A\) can be computed as the weighted average of the conditional probabilities \(P(A \mid B_i)\), with weights \(P(B_i)\).</p>
+        </div>
+
+        <!-- Section 2: Partition of Sample Space -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Partition of the Sample Space</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Definition (Partition)</h3>
+                <p>A collection of events \(\{B_1, B_2, \ldots, B_n\}\) is said to form a <strong>partition</strong> of the sample space \(\Omega\) if:</p>
+                <ul>
+                    <li><strong>Mutually Exclusive:</strong> \(B_i \cap B_j = \emptyset\) for all \(i \neq j\)</li>
+                    <li><strong>Exhaustive:</strong> \(\displaystyle \bigcup_{i=1}^{n} B_i = \Omega\)</li>
+                    <li><strong>Non-zero Probability:</strong> \(P(B_i) > 0\) for all \(i\) (ensuring conditional probabilities are defined)</li>
+                </ul>
+            </div>
+            
+            <div class="venn-container">
+                <div id="venn-partition" class="venn-svg"></div>
+            </div>
+            <div class="arrow-label" style="text-align: center;">← Partition of sample space into 3 mutually exclusive and exhaustive events \(B_1, B_2, B_3\)</div>
+        </div>
+
+        <!-- Section 3: Law of Total Probability (Finite Case) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>3. Law of Total Probability (Finite Partition)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Law of Total Probability for Finite Partition)</h3>
+                <p>Let \(\{B_1, B_2, \ldots, B_n\}\) be a partition of the sample space \(\Omega\) with \(P(B_i) > 0\) for all \(i\). Then for any event \(A\),</p>
+                <div class="math-display">
+                    \[ P(A) = \sum_{i=1}^{n} P(A \mid B_i) \cdot P(B_i) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Express event A as a union of disjoint parts:</strong>
+                    <p>Since the \(B_i\) form a partition of \(\Omega\), we have:</p>
+                    <div class="math-display">
+                        \[ A = A \cap \Omega = A \cap \left( \bigcup_{i=1}^{n} B_i \right) = \bigcup_{i=1}^{n} (A \cap B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Note that the sets \(A \cap B_i\) are mutually exclusive:</strong>
+                    <p>Because the \(B_i\) are mutually exclusive, \((A \cap B_i) \cap (A \cap B_j) = \emptyset\) for \(i \neq j\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply finite additivity (Axiom 3):</strong>
+                    <div class="math-display">
+                        \[ P(A) = P\left( \bigcup_{i=1}^{n} (A \cap B_i) \right) = \sum_{i=1}^{n} P(A \cap B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Apply the multiplication rule (definition of conditional probability):</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B_i) = P(A \mid B_i) \cdot P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Substitute and conclude:</strong>
+                    <div class="math-display">
+                        \[ P(A) = \sum_{i=1}^{n} P(A \mid B_i) \cdot P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(A) = \sum_{i=1}^{n} P(A \mid B_i) P(B_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1 (Special Case n = 2):</strong> For any event A and any event B with \(0 < P(B) < 1\),
+                <div class="math-display">\[ P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c) \]</div>
+                
+                <strong>📌 Corollary 3.2 (Weighted Average Interpretation):</strong> \(P(A)\) is a weighted average of the conditional probabilities \(P(A \mid B_i)\), with weights \(P(B_i)\).
+                
+                <strong>📌 Corollary 3.3:</strong> \(\min_i P(A \mid B_i) \leq P(A) \leq \max_i P(A \mid B_i)\). The unconditional probability lies between the smallest and largest conditional probabilities.
+            </div>
+        </div>
+
+        <!-- Section 4: Law of Total Probability (Countably Infinite Case) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">∞</span>
+                <h2>4. Law of Total Probability for Countably Infinite Partition</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Countable Partition)</h3>
+                <p>Let \(\{B_1, B_2, B_3, \ldots\}\) be a countable partition of the sample space \(\Omega\) with \(P(B_i) > 0\) for all \(i\). Then for any event \(A\),</p>
+                <div class="math-display">
+                    \[ P(A) = \sum_{i=1}^{\infty} P(A \mid B_i) \cdot P(B_i) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Same as finite case, but using countable additivity:</strong>
+                    <div class="math-display">
+                        \[ A = \bigcup_{i=1}^{\infty} (A \cap B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Using countable additivity (Extended Axiom of Addition):</strong>
+                    <div class="math-display">
+                        \[ P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply multiplication rule:</strong>
+                    <div class="math-display">
+                        \[ P(A \cap B_i) = P(A \mid B_i) P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(A) = \sum_{i=1}^{\infty} P(A \mid B_i) P(B_i)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1:</strong> The series \(\sum_{i=1}^{\infty} P(A \mid B_i) P(B_i)\) converges absolutely because it equals \(P(A) \leq 1\).<br><br>
+                <strong>📌 Corollary 4.2:</strong> If only finitely many \(B_i\) have positive probability, the infinite sum reduces to a finite sum.
+            </div>
+        </div>
+
+        <!-- Section 5: Law of Total Probability for Continuous Case -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">∫</span>
+                <h2>5. Law of Total Probability for Continuous Random Variables</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Continuous Version)</h3>
+                <p>If \(X\) is a continuous random variable with probability density function \(f_X(x)\), then for any event \(A\),</p>
+                <div class="math-display">
+                    \[ P(A) = \int_{-\infty}^{\infty} P(A \mid X = x) \, f_X(x) \, dx \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Venn Diagram Visualization -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎨</span>
+                <h2>6. Venn Diagram Illustration</h2>
+            </div>
+            <div class="venn-container" style="flex-direction: column; align-items: center;">
+                <div id="venn-total" class="venn-svg"></div>
+                <div class="arrow-label" style="text-align: center; margin-top: 0.5rem;">← Event A (blue) intersecting with partition sets \(B_1, B_2, B_3\)</div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Interpretation:</strong> The total probability of A equals the sum of the probabilities of the overlapping regions \(A \cap B_1\), \(A \cap B_2\), and \(A \cap B_3\). Each of these equals \(P(A \mid B_i) P(B_i)\).
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Two Machines Factory</strong><br>
+                A factory has two machines. Machine 1 produces 60% of the total output with a defect rate of 2%. Machine 2 produces 40% of the total output with a defect rate of 3%. What is the probability that a randomly selected product is defective?<br><br>
+                <strong>Solution:</strong> Let D = "product is defective", \(M_1\) = "from Machine 1", \(M_2\) = "from Machine 2".<br>
+                \(P(M_1) = 0.6\), \(P(M_2) = 0.4\)<br>
+                \(P(D \mid M_1) = 0.02\), \(P(D \mid M_2) = 0.03\)<br>
+                By the Law of Total Probability:
+                <div class="math-display">
+                    \[ P(D) = P(D \mid M_1)P(M_1) + P(D \mid M_2)P(M_2) \]
+                </div>
+                <div class="math-display">
+                    \[ P(D) = 0.02 \times 0.6 + 0.03 \times 0.4 = 0.012 + 0.012 = 0.024 \]
+                </div>
+                So the overall defect probability is 2.4%.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 2: Three Urns</strong><br>
+                Urn 1 contains 5 red and 3 blue balls. Urn 2 contains 4 red and 4 blue balls. Urn 3 contains 2 red and 6 blue balls. An urn is chosen uniformly at random, and then a ball is drawn from that urn. What is the probability of drawing a red ball?<br><br>
+                <strong>Solution:</strong> Let \(R\) = "red ball", \(U_i\) = "choose urn i".<br>
+                \(P(U_i) = \frac{1}{3}\) for \(i = 1, 2, 3\).<br>
+                \(P(R \mid U_1) = \frac{5}{8}\), \(P(R \mid U_2) = \frac{4}{8} = \frac{1}{2}\), \(P(R \mid U_3) = \frac{2}{8} = \frac{1}{4}\)<br>
+                By Total Probability:
+                <div class="math-display">
+                    \[ P(R) = \frac{1}{3} \cdot \frac{5}{8} + \frac{1}{3} \cdot \frac{1}{2} + \frac{1}{3} \cdot \frac{1}{4} = \frac{1}{3} \left( \frac{5}{8} + \frac{4}{8} + \frac{2}{8} \right) = \frac{1}{3} \cdot \frac{11}{8} = \frac{11}{24} \approx 0.4583 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 3: Medical Test</strong><br>
+                A disease affects 1% of the population. A test has 95% sensitivity and 90% specificity. Find the probability that a randomly selected person tests positive.<br><br>
+                <strong>Solution:</strong> Let D = "has disease", T = "tests positive".<br>
+                \(P(D) = 0.01\), \(P(D^c) = 0.99\)<br>
+                \(P(T \mid D) = 0.95\) (true positive rate)<br>
+                \(P(T \mid D^c) = 0.10\) (false positive rate, since specificity = 0.90)<br>
+                <div class="math-display">
+                    \[ P(T) = P(T \mid D)P(D) + P(T \mid D^c)P(D^c) = 0.95 \times 0.01 + 0.10 \times 0.99 = 0.0095 + 0.099 = 0.1085 \]
+                </div>
+                So about 10.85% of the population tests positive.
+            </div>
+        </div>
+
+        <!-- Section 8: Connection to Bayes' Theorem -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>8. Connection to Bayes' Theorem</h2>
+            </div>
+            <div class="definition">
+                The Law of Total Probability provides the denominator in Bayes' Theorem:
+                <div class="math-display">
+                    \[ P(B_i \mid A) = \frac{P(A \mid B_i) P(B_i)}{\sum_{j=1}^{n} P(A \mid B_j) P(B_j)} \]
+                </div>
+                <p>Thus, the Law of Total Probability is essential for Bayesian updating.</p>
+            </div>
+        </div>
+
+        <!-- Section 9: Alternative Forms -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>9. Alternative Forms</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Form 1 (Using Expectation)</h3>
+                <div class="math-display">
+                    \[ P(A) = E[P(A \mid X)] \]
+                </div>
+                <p>where \(X\) is any discrete random variable forming a partition.</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Form 2 (Continuous Case)</h3>
+                <div class="math-display">
+                    \[ P(A) = \int P(A \mid X = x) f_X(x) \, dx \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> In a certain population, 30% are smokers. Among smokers, the probability of developing lung cancer is 0.15; among non-smokers, it is 0.02. What is the probability that a randomly selected person develops lung cancer?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(C) = 0.15 \times 0.3 + 0.02 \times 0.7 = 0.045 + 0.014 = 0.059\) (5.9%)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> A bag contains 3 red and 4 blue balls. Two balls are drawn without replacement. Find the probability that the second ball is red using total probability.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Let \(R_1\) = first is red, \(R_2\) = second is red. \(P(R_2) = P(R_2 \mid R_1)P(R_1) + P(R_2 \mid R_1^c)P(R_1^c) = \frac{2}{6} \times \frac{3}{7} + \frac{3}{6} \times \frac{4}{7} = \frac{6}{42} + \frac{12}{42} = \frac{18}{42} = \frac{3}{7}\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that for any events A and B, \(P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Since \(\{B, B^c\}\) forms a partition of \(\Omega\), the result follows directly from the Law of Total Probability with \(n=2\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Law of Total Probability:</strong> \(P(A) = \sum_{i=1}^{n} P(A \mid B_i) P(B_i)\) for any partition \(\{B_1, \ldots, B_n\}\)</li>
+                <li><strong>Partition:</strong> Events must be mutually exclusive, exhaustive, and have positive probability</li>
+                <li><strong>Special Case (n = 2):</strong> \(P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c)\)</li>
+                <li><strong>Countable Extension:</strong> \(P(A) = \sum_{i=1}^{\infty} P(A \mid B_i) P(B_i)\) for countable partitions</li>
+                <li><strong>Continuous Extension:</strong> \(P(A) = \int P(A \mid X = x) f_X(x) dx\)</li>
+                <li><strong>Applications:</strong> Medical testing, quality control, Bayesian inference, reliability analysis</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="extended_theorem.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Extended Axiom of Addition and Continuity </a>
+            <a href="bayes_theorem.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Bayes' Theorem →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Law of Total Probability — decomposing probabilities using a partition of the sample space.
+    </footer>
+</div>
+
+<script>
+    // Create partition Venn diagram (3 disjoint circles)
+    function createPartitionDiagram() {
+        const container = d3.select("#venn-partition");
+        container.html("");
+        const width = 300, height = 300;
+        const svg = container.append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 300 300");
+        
+        // Draw three disjoint circles (partition)
+        svg.append("circle")
+            .attr("cx", 80)
+            .attr("cy", 130)
+            .attr("r", 55)
+            .attr("fill", "#3b82f6")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "#1e40af")
+            .attr("stroke-width", 2);
+        
+        svg.append("circle")
+            .attr("cx", 150)
+            .attr("cy", 80)
+            .attr("r", 55)
+            .attr("fill", "#10b981")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "#065f46")
+            .attr("stroke-width", 2);
+        
+        svg.append("circle")
+            .attr("cx", 220)
+            .attr("cy", 130)
+            .attr("r", 55)
+            .attr("fill", "#f59e0b")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "#d97706")
+            .attr("stroke-width", 2);
+        
+        // Labels
+        svg.append("text")
+            .attr("x", 80)
+            .attr("y", 135)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "13")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₁");
+        
+        svg.append("text")
+            .attr("x", 150)
+            .attr("y", 85)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "13")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₂");
+        
+        svg.append("text")
+            .attr("x", 220)
+            .attr("y", 135)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "13")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₃");
+    }
+    
+    // Create total probability Venn diagram (A intersecting partition)
+    function createTotalDiagram() {
+        const container = d3.select("#venn-total");
+        container.html("");
+        const width = 300, height = 300;
+        const svg = container.append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 300 300");
+        
+        // Draw partition sets (light background)
+        svg.append("circle")
+            .attr("cx", 80)
+            .attr("cy", 130)
+            .attr("r", 55)
+            .attr("fill", "#3b82f6")
+            .attr("fill-opacity", 0.2)
+            .attr("stroke", "#1e40af")
+            .attr("stroke-width", 1.5);
+        
+        svg.append("circle")
+            .attr("cx", 150)
+            .attr("cy", 80)
+            .attr("r", 55)
+            .attr("fill", "#10b981")
+            .attr("fill-opacity", 0.2)
+            .attr("stroke", "#065f46")
+            .attr("stroke-width", 1.5);
+        
+        svg.append("circle")
+            .attr("cx", 220)
+            .attr("cy", 130)
+            .attr("r", 55)
+            .attr("fill", "#f59e0b")
+            .attr("fill-opacity", 0.2)
+            .attr("stroke", "#d97706")
+            .attr("stroke-width", 1.5);
+        
+        // Draw event A as a large ellipse overlapping all
+        svg.append("ellipse")
+            .attr("cx", 150)
+            .attr("cy", 150)
+            .attr("rx", 110)
+            .attr("ry", 80)
+            .attr("fill", "#8b5cf6")
+            .attr("fill-opacity", 0.35)
+            .attr("stroke", "#6d28d9")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "6,3");
+        
+        // Labels for partition
+        svg.append("text")
+            .attr("x", 80)
+            .attr("y", 135)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₁");
+        
+        svg.append("text")
+            .attr("x", 150)
+            .attr("y", 85)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₂");
+        
+        svg.append("text")
+            .attr("x", 220)
+            .attr("y", 135)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12")
+            .attr("font-weight", "bold")
+            .attr("fill", "#1e293b")
+            .text("B₃");
+        
+        // Label for event A
+        svg.append("text")
+            .attr("x", 150)
+            .attr("y", 165)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "14")
+            .attr("font-weight", "bold")
+            .attr("fill", "#6d28d9")
+            .text("A");
+    }
+    
+    // Create diagrams
+    createPartitionDiagram();
+    createTotalDiagram();
+</script>
+</body>
+</html>
