@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Extended Axiom of Addition & Axiom of Continuity | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- D3.js for visual diagrams -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .sequence-diagram {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .sequence-diagram h4 {
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+        }
+        .svg-diagram {
+            width: 350px;
+            height: 180px;
+            display: block;
+            margin: 0 auto;
+        }
+        .arrow-label {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Extended Axiom of Addition & Continuity</span>
+        </div>
+        <h1>📐 Extended Axiom of Addition & Axiom of Continuity</h1>
+        <p>The equivalence of countable additivity and continuity of probability measures</p>
+        <span class="badge">Probability Theory · Unit II · Advanced Axioms</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Introduction</h2>
+            </div>
+            <div class="definition">
+                The <strong>Extended Axiom of Addition</strong> (also called <strong>Countable Additivity</strong> or <strong>σ-additivity</strong>) and the <strong>Axiom of Continuity</strong> are two fundamental properties of probability measures. While Kolmogorov's third axiom is Countable Additivity, the Continuity Axiom is a consequence that deals with limits of monotone sequences of events. This page proves that these two axioms are <strong>equivalent</strong> (given finite additivity).
+            </div>
+            <p>We assume throughout that finite additivity holds (Axiom 3 for finitely many events). We then prove:</p>
+            <ul>
+                <li><strong>Countable Additivity ⇒ Continuity</strong> (and vice versa)</li>
+                <li>Both properties are essential for probability theory to handle infinite sequences of events</li>
+            </ul>
+            <div class="note-tip">
+                💡 <strong>Historical Note:</strong> Kolmogorov included Countable Additivity in his axioms. The Continuity Axiom is often stated separately in some texts as an alternative to Countable Additivity.
+            </div>
+        </div>
+
+        <!-- Section 2: Definitions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📚</span>
+                <h2>2. Formal Definitions</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Definition 1: Extended Axiom of Addition (Countable Additivity)</h3>
+                <p>A probability measure \(P\) satisfies the <strong>Extended Axiom of Addition</strong> if for any sequence of mutually exclusive events \(A_1, A_2, A_3, \ldots\) (i.e., \(A_i \cap A_j = \emptyset\) for \(i \neq j\)),</p>
+                <div class="math-display">
+                    \[ P\left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i) \]
+                </div>
+                <p>This is Kolmogorov's third axiom, extended to countably infinite collections.</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Definition 2: Axiom of Continuity</h3>
+                <p>A probability measure \(P\) satisfies the <strong>Axiom of Continuity</strong> if for any monotone sequence of events:</p>
+                <ul>
+                    <li><strong>Increasing sequence:</strong> If \(A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots\), then</li>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(A_n) = P\left( \bigcup_{n=1}^{\infty} A_n \right) \]
+                    </div>
+                    <li><strong>Decreasing sequence:</strong> If \(B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots\), then</li>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(B_n) = P\left( \bigcap_{n=1}^{\infty} B_n \right) \]
+                    </div>
+                </ul>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Note:</strong> The decreasing case follows from the increasing case by complementation: \(A_n = B_n^c\) gives an increasing sequence.
+            </div>
+        </div>
+
+        <!-- Section 3: Visual Illustration of Continuity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🎨</span>
+                <h2>3. Visual Illustration of Continuity</h2>
+            </div>
+            <div class="diagram-container">
+                <div class="sequence-diagram">
+                    <h4>Increasing Sequence \(A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots\)</h4>
+                    <div id="increasing-diagram" class="svg-diagram"></div>
+                    <div class="arrow-label">← As n increases, \(A_n\) expands toward the union</div>
+                </div>
+                <div class="sequence-diagram">
+                    <h4>Decreasing Sequence \(B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots\)</h4>
+                    <div id="decreasing-diagram" class="svg-diagram"></div>
+                    <div class="arrow-label">← As n increases, \(B_n\) shrinks toward the intersection</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Theorem 1 - Countable Additivity ⇒ Continuity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➡️</span>
+                <h2>4. Theorem 1: Countable Additivity Implies Continuity</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Statement</h3>
+                <p>If a probability measure \(P\) satisfies the Extended Axiom of Addition (Countable Additivity), then it satisfies the Axiom of Continuity.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof for Increasing Sequence:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots\) be a monotone increasing sequence of events.</strong>
+                    <p>Define \(B_1 = A_1\), and for \(n \geq 2\), define \(B_n = A_n \setminus A_{n-1} = A_n \cap A_{n-1}^c\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Note that the \(B_n\) are mutually exclusive (disjoint):</strong>
+                    <div class="math-display">
+                        \[ B_i \cap B_j = \emptyset \quad \text{for } i \neq j \]
+                    </div>
+                    <p>Because \(B_n\) consists of points that first appear in \(A_n\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Express \(A_n\) as the union of the first \(n\) \(B_i\)'s:</strong>
+                    <div class="math-display">
+                        \[ A_n = \bigcup_{i=1}^{n} B_i \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Express the union \(\bigcup_{n=1}^{\infty} A_n\) as the union of all \(B_i\)'s:</strong>
+                    <div class="math-display">
+                        \[ \bigcup_{n=1}^{\infty} A_n = \bigcup_{i=1}^{\infty} B_i \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Apply finite additivity to \(A_n\):</strong>
+                    <div class="math-display">
+                        \[ P(A_n) = \sum_{i=1}^{n} P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Apply Countable Additivity (Extended Axiom) to \(\bigcup_{i=1}^{\infty} B_i\):</strong>
+                    <div class="math-display">
+                        \[ P\left( \bigcup_{i=1}^{\infty} B_i \right) = \sum_{i=1}^{\infty} P(B_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Observe that \(\lim_{n \to \infty} P(A_n) = \lim_{n \to \infty} \sum_{i=1}^{n} P(B_i) = \sum_{i=1}^{\infty} P(B_i)\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(A_n) = \sum_{i=1}^{\infty} P(B_i) = P\left( \bigcup_{i=1}^{\infty} B_i \right) = P\left( \bigcup_{n=1}^{\infty} A_n \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion for increasing sequences:</strong>
+                    <div class="math-display">
+                        \[ \boxed{\lim_{n \to \infty} P(A_n) = P\left( \bigcup_{n=1}^{\infty} A_n \right)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Decreasing Sequence (by complementation):</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots\) be a monotone decreasing sequence.</strong>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Define \(A_n = B_n^c\). Then \(A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots\) (increasing sequence).</strong>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply the increasing case to \(\{A_n\}\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(A_n) = P\left( \bigcup_{n=1}^{\infty} A_n \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Using the complement rule and De Morgan's laws:</strong>
+                    <p>\(P(A_n) = P(B_n^c) = 1 - P(B_n)\). Also, \(\bigcup_{n=1}^{\infty} A_n = \bigcup_{n=1}^{\infty} B_n^c = \left( \bigcap_{n=1}^{\infty} B_n \right)^c\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Substitute into the limit equation:</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} (1 - P(B_n)) = 1 - P\left( \bigcap_{n=1}^{\infty} B_n \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Rearranging:</strong>
+                    <div class="math-display">
+                        \[ 1 - \lim_{n \to \infty} P(B_n) = 1 - P\left( \bigcap_{n=1}^{\infty} B_n \right) \]
+                    </div>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(B_n) = P\left( \bigcap_{n=1}^{\infty} B_n \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Conclusion for decreasing sequences:</strong>
+                    <div class="math-display">
+                        \[ \boxed{\lim_{n \to \infty} P(B_n) = P\left( \bigcap_{n=1}^{\infty} B_n \right)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 1.1 (Continuity from Above):</strong> For a decreasing sequence of events, the probability of the limit equals the limit of the probabilities.<br><br>
+                <strong>📌 Corollary 1.2 (Continuity from Below):</strong> For an increasing sequence of events, the probability of the limit equals the limit of the probabilities.<br><br>
+                <strong>📌 Corollary 1.3 (Application — Borel-Cantelli Lemma):</strong> Continuity is essential for proving the Borel-Cantelli lemmas and handling infinite sequences of events.
+            </div>
+        </div>
+
+        <!-- Section 5: Theorem 2 - Continuity ⇒ Countable Additivity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⬅️</span>
+                <h2>5. Theorem 2: Continuity Implies Countable Additivity</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Statement</h3>
+                <p>If a probability measure \(P\) satisfies the Axiom of Continuity (for both increasing and decreasing sequences) and finite additivity, then it satisfies the Extended Axiom of Addition (Countable Additivity).</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(A_1, A_2, A_3, \ldots\) be a sequence of mutually exclusive events:</strong>
+                    <div class="math-display">
+                        \[ A_i \cap A_j = \emptyset \quad \text{for } i \neq j \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Define the partial unions:</strong>
+                    <div class="math-display">
+                        \[ S_n = \bigcup_{i=1}^{n} A_i \]
+                    </div>
+                    <p>Note that \(S_1 \subseteq S_2 \subseteq S_3 \subseteq \cdots\) forms an increasing sequence of events.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply finite additivity to \(S_n\):</strong>
+                    <p>Since the \(A_i\) are mutually exclusive, by finite additivity:</p>
+                    <div class="math-display">
+                        \[ P(S_n) = \sum_{i=1}^{n} P(A_i) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Observe that the union of all events is the limit of \(S_n\):</strong>
+                    <div class="math-display">
+                        \[ \bigcup_{i=1}^{\infty} A_i = \bigcup_{n=1}^{\infty} S_n \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Apply the Continuity Axiom for increasing sequences:</strong>
+                    <p>Since \(S_n \uparrow \bigcup_{i=1}^{\infty} A_i\) (monotone increasing), we have:</p>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(S_n) = P\left( \bigcup_{i=1}^{\infty} A_i \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 6 — Substitute the expression for \(P(S_n)\) from Step 3:</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} \sum_{i=1}^{n} P(A_i) = P\left( \bigcup_{i=1}^{\infty} A_i \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 7 — Recognize the left-hand side as the infinite series:</strong>
+                    <div class="math-display">
+                        \[ \sum_{i=1}^{\infty} P(A_i) = P\left( \bigcup_{i=1}^{\infty} A_i \right) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 8 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P\left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i)} \]
+                    </div>
+                    <p>Thus, Countable Additivity holds. ∎</p>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> Given finite additivity, Countable Additivity and Continuity are logically equivalent.<br><br>
+                <strong>📌 Corollary 2.2 (Borel's First Lemma):</strong> For any decreasing sequence of events \(B_n\) with \(P(B_n) \to 0\), we have:
+                <div class="math-display">\[ P\left( \bigcap_{n=1}^{\infty} B_n \right) = 0 \]</div>
+                This follows from continuity.<br><br>
+                <strong>📌 Corollary 2.3:</strong> Any finitely additive measure that fails continuity cannot be countably additive, and vice versa.
+            </div>
+        </div>
+
+        <!-- Section 6: Counterexample (Finite Additivity without Continuity) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⚠️</span>
+                <h2>6. Counterexample: Finitely Additive but not Continuous</h2>
+            </div>
+            <div class="definition">
+                <p>It is possible to define a finitely additive probability measure on the natural numbers that is <strong>not</strong> continuous (and hence not countably additive).</p>
+                <p><strong>Example (Banach Limit / Non-principal ultrafilter):</strong> Define \(P(A)\) as the asymptotic density of \(A\) if it exists; otherwise extend by a non-principal ultrafilter. This gives a finitely additive probability on \(\mathbb{N}\) where every finite set has probability 0, but \(P(\mathbb{N}) = 1\). For the decreasing sequence \(A_n = \{n, n+1, n+2, \ldots\}\), we have \(P(A_n) = 1\) for all \(n\), but \(\bigcap_{n=1}^{\infty} A_n = \emptyset\), so \(P(\emptyset) = 0 \neq \lim_{n \to \infty} P(A_n) = 1\). Thus, continuity fails.</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary of Equivalence -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>7. Summary of the Equivalence</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Main Theorem (Equivalence of Axioms)</h3>
+                <p>Assuming finite additivity, the following are equivalent for a probability measure \(P\):</p>
+                <ol>
+                    <li><strong>Extended Axiom of Addition (Countable Additivity):</strong> For any sequence of mutually exclusive events \(A_1, A_2, \ldots\),</li>
+                    <div class="math-display">\[ P\left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} P(A_i) \]</div>
+                    <li><strong>Axiom of Continuity:</strong> For any monotone sequence of events,</li>
+                    <div class="math-display">\[ \lim_{n \to \infty} P(A_n) = P\left( \lim_{n \to \infty} A_n \right) \]</div>
+                    where \(\lim A_n = \bigcup A_n\) for increasing sequences and \(\bigcap A_n\) for decreasing sequences.
+                </ol>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Equivalence Diagram:</h4>
+                <div class="math-display">
+                    \[ \text{Finite Additivity} + \text{Countable Additivity} \xleftrightarrow[\text{Theorem 2}]{\text{Theorem 1}} \text{Finite Additivity} + \text{Continuity} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Consequences and Applications -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔧</span>
+                <h2>8. Consequences and Applications</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Application 1: Probability of a Countable Union</strong><br>
+                Countable additivity allows us to compute probabilities of infinite unions. For example, in coin tossing, the probability that a head eventually appears is:
+                <div class="math-display">
+                    \[ P(\text{head event}) = 1 - P(\text{no heads in any toss}) = 1 - \lim_{n \to \infty} \left(\frac{1}{2}\right)^n = 1 \]
+                </div>
+                This uses continuity.
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Application 2: Borel-Cantelli Lemma</strong><br>
+                If \(\sum_{n=1}^{\infty} P(A_n) < \infty\), then using continuity, we prove that \(P(\limsup A_n) = 0\), meaning infinitely many \(A_n\) occur with probability 0.
+            </div>
+        </div>
+
+        <!-- Section 9: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>9. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> Prove that if \(P\) is countably additive, then for any decreasing sequence \(B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots\), we have \(P(\bigcap_{n=1}^{\infty} B_n) = \lim_{n \to \infty} P(B_n)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Set \(A_n = B_n^c\). Then \(A_n\) is increasing. By continuity for increasing sequences, \(\lim P(A_n) = P(\bigcup A_n)\). By complement rule, \(\lim (1 - P(B_n)) = 1 - P(\bigcap B_n)\). Hence, \(\lim P(B_n) = P(\bigcap B_n)\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Why does asymptotic density (limit of \(|A \cap \{1,\ldots,n\}|/n\)) fail to be countably additive?</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Asymptotic density is only finitely additive. Consider \(A_n = \{n\}\). Then each \(A_n\) has density 0, but the union of all \(A_n\) is \(\mathbb{N}\), which has density 1. Thus, countable additivity fails, and continuity fails because the decreasing sequence \(B_n = \{n, n+1, \ldots\}\) has density 1 for all n, but the intersection is empty with density 0.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Given countable additivity, prove that \(P(\bigcup_{i=1}^{\infty} A_i) \leq \sum_{i=1}^{\infty} P(A_i)\) (Countable Boole's Inequality).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Let \(B_1 = A_1\), \(B_n = A_n \setminus \bigcup_{i=1}^{n-1} A_i\). Then \(B_n\) are mutually exclusive and \(\bigcup B_n = \bigcup A_n\). Also \(P(B_n) \leq P(A_n)\). By countable additivity, \(P(\bigcup A_n) = \sum P(B_n) \leq \sum P(A_n)\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Extended Axiom of Addition (Countable Additivity):</strong> \(P(\bigcup_{i=1}^{\infty} A_i) = \sum_{i=1}^{\infty} P(A_i)\) for mutually exclusive events</li>
+                <li><strong>Axiom of Continuity:</strong> For increasing sequences: \(\lim P(A_n) = P(\bigcup A_n)\); for decreasing sequences: \(\lim P(B_n) = P(\bigcap B_n)\)</li>
+                <li><strong>Equivalence:</strong> Given finite additivity, Countable Additivity ⟺ Continuity</li>
+                <li><strong>Proofs:</strong> 
+                    <ul>
+                        <li>Countable Additivity ⇒ Continuity: Use disjoint decomposition of monotone sequences</li>
+                        <li>Continuity ⇒ Countable Additivity: Use increasing partial sums and continuity from below</li>
+                    </ul>
+                </li>
+                <li><strong>Importance:</strong> These axioms enable probability to handle infinite sample spaces and limit theorems (Law of Large Numbers, CLT)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="matching_problem.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Matching Problem</a>
+            <a href="random_variables_discrete.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Random Variables →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Extended Axiom of Addition and Axiom of Continuity — two equivalent formulations of countable additivity in probability theory.
+    </footer>
+</div>
+
+<script>
+    // Create increasing sequence diagram
+    function createIncreasingDiagram() {
+        const width = 350, height = 180;
+        const svg = d3.select("#increasing-diagram")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 350 180");
+        
+        // Draw outer rectangle (sample space)
+        svg.append("rect")
+            .attr("x", 20)
+            .attr("y", 20)
+            .attr("width", 310)
+            .attr("height", 140)
+            .attr("fill", "#f1f5f9")
+            .attr("stroke", "#cbd5e1")
+            .attr("stroke-width", 1.5)
+            .attr("rx", 8);
+        
+        // Draw A1 (small circle)
+        svg.append("circle")
+            .attr("cx", 90)
+            .attr("cy", 90)
+            .attr("r", 25)
+            .attr("fill", "#3b82f6")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "#1e40af")
+            .attr("stroke-width", 1.5);
+        
+        // Draw A2 (larger circle)
+        svg.append("circle")
+            .attr("cx", 140)
+            .attr("cy", 95)
+            .attr("r", 40)
+            .attr("fill", "#10b981")
+            .attr("fill-opacity", 0.4)
+            .attr("stroke", "#065f46")
+            .attr("stroke-width", 1.5);
+        
+        // Draw A3 (even larger circle)
+        svg.append("circle")
+            .attr("cx", 200)
+            .attr("cy", 100)
+            .attr("r", 55)
+            .attr("fill", "#f59e0b")
+            .attr("fill-opacity", 0.3)
+            .attr("stroke", "#d97706")
+            .attr("stroke-width", 1.5);
+        
+        // Labels
+        svg.append("text")
+            .attr("x", 85)
+            .attr("y", 85)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("A₁");
+        
+        svg.append("text")
+            .attr("x", 140)
+            .attr("y", 90)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("A₂");
+        
+        svg.append("text")
+            .attr("x", 205)
+            .attr("y", 95)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("A₃");
+        
+        svg.append("text")
+            .attr("x", 270)
+            .attr("y", 75)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10")
+            .attr("fill", "#64748b")
+            .text("→");
+        
+        svg.append("text")
+            .attr("x", 290)
+            .attr("y", 70)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10")
+            .attr("font-style", "italic")
+            .text("∞")
+            .style("font-size", "14px")
+            .attr("font-weight", "bold");
+    }
+    
+    // Create decreasing sequence diagram
+    function createDecreasingDiagram() {
+        const width = 350, height = 180;
+        const svg = d3.select("#decreasing-diagram")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", "0 0 350 180");
+        
+        // Draw outer rectangle (sample space)
+        svg.append("rect")
+            .attr("x", 20)
+            .attr("y", 20)
+            .attr("width", 310)
+            .attr("height", 140)
+            .attr("fill", "#f1f5f9")
+            .attr("stroke", "#cbd5e1")
+            .attr("stroke-width", 1.5)
+            .attr("rx", 8);
+        
+        // Draw B1 (largest circle)
+        svg.append("circle")
+            .attr("cx", 175)
+            .attr("cy", 90)
+            .attr("r", 65)
+            .attr("fill", "#3b82f6")
+            .attr("fill-opacity", 0.3)
+            .attr("stroke", "#1e40af")
+            .attr("stroke-width", 1.5);
+        
+        // Draw B2 (medium circle)
+        svg.append("circle")
+            .attr("cx", 175)
+            .attr("cy", 90)
+            .attr("r", 45)
+            .attr("fill", "#10b981")
+            .attr("fill-opacity", 0.4)
+            .attr("stroke", "#065f46")
+            .attr("stroke-width", 1.5);
+        
+        // Draw B3 (smallest circle)
+        svg.append("circle")
+            .attr("cx", 175)
+            .attr("cy", 90)
+            .attr("r", 25)
+            .attr("fill", "#f59e0b")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "#d97706")
+            .attr("stroke-width", 1.5);
+        
+        // Labels
+        svg.append("text")
+            .attr("x", 115)
+            .attr("y", 75)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("B₁");
+        
+        svg.append("text")
+            .attr("x", 145)
+            .attr("y", 75)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("B₂");
+        
+        svg.append("text")
+            .attr("x", 168)
+            .attr("y", 85)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "11")
+            .attr("font-weight", "bold")
+            .text("B₃");
+        
+        svg.append("text")
+            .attr("x", 230)
+            .attr("y", 75)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10")
+            .attr("fill", "#64748b")
+            .text("→");
+        
+        svg.append("text")
+            .attr("x", 250)
+            .attr("y", 70)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10")
+            .attr("font-style", "italic")
+            .text("∞")
+            .style("font-size", "14px")
+            .attr("font-weight", "bold");
+        
+        svg.append("text")
+            .attr("x", 270)
+            .attr("y", 110)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "9")
+            .attr("fill", "#64748b")
+            .text("∩ Bₙ");
+    }
+    
+    // Create diagrams
+    createIncreasingDiagram();
+    createDecreasingDiagram();
+</script>
+</body>
+</html>
