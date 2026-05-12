@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Random Variables | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Random Variables</span>
+        </div>
+        <h1>📊 Random Variables</h1>
+        <p>Formal definition, notation, fundamental theorems, Bernoulli and Characteristic random variables</p>
+        <span class="badge">Probability Theory · Unit III · Random Variables</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Introduction and Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of a Random Variable</h2>
+            </div>
+            <div class="definition">
+                A <strong>random variable</strong> (RV) is a function \(X : \Omega \to \mathbb{R}\) that assigns a real number to each outcome \(\omega\) in the sample space \(\Omega\). It must be measurable, meaning that for every Borel set \(B \subseteq \mathbb{R}\), the preimage \(X^{-1}(B) = \{\omega \in \Omega : X(\omega) \in B\}\) is an event (belongs to the sigma-algebra \(\mathcal{F}\)).
+            </div>
+            <p>Random variables allow us to work with numerical quantities derived from random experiments, rather than abstract outcomes. They are classified as:</p>
+            <ul>
+                <li><strong>Discrete Random Variables:</strong> Take values from a finite or countably infinite set (e.g., number of heads, dice roll)</li>
+                <li><strong>Continuous Random Variables:</strong> Take values from an uncountably infinite set (e.g., height, temperature, time)</li>
+            </ul>
+            
+            <div class="math-display">
+                \[ X: \Omega \to \mathbb{R} \quad \text{such that} \quad X^{-1}(B) \in \mathcal{F} \; \forall B \in \mathcal{B}(\mathbb{R}) \]
+            </div>
+        </div>
+
+        <!-- Section 2: Notation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">✍️</span>
+                <h2>2. Notation for Random Variables</h2>
+            </div>
+            <div class="definition">
+                <p><strong>Standard Notation:</strong></p>
+                <ul>
+                    <li>Random variables are denoted by capital letters: \(X, Y, Z, T, \ldots\)</li>
+                    <li>Their observed values (realizations) are denoted by lowercase letters: \(x, y, z, t, \ldots\)</li>
+                    <li>\(P(X = x)\) — probability that RV \(X\) equals the value \(x\)</li>
+                    <li>\(P(X \leq x)\) — cumulative distribution function (CDF) at \(x\)</li>
+                    <li>\(P(X \in A)\) — probability that \(X\) falls in set \(A\)</li>
+                    <li>\(F_X(x) = P(X \leq x)\) — CDF of \(X\)</li>
+                    <li>\(f_X(x)\) — probability mass function (PMF) for discrete RVs</li>
+                    <li>\(f_X(x)\) — probability density function (PDF) for continuous RVs</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> Tossing two fair coins. Let \(X\) = number of heads. Then:
+                <div class="math-display">
+                    \[ \Omega = \{HH, HT, TH, TT\}, \quad X(HH)=2, X(HT)=1, X(TH)=1, X(TT)=0 \]
+                </div>
+                <div class="math-display">
+                    \[ P(X=0) = \frac{1}{4}, \quad P(X=1) = \frac{1}{2}, \quad P(X=2) = \frac{1}{4} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Fundamental Theorems on Random Variables -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>3. Fundamental Theorems on Random Variables</h2>
+            </div>
+            
+            <!-- Theorem 1: CDF Properties -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 1 (Properties of Cumulative Distribution Function)</h3>
+                <p>For any random variable \(X\) with CDF \(F_X(x) = P(X \leq x)\), the following properties hold:</p>
+                <div class="math-display">
+                    \[ \text{(i)} \quad \lim_{x \to -\infty} F_X(x) = 0 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad \lim_{x \to \infty} F_X(x) = 1 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad F_X \text{ is non-decreasing: } x_1 < x_2 \Rightarrow F_X(x_1) \leq F_X(x_2) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv)} \quad F_X \text{ is right-continuous: } \lim_{h \to 0^+} F_X(x+h) = F_X(x) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i):</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Consider the event \(X \leq x\) as \(x \to -\infty\):</strong>
+                    <p>As \(x \to -\infty\), the event \(X \leq x\) becomes the empty set \(\emptyset\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply continuity of probability:</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to -\infty} F_X(x) = P(\emptyset) = 0 \]
+                    </div>
+                </div>
+                
+                <h4>📝 Proof of (ii):</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Consider the event \(X \leq x\) as \(x \to \infty\):</strong>
+                    <p>As \(x \to \infty\), the event \(X \leq x\) becomes the entire sample space \(\Omega\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply continuity of probability:</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to \infty} F_X(x) = P(\Omega) = 1 \]
+                    </div>
+                </div>
+                
+                <h4>📝 Proof of (iii):</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — If \(x_1 < x_2\), then \(\{X \leq x_1\} \subseteq \{X \leq x_2\}\):</strong>
+                    <p>Because if \(X \leq x_1\), then automatically \(X \leq x_2\) since \(x_1 < x_2\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply monotonicity of probability:</strong>
+                    <div class="math-display">
+                        \[ F_X(x_1) = P(X \leq x_1) \leq P(X \leq x_2) = F_X(x_2) \]
+                    </div>
+                </div>
+                
+                <h4>📝 Proof of (iv) — Right-continuity:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Use the continuity of probability for a decreasing sequence:</strong>
+                    <p>Let \(h_n \downarrow 0\). Then the events \(\{X \leq x + h_n\}\) decrease to \(\{X \leq x\}\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply continuity from above:</strong>
+                    <div class="math-display">
+                        \[ \lim_{h \to 0^+} F_X(x+h) = P\left( \bigcap_{n=1}^{\infty} \{X \leq x + h_n\} \right) = P(X \leq x) = F_X(x) \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 1.1:</strong> \(P(a < X \leq b) = F_X(b) - F_X(a)\)<br>
+                <strong>📌 Corollary 1.2:</strong> \(P(X = x) = F_X(x) - \lim_{t \to x^-} F_X(t)\) (the size of the jump at x)<br>
+                <strong>📌 Corollary 1.3:</strong> For a continuous RV, \(P(X = x) = 0\) for all x.
+            </div>
+            
+            <!-- Theorem 2: Expectation Properties -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 2 (Properties of Expectation)</h3>
+                <p>For random variables \(X\) and \(Y\) and constants \(a, b \in \mathbb{R}\):</p>
+                <div class="math-display">
+                    \[ \text{(i)} \quad E[a] = a \quad \text{(Expectation of a constant)} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad E[aX] = a E[X] \quad \text{(Homogeneity)} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad E[X + Y] = E[X] + E[Y] \quad \text{(Additivity)} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv)} \quad E[aX + bY] = aE[X] + bE[Y] \quad \text{(Linearity)} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i):</h4>
+                <div class="math-display">
+                    \[ E[c] = \sum_{i} c \cdot P(X = c) = c \cdot 1 = c \]
+                </div>
+                
+                <h4>📝 Proof of (ii):</h4>
+                <div class="math-display">
+                    \[ E[aX] = \sum_x a x \cdot P(X = x) = a \sum_x x P(X = x) = a E[X] \]
+                </div>
+                
+                <h4>📝 Proof of (iii):</h4>
+                <div class="math-display">
+                    \[ E[X+Y] = \sum_x \sum_y (x+y) P(X=x, Y=y) = \sum_x x \sum_y P(X=x, Y=y) + \sum_y y \sum_x P(X=x, Y=y) \]
+                </div>
+                <div class="math-display">
+                    \[ = \sum_x x P(X=x) + \sum_y y P(Y=y) = E[X] + E[Y] \]
+                </div>
+                
+                <h4>📝 Proof of (iv):</h4>
+                <p>Combines (ii) and (iii): \(E[aX + bY] = aE[X] + bE[Y]\).</p>
+            </div>
+            
+            <!-- Theorem 3: Variance Properties -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 3 (Properties of Variance)</h3>
+                <p>Variance is defined as \(\text{Var}(X) = E[(X - \mu)^2] = E[X^2] - (E[X])^2\). Properties:</p>
+                <div class="math-display">
+                    \[ \text{(i)} \quad \text{Var}(c) = 0 \quad \text{(constant has zero variance)} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad \text{Var}(aX) = a^2 \text{Var}(X) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad \text{Var}(X + c) = \text{Var}(X) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv)} \quad \text{Var}(aX + b) = a^2 \text{Var}(X) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i):</h4>
+                <div class="math-display">
+                    \[ \text{Var}(c) = E[(c - E[c])^2] = E[(c - c)^2] = E[0] = 0 \]
+                </div>
+                
+                <h4>📝 Proof of (ii):</h4>
+                <div class="math-display">
+                    \[ \text{Var}(aX) = E[(aX - E[aX])^2] = E[a^2(X - E[X])^2] = a^2 \text{Var}(X) \]
+                </div>
+                
+                <h4>📝 Proof of (iii):</h4>
+                <div class="math-display">
+                    \[ \text{Var}(X + c) = E[(X + c - E[X + c])^2] = E[(X - E[X])^2] = \text{Var}(X) \]
+                </div>
+                
+                <h4>📝 Proof of (iv):</h4>
+                <div class="math-display">
+                    \[ \text{Var}(aX + b) = a^2 \text{Var}(X) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Bernoulli Random Variable -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🪙</span>
+                <h2>4. Bernoulli Random Variable</h2>
+            </div>
+            <div class="definition">
+                A <strong>Bernoulli random variable</strong> is the simplest discrete random variable. It models a single trial of an experiment with exactly two outcomes: success (1) with probability \(p\), and failure (0) with probability \(q = 1-p\).
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Definition</h3>
+                <p>Let \(X \sim \text{Bernoulli}(p)\), where \(0 \leq p \leq 1\). Then:</p>
+                <div class="math-display">
+                    \[ P(X = 1) = p, \quad P(X = 0) = 1 - p \]
+                </div>
+                <p>The probability mass function (PMF) is:</p>
+                <div class="math-display">
+                    \[ f_X(x) = p^x (1-p)^{1-x}, \quad x \in \{0, 1\} \]
+                </div>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Properties of Bernoulli Random Variable</h3>
+                <div class="math-display">
+                    \[ \text{(i) Expectation: } E[X] = p \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii) Variance: } \text{Var}(X) = p(1-p) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii) Moment Generating Function: } M_X(t) = E[e^{tX}] = 1 - p + pe^t \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv) Characteristic Function: } \phi_X(t) = E[e^{itX}] = 1 - p + pe^{it} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i) — Expectation:</h4>
+                <div class="math-display">
+                    \[ E[X] = 1 \cdot p + 0 \cdot (1-p) = p \]
+                </div>
+                
+                <h4>📝 Proof of (ii) — Variance:</h4>
+                <div class="math-display">
+                    \[ E[X^2] = 1^2 \cdot p + 0^2 \cdot (1-p) = p \]
+                </div>
+                <div class="math-display">
+                    \[ \text{Var}(X) = E[X^2] - (E[X])^2 = p - p^2 = p(1-p) \]
+                </div>
+                
+                <h4>📝 Proof of (iii) — MGF:</h4>
+                <div class="math-display">
+                    \[ M_X(t) = E[e^{tX}] = e^{t \cdot 1} \cdot p + e^{t \cdot 0} \cdot (1-p) = pe^t + (1-p) \]
+                </div>
+                
+                <h4>📝 Proof of (iv) — Characteristic Function:</h4>
+                <div class="math-display">
+                    \[ \phi_X(t) = E[e^{itX}] = e^{it} p + (1-p) = 1 - p + pe^{it} \]
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Moment Generating Property):</strong>
+                <div class="math-display">\[ E[X^k] = p \quad \text{for all } k \geq 1 \]</div>
+                
+                <strong>📌 Corollary 4.2:</strong> Sum of \(n\) independent Bernoulli(p) random variables is a Binomial(n, p) random variable:
+                <div class="math-display">\[ Y = \sum_{i=1}^{n} X_i \sim \text{Binomial}(n, p) \]</div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> Tossing a fair coin once. Let \(X = 1\) if heads (success), \(X = 0\) if tails (failure). Then \(X \sim \text{Bernoulli}(0.5)\). Expected number of heads = 0.5, variance = 0.5 × 0.5 = 0.25.
+            </div>
+        </div>
+
+        <!-- Section 5: Characteristic Random Variable (Indicator Variable) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🏷️</span>
+                <h2>5. Characteristic (Indicator) Random Variable</h2>
+            </div>
+            <div class="definition">
+                A <strong>characteristic random variable</strong> (also called an <strong>indicator random variable</strong>) is associated with an event \(A\) and takes the value 1 if the event occurs, and 0 otherwise. It is denoted as \(\mathbf{1}_A\) or \(I_A\).
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Definition</h3>
+                <p>For any event \(A\), the indicator random variable is defined as:</p>
+                <div class="math-display">
+                    \[ \mathbf{1}_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\ 0 & \text{if } \omega \notin A \end{cases} \]
+                </div>
+                <p>Note that \(\mathbf{1}_A \sim \text{Bernoulli}(P(A))\).</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Properties of Indicator Random Variables</h3>
+                <div class="math-display">
+                    \[ \text{(i) } \mathbf{1}_{A^c} = 1 - \mathbf{1}_A \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii) } \mathbf{1}_{A \cap B} = \mathbf{1}_A \cdot \mathbf{1}_B \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii) } \mathbf{1}_{A \cup B} = \mathbf{1}_A + \mathbf{1}_B - \mathbf{1}_A \mathbf{1}_B \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv) } E[\mathbf{1}_A] = P(A) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(v) } \text{Var}(\mathbf{1}_A) = P(A)(1 - P(A)) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(vi) } \mathbf{1}_A \mathbf{1}_B = \mathbf{1}_{A \cap B} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of (i) — Complement:</h4>
+                <div class="math-display">
+                    \[ \mathbf{1}_{A^c}(\omega) = 
+                    \begin{cases} 
+                        1 & \omega \notin A \\ 
+                        0 & \omega \in A 
+                    \end{cases}
+                    = 1 - \mathbf{1}_A(\omega) \]
+                </div>
+                
+                <h4>📝 Proof of (ii) — Intersection:</h4>
+                <div class="math-display">
+                    \[ \mathbf{1}_{A \cap B}(\omega) = 1 \iff \omega \in A \text{ and } \omega \in B \iff \mathbf{1}_A(\omega) = 1 \text{ and } \mathbf{1}_B(\omega) = 1 \iff \mathbf{1}_A(\omega) \cdot \mathbf{1}_B(\omega) = 1 \]
+                </div>
+                
+                <h4>📝 Proof of (iii) — Union:</h4>
+                <div class="math-display">
+                    \[ \mathbf{1}_{A \cup B} = \mathbf{1}_A + \mathbf{1}_B - \mathbf{1}_A \mathbf{1}_B \quad \text{(by inclusion-exclusion)} \]
+                </div>
+                
+                <h4>📝 Proof of (iv) — Expectation:</h4>
+                <div class="math-display">
+                    \[ E[\mathbf{1}_A] = 1 \cdot P(A) + 0 \cdot P(A^c) = P(A) \]
+                </div>
+                
+                <h4>📝 Proof of (v) — Variance:</h4>
+                <div class="math-display">
+                    \[ \text{Var}(\mathbf{1}_A) = E[(\mathbf{1}_A)^2] - (E[\mathbf{1}_A])^2 = P(A) - (P(A))^2 = P(A)(1 - P(A)) \]
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1 (Linearity of Expectation with Indicators):</strong>
+                <div class="math-display">\[ E\left[ \sum_{i=1}^{n} c_i \mathbf{1}_{A_i} \right] = \sum_{i=1}^{n} c_i P(A_i) \]</div>
+                
+                <strong>📌 Corollary 5.2 (Number of Events Occurring):</strong> Let \(N = \sum_{i=1}^{n} \mathbf{1}_{A_i}\) be the number of events that occur. Then:
+                <div class="math-display">\[ E[N] = \sum_{i=1}^{n} P(A_i) \]</div>
+                
+                <strong>📌 Corollary 5.3 (Variance of Number of Events):</strong>
+                <div class="math-display">\[ \text{Var}(N) = \sum_{i=1}^{n} \sum_{j=1}^{n} \text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j}) = \sum_{i=1}^{n} P(A_i)(1-P(A_i)) + 2 \sum_{i<j} [P(A_i \cap A_j) - P(A_i)P(A_j)] \]</div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example — Expectation of Number of Matches (Hat Check Problem):</strong><br>
+                In the matching problem with n hats, let \(\mathbf{1}_i\) be the indicator that person i gets their own hat. Then the number of matches \(N = \sum_{i=1}^{n} \mathbf{1}_i\). By linearity of expectation:
+                <div class="math-display">
+                    \[ E[N] = \sum_{i=1}^{n} E[\mathbf{1}_i] = \sum_{i=1}^{n} \frac{1}{n} = 1 \]
+                </div>
+                This elegant derivation shows the expected number of matches is always 1, independent of n!
+            </div>
+        </div>
+
+        <!-- Section 6: Relationship Between Bernoulli and Indicator -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>6. Relationship Between Bernoulli and Characteristic RVs</h2>
+            </div>
+            <div class="definition">
+                <p>Any Bernoulli random variable with parameter \(p\) can be expressed as an indicator of an event with probability \(p\). Conversely, any indicator random variable is a Bernoulli RV with parameter \(P(A)\).</p>
+                <div class="math-display">
+                    \[ X \sim \text{Bernoulli}(p) \iff X = \mathbf{1}_A \text{ for some event } A \text{ with } P(A) = p \]
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 6.1:</strong> The sum of independent indicator RVs gives a Binomial RV.<br>
+                <strong>📌 Corollary 6.2:</strong> Indicators are fundamental building blocks for counting random variables.
+            </div>
+        </div>
+
+        <!-- Section 7: Summary Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>7. Summary: Bernoulli vs Characteristic Random Variables</h2>
+            </div>
+            
+            <table class="comparison-table" style="width:100%; border-collapse:collapse; margin:1rem 0;">
+                <thead>
+                    <tr style="background:#f1f5f9;">
+                        <th style="border:1px solid #e2e8f0; padding:0.75rem;">Property</th>
+                        <th style="border:1px solid #e2e8f0; padding:0.75rem;">Bernoulli(p)</th>
+                        <th style="border:1px solid #e2e8f0; padding:0.75rem;">Indicator \(\mathbf{1}_A\)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="border:1px solid #e2e8f0; padding:0.75rem;">Range</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">{0, 1}</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">{0, 1}</td></tr>
+                    <tr><td style="border:1px solid #e2e8f0; padding:0.75rem;">PMF</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(p^x(1-p)^{1-x}\)</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(P(A)^x (1-P(A))^{1-x}\)</td></tr>
+                    <tr><td style="border:1px solid #e2e8f0; padding:0.75rem;">Expectation</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(p\)</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(P(A)\)</td></tr>
+                    <tr><td style="border:1px solid #e2e8f0; padding:0.75rem;">Variance</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(p(1-p)\)</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(P(A)(1-P(A))\)</td></tr>
+                    <tr><td style="border:1px solid #e2e8f0; padding:0.75rem;">MGF</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(1-p+pe^t\)</td><td style="border:1px solid #e2e8f0; padding:0.75rem;">\(1-P(A)+P(A)e^t\)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 8: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For a Bernoulli random variable with \(p = 0.3\), find \(E[X]\), \(\text{Var}(X)\), and \(E[X^3]\).</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>\(E[X] = 0.3\), \(\text{Var}(X) = 0.3 \times 0.7 = 0.21\), \(E[X^3] = 1^3 \cdot 0.3 + 0^3 \cdot 0.7 = 0.3\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> For events A and B, express \(\mathbf{1}_{A \setminus B}\) in terms of \(\mathbf{1}_A\) and \(\mathbf{1}_B\).</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>\(\mathbf{1}_{A \setminus B} = \mathbf{1}_A - \mathbf{1}_A \mathbf{1}_B = \mathbf{1}_A (1 - \mathbf{1}_B)\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that \(\text{Var}(\mathbf{1}_A + \mathbf{1}_B) = \text{Var}(\mathbf{1}_A) + \text{Var}(\mathbf{1}_B) + 2\text{Cov}(\mathbf{1}_A, \mathbf{1}_B)\).</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>Use the general property \(\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Random Variable:</strong> A measurable function from \(\Omega\) to \(\mathbb{R}\)</li>
+                <li><strong>CDF Properties:</strong> Non-decreasing, right-continuous, limits 0 and 1 at ±∞</li>
+                <li><strong>Expectation:</strong> Linear operator: \(E[aX+bY] = aE[X] + bE[Y]\)</li>
+                <li><strong>Variance:</strong> \(\text{Var}(aX+b) = a^2\text{Var}(X)\); measures spread</li>
+                <li><strong>Bernoulli(p):</strong> Models a single trial with success probability p. \(E[X]=p\), \(\text{Var}(X)=p(1-p)\)</li>
+                <li><strong>Indicator RV \(\mathbf{1}_A\):</strong> Bernoulli with parameter \(P(A)\); fundamental for counting events</li>
+                <li><strong>Key Application:</strong> Expectation of number of events = sum of probabilities (linearity of expectation)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="bayes_theorem.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Bayes' Theorem</a>
+            <a href="random_variables_discrete_continued.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Discrete Random Variables →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Random Variables — the bridge between probability theory and data analysis.
+    </footer>
+</div>
+</body>
+</html>
