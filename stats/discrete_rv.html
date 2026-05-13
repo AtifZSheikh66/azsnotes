@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Discrete Random Variables | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .graph-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .graph-card {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+        .graph-card canvas {
+            max-width: 100%;
+            height: auto;
+            background: white;
+            border-radius: 0.5rem;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Discrete Random Variables</span>
+        </div>
+        <h1>🔢 Discrete Random Variables</h1>
+        <p>Definition, Probability Mass Function, Discrete Distribution Function, and their properties</p>
+        <span class="badge">Probability Theory · Unit III · Discrete Random Variables</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition of Discrete Random Variable -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of a Discrete Random Variable</h2>
+            </div>
+            <div class="definition">
+                A random variable \(X\) is said to be <strong>discrete</strong> if its set of possible values is either finite or countably infinite. That is, there exists a countable set \(\{x_1, x_2, x_3, \ldots\} \subseteq \mathbb{R}\) such that:
+                <div class="math-display">
+                    \[ P(X = x) > 0 \quad \text{for } x \in \{x_1, x_2, \ldots\} \]
+                </div>
+                <div class="math-display">
+                    \[ \sum_{i=1}^{\infty} P(X = x_i) = 1 \]
+                </div>
+            </div>
+            <p>Examples of discrete random variables include:</p>
+            <ul>
+                <li>Number of heads in \(n\) coin tosses (Binomial)</li>
+                <li>Number of arrivals at a service station (Poisson)</li>
+                <li>Outcome of rolling a die (Uniform discrete)</li>
+                <li>Number of defective items in a sample (Hypergeometric)</li>
+            </ul>
+        </div>
+
+        <!-- Section 2: Probability Mass Function (PMF) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>2. Probability Mass Function (PMF)</h2>
+            </div>
+            <div class="definition">
+                The <strong>Probability Mass Function</strong> (PMF) of a discrete random variable \(X\) is defined as:
+                <div class="math-display">
+                    \[ p_X(x) = P(X = x) \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+                <p>The PMF specifies the probability that \(X\) takes each specific value in its support.</p>
+            </div>
+
+            <!-- Properties of PMF -->
+            <div class="theorem-box">
+                <h3>📌 Properties of Probability Mass Function</h3>
+                <p>A function \(p(x)\) is a valid PMF if and only if it satisfies:</p>
+                <div class="math-display">
+                    \[ \text{(i)} \quad p(x) \geq 0 \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad \sum_{x} p(x) = 1 \quad \text{(sum over all possible values)} \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad p(x) = 0 \quad \text{for all } x \text{ not in the support} \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Verification of Properties:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Non-negativity:</strong>
+                    <p>Since \(p(x) = P(X = x)\) is a probability, by Axiom 1 of probability, \(P(X = x) \geq 0\). Thus, \(p(x) \geq 0\) for all \(x\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Summation to 1:</strong>
+                    <p>Let \(\{x_1, x_2, \ldots\}\) be the set of possible values of \(X\). The events \(\{X = x_i\}\) are mutually exclusive (since \(X\) can only take one value at a time) and exhaustive (since \(X\) must take some value). Therefore, by countable additivity (Axiom 3):</p>
+                    <div class="math-display">
+                        \[ \sum_{i=1}^{\infty} P(X = x_i) = P\left( \bigcup_{i=1}^{\infty} \{X = x_i\} \right) = P(\Omega) = 1 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Zero outside support:</strong>
+                    <p>By definition, if \(x\) is not a possible value of \(X\), then \(P(X = x) = 0\). Hence, \(p(x) = 0\) for all \(x\) not in the support.</p>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> For any event \(A \subseteq \mathbb{R}\), the probability that \(X \in A\) is:
+                <div class="math-display">\[ P(X \in A) = \sum_{x \in A} p(x) \]</div>
+                
+                <strong>📌 Corollary 2.2:</strong> The total probability over the support equals 1: \(\sum_{x \in \text{support}} p(x) = 1\).
+            </div>
+        </div>
+
+        <!-- Section 3: Discrete Distribution Function (CDF) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>3. Discrete Distribution Function (CDF)</h2>
+            </div>
+            <div class="definition">
+                The <strong>Cumulative Distribution Function</strong> (CDF) of a discrete random variable \(X\) is defined as:
+                <div class="math-display">
+                    \[ F_X(x) = P(X \leq x) = \sum_{t \leq x} p(t) \]
+                </div>
+                <p>For a discrete random variable, the CDF is a <strong>right-continuous step function</strong> with jumps at the possible values of \(X\).</p>
+            </div>
+
+            <!-- Properties of Discrete CDF -->
+            <div class="theorem-box">
+                <h3>📌 Properties of Discrete Distribution Function</h3>
+                <div class="math-display">
+                    \[ \text{(i)} \quad 0 \leq F(x) \leq 1 \quad \text{for all } x \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad F \text{ is non-decreasing: } x_1 < x_2 \Rightarrow F(x_1) \leq F(x_2) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad \lim_{x \to -\infty} F(x) = 0 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv)} \quad \lim_{x \to \infty} F(x) = 1 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(v)} \quad F \text{ is right-continuous: } \lim_{h \to 0^+} F(x+h) = F(x) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(vi)} \quad F \text{ has jump discontinuities at the possible values of } X \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Verification of Properties:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Boundedness:</strong>
+                    <p>Since \(F(x) = P(X \leq x)\) is a probability, \(0 \leq F(x) \leq 1\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Monotonicity:</strong>
+                    <p>If \(x_1 < x_2\), then \(\{X \leq x_1\} \subseteq \{X \leq x_2\}\), so \(F(x_1) \leq F(x_2)\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Limits:</strong>
+                    <p>As \(x \to -\infty\), \(\{X \leq x\} \to \emptyset\), so \(F(x) \to 0\). As \(x \to \infty\), \(\{X \leq x\} \to \Omega\), so \(F(x) \to 1\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4 — Right-continuity:</strong>
+                    <p>For any decreasing sequence \(h_n \downarrow 0\), the events \(\{X \leq x + h_n\}\) decrease to \(\{X \leq x\}\), giving right-continuity.</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 5 — Jump discontinuities:</strong>
+                    <p>At a possible value \(x_j\), \(F(x_j) - F(x_j^-) = P(X = x_j) = p(x_j) > 0\), so there is a jump.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Theorem: Relationship between PMF and CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>4. Theorem: \(p(x_j) = P(X = x_j) = F(x_j) - F(x_j^-)\)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Relationship between PMF and CDF)</h3>
+                <p>For a discrete random variable \(X\) with possible values \(x_1, x_2, x_3, \ldots\), the probability mass function at \(x_j\) is given by:</p>
+                <div class="math-display">
+                    \[ p(x_j) = P(X = x_j) = F(x_j) - F(x_j^-) \]
+                </div>
+                <p>where \(F(x_j^-) = \lim_{x \to x_j^-} F(x)\) is the left-hand limit of the CDF at \(x_j\).</p>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Express the probability as a difference of probabilities:</strong>
+                    <div class="math-display">
+                        \[ P(X = x_j) = P(X \leq x_j) - P(X < x_j) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Identify the first term:</strong>
+                    <div class="math-display">
+                        \[ P(X \leq x_j) = F(x_j) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Express the second term as a left-hand limit:</strong>
+                    <p>For any increasing sequence \(x_n \uparrow x_j\), we have \{X \leq x_n\} \uparrow \{X < x_j\}. By continuity of probability from below:</p>
+                    <div class="math-display">
+                        \[ \lim_{x \to x_j^-} F(x) = \lim_{n \to \infty} F(x_n) = P(X < x_j) \]
+                    </div>
+                    <p>Denote this limit as \(F(x_j^-)\).</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Substitute into Step 1:</strong>
+                    <div class="math-display">
+                        \[ P(X = x_j) = F(x_j) - F(x_j^-) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{p(x_j) = F(x_j) - F(x_j^-)} \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1 (Jump Size):</strong> The jump (discontinuity) in the CDF at \(x_j\) equals the probability that \(X = x_j\).<br><br>
+                
+                <strong>📌 Corollary 4.2 (Reconstruction of PMF from CDF):</strong> The PMF can be recovered from the CDF by taking differences at the discontinuity points.<br><br>
+                
+                <strong>📌 Corollary 4.3 (Probability of an Interval):</strong> For any \(a < b\):
+                <div class="math-display">\[ P(a < X \leq b) = F(b) - F(a) \]</div>
+                <div class="math-display">\[ P(a \leq X \leq b) = F(b) - F(a^-) \]</div>
+                <div class="math-display">\[ P(a < X < b) = F(b^-) - F(a) \]</div>
+            </div>
+        </div>
+
+        <!-- Section 5: Graphs - PMF and CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>5. Visual Representation: PMF and CDF of a Discrete Random Variable</h2>
+            </div>
+            <div class="definition">
+                Below are graphical representations of the Probability Mass Function (PMF) and Cumulative Distribution Function (CDF) for a discrete random variable — specifically, the Binomial distribution with \(n = 6\) trials and success probability \(p = 0.5\).
+            </div>
+            
+            <div class="graph-container">
+                <div class="graph-card">
+                    <h3>📊 Probability Mass Function (PMF)</h3>
+                    <canvas id="pmfChart" width="400" height="300"></canvas>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Vertical bars represent \(P(X = k)\) for \(k = 0, 1, \ldots, 6\)</p>
+                </div>
+                <div class="graph-card">
+                    <h3>📈 Cumulative Distribution Function (CDF)</h3>
+                    <canvas id="cdfChart" width="400" height="300"></canvas>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Step function showing \(F(x) = P(X \leq x)\)</p>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Observations from the graphs:</strong>
+                <ul>
+                    <li>The PMF shows the probability at each possible value \(k\). The sum of all bar heights equals 1.</li>
+                    <li>The CDF is a non-decreasing step function that jumps by \(p(k)\) at each possible value \(k\).</li>
+                    <li>The CDF is right-continuous — at each jump point, the value is the higher (right-hand) value.</li>
+                    <li>The jump size at \(k\) equals \(p(k) = F(k) - F(k^-)\).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>6. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Bernoulli Random Variable</strong><br>
+                Let \(X \sim \text{Bernoulli}(p)\) with \(P(X=1) = p\), \(P(X=0) = 1-p\).<br>
+                PMF: \(p(0) = 1-p\), \(p(1) = p\)<br>
+                CDF:
+                <div class="math-display">
+                    \[ F(x) = \begin{cases} 
+                        0 & x < 0 \\
+                        1-p & 0 \leq x < 1 \\
+                        1 & x \geq 1 
+                    \end{cases} \]
+                </div>
+                Verify Theorem: \(F(1) - F(1^-) = 1 - (1-p) = p = p(1)\) ✓
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 2: Binomial Random Variable</strong><br>
+                Let \(X \sim \text{Binomial}(n=3, p=0.5)\). The PMF is:
+                <div class="math-display">
+                    \[ p(0)=\frac{1}{8},\; p(1)=\frac{3}{8},\; p(2)=\frac{3}{8},\; p(3)=\frac{1}{8} \]
+                </div>
+                CDF:
+                <div class="math-display">
+                    \[ F(x) = \begin{cases} 
+                        0 & x < 0 \\
+                        \frac{1}{8} & 0 \leq x < 1 \\
+                        \frac{4}{8} & 1 \leq x < 2 \\
+                        \frac{7}{8} & 2 \leq x < 3 \\
+                        1 & x \geq 3 
+                    \end{cases} \]
+                </div>
+                Jump sizes: at \(x=1\), \(F(1)-F(1^-) = \frac{4}{8} - \frac{1}{8} = \frac{3}{8} = p(1)\) ✓
+            </div>
+        </div>
+
+        <!-- Section 7: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>7. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> A discrete random variable \(X\) has PMF \(p(1)=0.2\), \(p(2)=0.3\), \(p(3)=0.4\), \(p(4)=0.1\). Compute \(F(2.5)\) and \(P(1 < X \leq 3)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(F(2.5) = P(X \leq 2.5) = p(1)+p(2) = 0.2+0.3 = 0.5\).<br>\(P(1 < X \leq 3) = p(2)+p(3) = 0.3+0.4 = 0.7\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Given the CDF of a discrete RV: \(F(x) = 0\) for \(x < 0\), \(\frac{1}{4}\) for \(0 \leq x < 1\), \(\frac{3}{4}\) for \(1 \leq x < 2\), \(1\) for \(x \geq 2\). Find the PMF.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(p(0) = F(0)-F(0^-) = 0.25-0=0.25\)<br>\(p(1) = F(1)-F(1^-) = 0.75-0.25=0.5\)<br>\(p(2) = F(2)-F(2^-) = 1-0.75=0.25\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that for a discrete random variable, \(\sum_{j} F(x_j) - F(x_j^-) = 1\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(\sum_j [F(x_j) - F(x_j^-)] = \sum_j p(x_j) = 1\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Discrete Random Variable:</strong> Takes values from a finite or countably infinite set</li>
+                <li><strong>Probability Mass Function (PMF):</strong> \(p(x) = P(X = x)\) with \(p(x) \geq 0\) and \(\sum_x p(x) = 1\)</li>
+                <li><strong>Discrete Distribution Function (CDF):</strong> \(F(x) = P(X \leq x) = \sum_{t \leq x} p(t)\), a right-continuous step function</li>
+                <li><strong>Key Theorem:</strong> \(p(x_j) = F(x_j) - F(x_j^-)\) — the jump size equals the PMF value</li>
+                <li><strong>Properties of CDF:</strong> Non-decreasing, right-continuous, limits 0 and 1 at ±∞</li>
+                <li><strong>Applications:</strong> Bernoulli, Binomial, Poisson, Geometric distributions</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="distribution_function.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Distribution Function</a>
+            <a href="continuous_random_variables.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Continuous Random Variables →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Discrete Random Variables — fundamental concepts including PMF, CDF, and their relationship.
+    </footer>
+</div>
+
+<script>
+    // Data for Binomial(n=6, p=0.5)
+    const kValues = [0, 1, 2, 3, 4, 5, 6];
+    const pmfValues = [
+        1/64,   // 0
+        6/64,   // 1
+        15/64,  // 2
+        20/64,  // 3
+        15/64,  // 4
+        6/64,   // 5
+        1/64    // 6
+    ];
+    
+    // CDF values (cumulative sum)
+    const cdfValues = [];
+    let sum = 0;
+    for (let i = 0; i < pmfValues.length; i++) {
+        sum += pmfValues[i];
+        cdfValues[i] = sum;
+    }
+    
+    // Create PMF Bar Chart
+    const pmfCtx = document.getElementById('pmfChart').getContext('2d');
+    new Chart(pmfCtx, {
+        type: 'bar',
+        data: {
+            labels: kValues.map(k => `x = ${k}`),
+            datasets: [{
+                label: 'P(X = k)',
+                data: pmfValues,
+                backgroundColor: '#3b82f6',
+                borderColor: '#1e40af',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Probability', font: { size: 12 } },
+                    ticks: { callback: (value) => value.toFixed(2) }
+                },
+                x: {
+                    title: { display: true, text: 'k (Number of Successes)', font: { size: 12 } }
+                }
+            },
+            plugins: {
+                tooltip: { callbacks: { label: (ctx) => `P(X = ${ctx.label.split('=')[1]}) = ${ctx.raw.toFixed(4)}` } },
+                legend: { position: 'top' }
+            }
+        }
+    });
+    
+    // Create CDF Step Chart
+    const cdfCtx = document.getElementById('cdfChart').getContext('2d');
+    
+    // Prepare step data: for each interval, we need x values and corresponding CDF values
+    const stepX = [];
+    const stepY = [];
+    
+    // Start from left
+    stepX.push(-1);
+    stepY.push(0);
+    
+    for (let i = 0; i < kValues.length; i++) {
+        stepX.push(kValues[i]);
+        stepY.push(i === 0 ? 0 : cdfValues[i-1]);
+        stepX.push(kValues[i]);
+        stepY.push(cdfValues[i]);
+    }
+    stepX.push(7);
+    stepY.push(cdfValues[cdfValues.length-1]);
+    
+    new Chart(cdfCtx, {
+        type: 'line',
+        data: {
+            labels: stepX,
+            datasets: [{
+                label: 'F(x) = P(X ≤ x)',
+                data: stepY,
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                stepped: true,
+                pointRadius: 5,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#065f46',
+                pointBorderColor: '#065f46'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1.05,
+                    title: { display: true, text: 'F(x)', font: { size: 12 } },
+                    ticks: { callback: (value) => value.toFixed(2) }
+                },
+                x: {
+                    title: { display: true, text: 'x', font: { size: 12 } }
+                }
+            },
+            plugins: {
+                tooltip: { callbacks: { label: (ctx) => `F(${ctx.raw.x}) = ${ctx.raw.y.toFixed(4)}` } },
+                legend: { position: 'top' }
+            }
+        }
+    });
+</script>
+</body>
+</html>
