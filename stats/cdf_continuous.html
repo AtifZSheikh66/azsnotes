@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Continuous CDF | Cumulative Distribution Function | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .graph-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .graph-card {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        .graph-card canvas {
+            max-width: 100%;
+            height: auto;
+            background: white;
+            border-radius: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>CDF of Continuous Random Variables</span>
+        </div>
+        <h1>📈 Cumulative Distribution Function (Continuous Case)</h1>
+        <p>Definition, properties, probability differential, and relationship with PDF</p>
+        <span class="badge">Probability Theory · Unit III · Continuous CDF</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of Continuous Distribution Function (CDF)</h2>
+            </div>
+            <div class="definition">
+                The <strong>Cumulative Distribution Function (CDF)</strong> of a continuous random variable \(X\) is defined as:
+                <div class="math-display">
+                    \[ F_X(x) = P(X \leq x) = \int_{-\infty}^{x} f(t) \, dt, \quad \forall x \in \mathbb{R} \]
+                </div>
+                <p>where \(f(t)\) is the probability density function (PDF) of \(X\). The CDF gives the probability that the random variable takes a value less than or equal to \(x\).</p>
+            </div>
+            <div class="note-tip">
+                💡 For a continuous random variable, \(F(x)\) is a continuous function (no jumps), unlike the discrete case where it is a step function. This is because \(P(X = a) = 0\) for any specific \(a\).
+            </div>
+        </div>
+
+        <!-- Section 2: Properties of Continuous CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Properties of Continuous Distribution Function</h2>
+            </div>
+
+            <!-- Property 1: Boundedness -->
+            <div class="theorem-box">
+                <h3>📌 Property 1: Boundedness</h3>
+                <div class="math-display">
+                    \[ 0 \leq F(x) \leq 1 \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    Since \(F(x) = P(X \leq x)\) is a probability, by the axioms of probability, \(0 \leq P(X \leq x) \leq 1\) for all \(x\). Hence, \(0 \leq F(x) \leq 1\).
+                </div>
+            </div>
+
+            <!-- Property 2: Monotonicity -->
+            <div class="theorem-box">
+                <h3>📌 Property 2: Monotonicity (Non-decreasing)</h3>
+                <div class="math-display">
+                    \[ x_1 < x_2 \implies F(x_1) \leq F(x_2) \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Observe the set inclusion:</strong>
+                    <p>If \(x_1 < x_2\), then \(\{X \leq x_1\} \subseteq \{X \leq x_2\}\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply monotonicity of probability:</strong>
+                    <div class="math-display">
+                        \[ P(X \leq x_1) \leq P(X \leq x_2) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Therefore:</strong>
+                    <div class="math-display">
+                        \[ F(x_1) \leq F(x_2) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 3: Limit at -∞ -->
+            <div class="theorem-box">
+                <h3>📌 Property 3: Limit at \(-\infty\)</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to -\infty} F(x) = 0 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(x_n \to -\infty\) be a decreasing sequence:</strong>
+                    <p>Consider \(x_n \downarrow -\infty\). Then the events \(\{X \leq x_n\}\) form a decreasing sequence.</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — The intersection of these events is empty:</strong>
+                    <div class="math-display">
+                        \[ \bigcap_{n=1}^{\infty} \{X \leq x_n\} = \emptyset \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Apply continuity from above:</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(X \leq x_n) = P(\emptyset) = 0 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4 — Therefore:</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to -\infty} F(x) = 0 \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 4: Limit at +∞ -->
+            <div class="theorem-box">
+                <h3>📌 Property 4: Limit at \(+\infty\)</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to \infty} F(x) = 1 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(x_n \to \infty\) be an increasing sequence:</strong>
+                    <p>Consider \(x_n \uparrow \infty\). Then the events \(\{X \leq x_n\}\) form an increasing sequence.</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — The union of these events is the entire sample space:</strong>
+                    <div class="math-display">
+                        \[ \bigcup_{n=1}^{\infty} \{X \leq x_n\} = \Omega \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Apply continuity from below:</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(X \leq x_n) = P(\Omega) = 1 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4 — Therefore:</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to \infty} F(x) = 1 \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 5: Right-Continuity -->
+            <div class="theorem-box">
+                <h3>📌 Property 5: Right-Continuity</h3>
+                <div class="math-display">
+                    \[ \lim_{h \to 0^+} F(x + h) = F(x) \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+                <p>For continuous random variables, the CDF is actually continuous everywhere (both left and right).</p>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Let \(h_n \downarrow 0\) be a decreasing sequence:</strong>
+                    <p>Then the events \(\{X \leq x + h_n\}\) decrease to \(\{X \leq x\}\).</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply continuity from above:</strong>
+                    <div class="math-display">
+                        \[ \lim_{h \to 0^+} F(x + h) = P(X \leq x) = F(x) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 6: Left-Continuity for Continuous RVs -->
+            <div class="theorem-box">
+                <h3>📌 Property 6: Left-Continuity (for Continuous RVs)</h3>
+                <div class="math-display">
+                    \[ \lim_{h \to 0^-} F(x + h) = F(x) \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+                <p>Unlike discrete random variables, continuous RVs have CDFs that are continuous from the left as well, because \(P(X = x) = 0\).</p>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Observe that:</strong>
+                    <div class="math-display">
+                        \[ F(x) - F(x^-) = P(X = x) = 0 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Hence, left-hand limit equals \(F(x)\):</strong>
+                    <div class="math-display">
+                        \[ F(x^-) = \lim_{h \to 0^-} F(x + h) = F(x) \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> For a continuous random variable, the CDF is continuous on all of \(\mathbb{R}\).<br><br>
+                <strong>📌 Corollary 2.2:</strong> \(P(a < X \leq b) = F(b) - F(a)\) for any \(a \leq b\).<br><br>
+                <strong>📌 Corollary 2.3:</strong> \(P(X > a) = 1 - F(a)\).<br><br>
+                <strong>📌 Corollary 2.4:</strong> \(P(X = a) = 0\) for all \(a\).
+            </div>
+        </div>
+
+        <!-- Section 3: Probability Differential -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>3. Probability Differential</h2>
+            </div>
+            <div class="definition">
+                For a continuous random variable with CDF \(F(x)\) and PDF \(f(x)\), the <strong>probability differential</strong> is:
+                <div class="math-display">
+                    \[ dF(x) = f(x) \, dx \]
+                </div>
+                <p>This represents the infinitesimal probability that \(X\) lies in the infinitesimal interval \([x, x + dx]\):</p>
+                <div class="math-display">
+                    \[ P(x \leq X \leq x + dx) \approx f(x) \, dx \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Derivation:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — By definition of CDF:</strong>
+                    <div class="math-display">
+                        \[ F(x) = \int_{-\infty}^{x} f(t) \, dt \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Differentiate both sides with respect to \(x\):</strong>
+                    <div class="math-display">
+                        \[ \frac{d}{dx} F(x) = f(x) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Multiply both sides by \(dx\):</strong>
+                    <div class="math-display">
+                        \[ dF(x) = f(x) \, dx \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4 — Interpretation:</strong>
+                    <div class="math-display">
+                        \[ P(x \leq X \leq x + dx) = F(x + dx) - F(x) \approx f(x) \, dx \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Remark:</strong> The probability differential is used in change-of-variable formulas for transformations of continuous random variables.
+            </div>
+        </div>
+
+        <!-- Section 4: Obtaining PDF from CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>4. Obtaining PDF from CDF</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.1: PDF via Differentiation</h3>
+                <p>If \(F(x)\) is the CDF of a continuous random variable \(X\), then the probability density function is given by:</p>
+                <div class="math-display">
+                    \[ f(x) = \frac{d}{dx} F(x) \]
+                </div>
+                <p>at all points where \(F\) is differentiable.</p>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — By the Fundamental Theorem of Calculus:</strong>
+                    <p>Since \(F(x) = \int_{-\infty}^{x} f(t) \, dt\), differentiating both sides with respect to \(x\) yields:</p>
+                    <div class="math-display">
+                        \[ \frac{d}{dx} F(x) = f(x) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — This holds wherever \(f\) is continuous (which is almost everywhere).</strong>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example:</strong> If \(F(x) = \begin{cases} 0 & x < 0 \\ \frac{x^2}{4} & 0 \leq x < 2 \\ 1 & x \geq 2 \end{cases}\), find \(f(x)\).
+                <div class="math-display">
+                    \[ f(x) = \frac{d}{dx} F(x) = \begin{cases} 0 & x < 0 \\ \frac{x}{2} & 0 < x < 2 \\ 0 & x > 2 \end{cases} \]
+                </div>
+                <p>At \(x = 0\) and \(x = 2\), \(f(x)\) can be defined arbitrarily (e.g., 0).</p>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1:</strong> The PDF is the derivative of the CDF wherever the derivative exists.<br><br>
+                <strong>📌 Corollary 4.2:</strong> The PDF is the density of the probability mass with respect to the Lebesgue measure.
+            </div>
+        </div>
+
+        <!-- Section 5: Obtaining CDF from PDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>5. Obtaining CDF from PDF</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem 5.1: CDF via Integration</h3>
+                <p>If \(f(x)\) is the PDF of a continuous random variable \(X\), then the cumulative distribution function is given by:</p>
+                <div class="math-display">
+                    \[ F(x) = \int_{-\infty}^{x} f(t) \, dt \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — By definition of PDF, for any \(a \leq b\):</strong>
+                    <div class="math-display">
+                        \[ P(a \leq X \leq b) = \int_{a}^{b} f(t) \, dt \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Set \(a = -\infty\) and \(b = x\):</strong>
+                    <div class="math-display">
+                        \[ P(X \leq x) = \int_{-\infty}^{x} f(t) \, dt \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Therefore:</strong>
+                    <div class="math-display">
+                        \[ F(x) = \int_{-\infty}^{x} f(t) \, dt \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example:</strong> For the exponential distribution with PDF \(f(x) = \lambda e^{-\lambda x}\), \(x \geq 0\), find \(F(x)\).
+                <div class="math-display">
+                    \[ F(x) = \int_{0}^{x} \lambda e^{-\lambda t} \, dt = 1 - e^{-\lambda x}, \quad x \geq 0 \]
+                </div>
+                <p>For \(x < 0\), \(F(x) = 0\).</p>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1:</strong> The CDF is the antiderivative (integral) of the PDF.<br><br>
+                <strong>📌 Corollary 5.2:</strong> The area under the PDF curve from \(-\infty\) to \(x\) equals the CDF at \(x\).<br><br>
+                <strong>📌 Corollary 5.3:</strong> \(\lim_{x \to \infty} F(x) = \int_{-\infty}^{\infty} f(t) \, dt = 1\).
+            </div>
+        </div>
+
+        <!-- Section 6: Relationship Summary -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔄</span>
+                <h2>6. Relationship Between PDF and CDF: Summary</h2>
+            </div>
+            <div class="definition">
+                <p>The PDF and CDF are related by the following fundamental relationships:</p>
+                <div class="math-display">
+                    \[ F(x) = \int_{-\infty}^{x} f(t) \, dt \quad \text{(CDF from PDF)} \]
+                </div>
+                <div class="math-display">
+                    \[ f(x) = \frac{d}{dx} F(x) \quad \text{(PDF from CDF)} \]
+                </div>
+                <div class="math-display">
+                    \[ P(a \leq X \leq b) = \int_{a}^{b} f(t) \, dt = F(b) - F(a) \]
+                </div>
+            </div>
+            
+            <div class="note-tip">
+                💡 The PDF is the derivative of the CDF, and the CDF is the integral of the PDF. This is a direct application of the Fundamental Theorem of Calculus.
+            </div>
+        </div>
+
+        <!-- Section 7: Graphical Representation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>7. Graphical Representation of PDF and CDF</h2>
+            </div>
+            <div class="definition">
+                Below are graphs of the PDF and CDF for the standard normal distribution:
+                <div class="math-display">
+                    \[ f(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}, \quad F(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \, dt \]
+                </div>
+            </div>
+            <div class="graph-container">
+                <div class="graph-card">
+                    <h3>📈 Probability Density Function (PDF)</h3>
+                    <canvas id="pdfChart" width="450" height="300"></canvas>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">\(f(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\)</p>
+                </div>
+                <div class="graph-card">
+                    <h3>📊 Cumulative Distribution Function (CDF)</h3>
+                    <canvas id="cdfChart" width="450" height="300"></canvas>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">\(F(x) = \int_{-\infty}^{x} f(t) dt\)</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <strong>📖 Observations from the graphs:</strong>
+                <ul>
+                    <li>The PDF is a bell-shaped curve; the total area under it is 1.</li>
+                    <li>The CDF is an S-shaped (sigmoid) curve that increases from 0 to 1.</li>
+                    <li>The CDF at any \(x\) equals the area under the PDF from \(-\infty\) to \(x\).</li>
+                    <li>The slope of the CDF at any point equals the PDF value at that point.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 8: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For a continuous random variable with PDF \(f(x) = 3x^2\) for \(0 \leq x \leq 1\), find the CDF \(F(x)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(F(x) = \int_{0}^{x} 3t^2 dt = x^3\) for \(0 \leq x \leq 1\). For \(x < 0\), \(F(x)=0\); for \(x > 1\), \(F(x)=1\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Given \(F(x) = 1 - e^{-2x}\) for \(x \geq 0\), find the PDF \(f(x)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(f(x) = \frac{d}{dx} F(x) = 2e^{-2x}\) for \(x \geq 0\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Prove that for any continuous random variable, \(P(a < X < b) = F(b) - F(a)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(a < X < b) = P(X \leq b) - P(X \leq a) - P(X = a) + P(X = b)\)? Wait, actually: \(P(a < X < b) = P(X \leq b) - P(X \leq a) - P(X = a) + P(X = b)\)? Simpler: \(F(b) = P(X \leq b) = P(X \leq a) + P(a < X \leq b) = F(a) + P(a < X \leq b)\). Since \(P(a < X \leq b) = P(a < X < b) + P(X = b) = P(a < X < b)\) because \(P(X = b) = 0\). Hence, \(P(a < X < b) = F(b) - F(a)\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>CDF Definition:</strong> \(F(x) = P(X \leq x) = \int_{-\infty}^{x} f(t) dt\)</li>
+                <li><strong>Properties:</strong> \(0 \leq F(x) \leq 1\), non-decreasing, \(\lim_{x \to -\infty} F(x) = 0\), \(\lim_{x \to \infty} F(x) = 1\), and \(F\) is continuous (for continuous RVs)</li>
+                <li><strong>Probability Differential:</strong> \(dF(x) = f(x) dx\)</li>
+                <li><strong>Obtaining PDF from CDF:</strong> \(f(x) = \frac{d}{dx} F(x)\)</li>
+                <li><strong>Obtaining CDF from PDF:</strong> \(F(x) = \int_{-\infty}^{x} f(t) dt\)</li>
+                <li><strong>Probability Formula:</strong> \(P(a \leq X \leq b) = F(b) - F(a) = \int_{a}^{b} f(t) dt\)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="continuous_rv.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Continuous Random Variable</a>
+            <a href="transformation_of_random_variables.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Transformation of RVs →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Cumulative Distribution Function for Continuous Random Variables — the complete characterization of distribution via integration of PDF.
+    </footer>
+</div>
+
+<script>
+    // Create PDF graph for Standard Normal distribution
+    const pdfCtx = document.getElementById('pdfChart').getContext('2d');
+    const cdfCtx = document.getElementById('cdfChart').getContext('2d');
+    
+    const xValues = [];
+    const pdfValues = [];
+    const cdfValues = [];
+    
+    // Standard normal PDF and CDF (approximated)
+    for (let x = -3.5; x <= 3.5; x += 0.05) {
+        xValues.push(x.toFixed(2));
+        const pdf = (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-x * x / 2);
+        pdfValues.push(pdf);
+        
+        // Approximate CDF using error function (simplified)
+        const cdf = 0.5 * (1 + erf(x / Math.sqrt(2)));
+        cdfValues.push(cdf);
+    }
+    
+    // Error function approximation
+    function erf(x) {
+        // Abramowitz and Stegun approximation
+        const sign = (x >= 0) ? 1 : -1;
+        x = Math.abs(x);
+        const a1 = 0.254829592;
+        const a2 = -0.284496736;
+        const a3 = 1.421413741;
+        const a4 = -1.453152027;
+        const a5 = 1.061405429;
+        const p = 0.3275911;
+        
+        const t = 1.0 / (1.0 + p * x);
+        const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+        return sign * y;
+    }
+    
+    new Chart(pdfCtx, {
+        type: 'line',
+        data: {
+            labels: xValues,
+            datasets: [{
+                label: 'f(x) = PDF',
+                data: pdfValues,
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                pointRadius: 0,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Probability Density f(x)', font: { size: 12 } }
+                },
+                x: {
+                    title: { display: true, text: 'x', font: { size: 12 } }
+                }
+            },
+            plugins: {
+                tooltip: { callbacks: { label: (ctx) => `f(${ctx.label}) = ${ctx.raw.toFixed(4)}` } },
+                legend: { position: 'top' }
+            }
+        }
+    });
+    
+    new Chart(cdfCtx, {
+        type: 'line',
+        data: {
+            labels: xValues,
+            datasets: [{
+                label: 'F(x) = CDF',
+                data: cdfValues,
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                pointRadius: 0,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1.05,
+                    title: { display: true, text: 'Cumulative Probability F(x)', font: { size: 12 } },
+                    ticks: { callback: (value) => value.toFixed(2) }
+                },
+                x: {
+                    title: { display: true, text: 'x', font: { size: 12 } }
+                }
+            },
+            plugins: {
+                tooltip: { callbacks: { label: (ctx) => `F(${ctx.label}) = ${ctx.raw.toFixed(4)}` } },
+                legend: { position: 'top' }
+            }
+        }
+    });
+</script>
+</body>
+</html>
