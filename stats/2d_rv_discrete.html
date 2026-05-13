@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Two-Dimensional Discrete Random Variables | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- Plotly for 3D graphs -->
+    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .pmf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .pmf-table th,
+        .pmf-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .pmf-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        .graph-container {
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .graph-container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Two-Dimensional Discrete Random Variables</span>
+        </div>
+        <h1>📊 Two-Dimensional Discrete Random Variables</h1>
+        <p>Definition, Joint Probability Mass Function, and Marginal Probability Functions</p>
+        <span class="badge">Probability Theory · Unit III · Joint Distributions (Discrete)</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition of Two-Dimensional Random Variable -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of a Two-Dimensional Random Variable</h2>
+            </div>
+            <div class="definition">
+                A <strong>two-dimensional random variable</strong> (or <strong>bivariate random variable</strong>) is a pair \((X, Y)\) of random variables defined on the same sample space \(\Omega\). It maps each outcome \(\omega \in \Omega\) to a point \((X(\omega), Y(\omega)) \in \mathbb{R}^2\).
+            </div>
+            <p>If both \(X\) and \(Y\) are discrete random variables, then \((X, Y)\) is called a <strong>two-dimensional discrete random variable</strong>. The set of possible values is at most countable:</p>
+            <div class="math-display">
+                \[ \{(x_i, y_j) : i = 1, 2, \ldots, m; j = 1, 2, \ldots, n\} \]
+            </div>
+        </div>
+
+        <!-- Section 2: Joint Probability Mass Function (Joint PMF) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>2. Joint Probability Mass Function (Joint PMF)</h2>
+            </div>
+            <div class="definition">
+                The <strong>joint probability mass function</strong> of the two-dimensional discrete random variable \((X, Y)\) is defined as:
+                <div class="math-display">
+                    \[ p_{X,Y}(x, y) = P(X = x, Y = y) \]
+                </div>
+                <p>for each pair \((x, y)\) in the support of \((X, Y)\).</p>
+            </div>
+
+            <div class="theorem-box">
+                <h3>📌 Properties of Joint PMF</h3>
+                <div class="math-display">
+                    \[ \text{(i)} \quad p_{X,Y}(x, y) \geq 0 \quad \text{for all } (x, y) \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad \sum_{x} \sum_{y} p_{X,Y}(x, y) = 1 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad P((X, Y) \in A) = \sum_{(x, y) \in A} p_{X,Y}(x, y) \quad \text{for any } A \subseteq \mathbb{R}^2 \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Proof of Properties:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Non-negativity:</strong> Since \(p_{X,Y}(x, y) = P(X = x, Y = y)\) is a probability, it must be non-negative by Axiom 1 of probability.
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Summation to 1:</strong> The events \(\{X = x_i, Y = y_j\}\) for all possible pairs form a partition of the sample space (they are mutually exclusive and exhaustive). By countable additivity:
+                    <div class="math-display">
+                        \[ \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} P(X = x_i, Y = y_j) = P(\Omega) = 1 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Probability of an event:</strong> For any set \(A \subseteq \mathbb{R}^2\), the probability that \((X, Y) \in A\) is the sum of the joint PMF over all \((x, y) \in A\).
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> The joint PMF completely characterizes the distribution of \((X, Y)\).<br><br>
+                <strong>📌 Corollary 2.2:</strong> \(P(X = x, Y = y) = 0\) for any \((x, y)\) not in the support.
+            </div>
+        </div>
+
+        <!-- Section 3: Tabular Representation of Joint PMF with Example -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>3. Tabular Representation of Joint PMF</h2>
+            </div>
+            <div class="definition">
+                A joint PMF is often represented in a <strong>contingency table</strong> (also called a joint probability table). The rows correspond to values of \(X\), columns to values of \(Y\), and each cell contains \(p_{X,Y}(x_i, y_j)\).
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example: Two Dice Roll</strong>
+                <p>Let \(X\) = outcome of first die roll, \(Y\) = outcome of second die roll. Then each pair \((x, y)\) has probability \(\frac{1}{36}\). The joint PMF table for a fair die is:</p>
+                <table class="pmf-table">
+                    <thead>
+                        <tr><th style="background:#e2e8f0;">\(X \setminus Y\)</th>
+                            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>\(P(X = x)\)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th style="background:#f1f5f9;">1</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">2</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">3</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">4</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">5</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">6</th><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/36</td><td>1/6</td></tr>
+                        <tr><th style="background:#f1f5f9;">\(P(Y = y)\)</th><td>1/6</td><td>1/6</td><td>1/6</td><td>1/6</td><td>1/6</td><td>1/6</td><td>1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example: Number of Defective Items</strong>
+                <p>Suppose two items are drawn without replacement from a batch of 3 defective and 2 non-defective items. Let \(X\) = number of defectives in the first draw, \(Y\) = number of defectives in the second draw. The joint PMF table is:</p>
+                <table class="pmf-table">
+                    <thead>
+                        <tr><th style="background:#e2e8f0;">\(X \setminus Y\)</th><th>0</th><th>1</th><th>\(P(X = x)\)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th style="background:#f1f5f9;">0</th><td>\(\frac{2}{5} \cdot \frac{1}{4} = \frac{2}{20}\)</td><td>\(\frac{2}{5} \cdot \frac{3}{4} = \frac{6}{20}\)</td><td>\(\frac{8}{20}\)</td></tr>
+                        <tr><th style="background:#f1f5f9;">1</th><td>\(\frac{3}{5} \cdot \frac{2}{4} = \frac{6}{20}\)</td><td>\(\frac{3}{5} \cdot \frac{2}{4} = \frac{6}{20}\)</td><td>\(\frac{12}{20}\)</td></tr>
+                        <tr><th style="background:#f1f5f9;">\(P(Y = y)\)</th><td>\(\frac{8}{20}\)</td><td>\(\frac{12}{20}\)</td><td>1</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: Sum of all joint probabilities = \(\frac{2}{20} + \frac{6}{20} + \frac{6}{20} + \frac{6}{20} = \frac{20}{20} = 1\).</p>
+            </div>
+        </div>
+
+        <!-- Section 4: 3D Visualization of Joint PMF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>4. 3D Visualization of Joint PMF</h2>
+            </div>
+            <div class="graph-container">
+                <h3>Joint Probability Mass Function (3D Bar Plot)</h3>
+                <div id="jointPMFPlot" style="width: 100%; height: 500px;"></div>
+                <p style="text-align: center; margin-top: 0.5rem;">Vertical bars represent \(p_{X,Y}(x, y) = P(X = x, Y = y)\)</p>
+            </div>
+        </div>
+
+        <!-- Section 5: Marginal Probability Functions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>5. Marginal Probability Functions</h2>
+            </div>
+            <div class="definition">
+                The <strong>marginal probability mass function</strong> of \(X\) (the marginal distribution of \(X\)) is obtained by summing the joint PMF over all possible values of \(Y\):
+                <div class="math-display">
+                    \[ p_X(x) = P(X = x) = \sum_{y} p_{X,Y}(x, y) \]
+                </div>
+                <p>Similarly, the marginal probability mass function of \(Y\) is:</p>
+                <div class="math-display">
+                    \[ p_Y(y) = P(Y = y) = \sum_{x} p_{X,Y}(x, y) \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Proof of Marginal PMF Formula:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Partition the event \(\{X = x\}\) by the values of \(Y\):</strong>
+                    <div class="math-display">
+                        \[ \{X = x\} = \bigcup_{j=1}^{\infty} \{X = x, Y = y_j\} \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — The events on the right are mutually exclusive (since \(Y\) can take only one value).</strong>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Apply countable additivity (Axiom 3):</strong>
+                    <div class="math-display">
+                        \[ P(X = x) = \sum_{j=1}^{\infty} P(X = x, Y = y_j) = \sum_{j=1}^{\infty} p_{X,Y}(x, y_j) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 4 — Therefore:</strong>
+                    <div class="math-display">
+                        \[ p_X(x) = \sum_{y} p_{X,Y}(x, y) \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="theorem-box">
+                <h3>📌 Properties of Marginal PMFs</h3>
+                <div class="math-display">
+                    \[ \text{(i)} \quad p_X(x) \geq 0 \quad \text{for all } x \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(ii)} \quad \sum_{x} p_X(x) = 1 \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iii)} \quad p_Y(y) \geq 0 \quad \text{for all } y \]
+                </div>
+                <div class="math-display">
+                    \[ \text{(iv)} \quad \sum_{y} p_Y(y) = 1 \]
+                </div>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Proof of Properties:</h4>
+                <div class="proof-step">
+                    <strong>Property (i) — Non-negativity:</strong> Since \(p_X(x)\) is a sum of non-negative terms, it is non-negative.
+                </div>
+                <div class="proof-step">
+                    <strong>Property (ii) — Summation to 1:</strong>
+                    <div class="math-display">
+                        \[ \sum_{x} p_X(x) = \sum_{x} \sum_{y} p_{X,Y}(x, y) = 1 \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Properties (iii) and (iv) — Analogous for \(Y\).</strong>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1:</strong> The marginal distributions are valid probability mass functions.<br><br>
+                <strong>📌 Corollary 5.2:</strong> The marginal probabilities are the row sums and column sums in the joint PMF table.<br><br>
+                <strong>📌 Corollary 5.3:</strong> \(p_X(x) = \sum_{y} p_{X,Y}(x, y)\) is called "marginal" because it is written in the margins of the joint probability table.
+            </div>
+        </div>
+
+        <!-- Section 6: Relationship Between Joint and Marginal -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔗</span>
+                <h2>6. Relationship Between Joint and Marginal PMFs</h2>
+            </div>
+            <div class="definition">
+                <p>The joint PMF contains more information than the marginal PMFs. The marginal PMFs can be recovered from the joint PMF by summation, but the joint PMF cannot always be recovered from the marginals (unless independence is known).</p>
+                <div class="math-display">
+                    \[ p_{X,Y}(x, y) = p_X(x) \cdot p_Y(y) \quad \text{if and only if } X \text{ and } Y \text{ are independent} \]
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example (from table above):</strong> Using the defective items example:
+                <div class="math-display">
+                    \[ p_X(0) = \frac{8}{20} = 0.4, \quad p_X(1) = \frac{12}{20} = 0.6 \]
+                </div>
+                <div class="math-display">
+                    \[ p_Y(0) = \frac{8}{20} = 0.4, \quad p_Y(1) = \frac{12}{20} = 0.6 \]
+                </div>
+                <p>Note that \(p_{X,Y}(0,0) = \frac{2}{20} \neq p_X(0)p_Y(0) = \frac{8}{20} \cdot \frac{8}{20} = \frac{64}{400} = 0.16\), so \(X\) and \(Y\) are not independent (as expected since sampling is without replacement).</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>7. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Finding Marginal PMFs</strong>
+                <p>Given the joint PMF table:</p>
+                <table class="pmf-table">
+                    <thead><tr><th>\(X \setminus Y\)</th><th>1</th><th>2</th><th>3</th></tr></thead>
+                    <tbody>
+                        <tr><th>1</th><td>0.1</td><td>0.1</td><td>0.0</td></tr>
+                        <tr><th>2</th><td>0.2</td><td>0.1</td><td>0.1</td></tr>
+                        <tr><th>3</th><td>0.0</td><td>0.2</td><td>0.2</td></tr>
+                    </tbody>
+                </table>
+                <p>Find \(p_X(1)\), \(p_X(2)\), \(p_X(3)\), and \(p_Y(1)\), \(p_Y(2)\), \(p_Y(3)\).</p>
+                <p><strong>Solution:</strong></p>
+                <p>\(p_X(1) = 0.1 + 0.1 + 0.0 = 0.2\)<br>
+                \(p_X(2) = 0.2 + 0.1 + 0.1 = 0.4\)<br>
+                \(p_X(3) = 0.0 + 0.2 + 0.2 = 0.4\)<br>
+                \(p_Y(1) = 0.1 + 0.2 + 0.0 = 0.3\)<br>
+                \(p_Y(2) = 0.1 + 0.1 + 0.2 = 0.4\)<br>
+                \(p_Y(3) = 0.0 + 0.1 + 0.2 = 0.3\)<br>
+                Check: \(\sum p_X = 0.2+0.4+0.4 = 1\), \(\sum p_Y = 0.3+0.4+0.3 = 1\).</p>
+            </div>
+
+            <div class="example-box">
+                <strong>📖 Example 2: Probability Calculation</strong>
+                <p>Using the same joint PMF, find \(P(X = Y)\) and \(P(X > Y)\).</p>
+                <p><strong>Solution:</strong></p>
+                <p>\(P(X = Y) = p(1,1) + p(2,2) + p(3,3) = 0.1 + 0.1 + 0.2 = 0.4\)<br>
+                \(P(X > Y) = p(2,1) + p(3,1) + p(3,2) = 0.2 + 0.0 + 0.2 = 0.4\)<br>
+                Check: \(P(X < Y) = 1 - 0.4 - 0.4 = 0.2\).</p>
+            </div>
+        </div>
+
+        <!-- Section 8: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>8. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For the joint PMF in Example 1, verify that \(\sum_x \sum_y p(x,y) = 1\).</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>Sum all cells: \(0.1+0.1+0.0+0.2+0.1+0.1+0.0+0.2+0.2 = 1.0\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Prove that \(\sum_x p_X(x) = 1\) using the definition of marginal PMF.</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>\(\sum_x p_X(x) = \sum_x \sum_y p(x,y) = 1\) by the property of joint PMF.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> For independent dice rolls, why is \(p_{X,Y}(x,y) = \frac{1}{36}\) for all \(x, y \in \{1,\ldots,6\}\)?</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>Since the rolls are independent, \(p_{X,Y}(x,y) = p_X(x)p_Y(y) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}\).</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Two-Dimensional Discrete RV:</strong> Pair \((X, Y)\) with countable support</li>
+                <li><strong>Joint PMF:</strong> \(p_{X,Y}(x,y) = P(X=x, Y=y)\) with \(p \geq 0\) and \(\sum_x \sum_y p = 1\)</li>
+                <li><strong>Marginal PMF of X:</strong> \(p_X(x) = \sum_y p_{X,Y}(x,y)\) — row sums in the table</li>
+                <li><strong>Marginal PMF of Y:</strong> \(p_Y(y) = \sum_x p_{X,Y}(x,y)\) — column sums in the table</li>
+                <li><strong>Marginals are valid PMFs:</strong> Non-negative and sum to 1</li>
+                <li><strong>Joint contains more info than marginals:</strong> Joint PMF cannot be recovered from marginals alone without independence</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="cdf_continuous.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Continuous CDF</a>
+            <a href="conditional_pmf_discrete.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Conditional PMF (Discrete) →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Two-Dimensional Discrete Random Variables — joint and marginal probability mass functions.
+    </footer>
+</div>
+
+<script>
+    // Create 3D bar plot for joint PMF
+    // Example data: X and Y from 1 to 6 (dice)
+    const xVals = [0, 1, 2, 3, 4, 5];
+    const yVals = [0, 1, 2, 3, 4, 5];
+    const zVals = [];
+    
+    for (let i = 0; i < xVals.length; i++) {
+        for (let j = 0; j < yVals.length; j++) {
+            zVals.push(1/36);
+        }
+    }
+    
+    // Prepare data for 3D bar plot using mesh3d
+    const trace1 = {
+        x: [],
+        y: [],
+        z: [],
+        type: 'scatter3d',
+        mode: 'markers',
+        marker: { size: 8, color: 'blue', opacity: 0.7 }
+    };
+    
+    const xMesh = [];
+    const yMesh = [];
+    const zMesh = [];
+    
+    for (let i = 0; i < xVals.length; i++) {
+        for (let j = 0; j < yVals.length; j++) {
+            xMesh.push(xVals[i]);
+            yMesh.push(yVals[j]);
+            zMesh.push(1/36);
+            trace1.x.push(xVals[i]);
+            trace1.y.push(yVals[j]);
+            trace1.z.push(1/36);
+        }
+    }
+    
+    // Create 3D bar plot using mesh3d for bars (simplified)
+    const traceBars = {
+        x: [],
+        y: [],
+        z: [],
+        type: 'scatter3d',
+        mode: 'markers+text',
+        marker: {
+            size: 12,
+            color: xVals.flatMap(() => yVals.map((_, j) => j / yVals.length)),
+            colorscale: 'Viridis',
+            opacity: 0.9,
+            symbol: 'square'
+        },
+        text: zMesh.map(v => v.toFixed(3)),
+        textposition: 'top center'
+    };
+    
+    for (let i = 0; i < xVals.length; i++) {
+        for (let j = 0; j < yVals.length; j++) {
+            traceBars.x.push(xVals[i]);
+            traceBars.y.push(yVals[j]);
+            traceBars.z.push(1/36);
+        }
+    }
+    
+    const layout = {
+        title: 'Joint PMF: P(X = x, Y = y)',
+        scene: {
+            xaxis: { title: 'X (First Die)', tickvals: [0,1,2,3,4,5], ticktext: ['1','2','3','4','5','6'] },
+            yaxis: { title: 'Y (Second Die)', tickvals: [0,1,2,3,4,5], ticktext: ['1','2','3','4','5','6'] },
+            zaxis: { title: 'Probability', range: [0, 0.04] }
+        },
+        margin: { l: 0, r: 0, b: 0, t: 50 }
+    };
+    
+    Plotly.newPlot('jointPMFPlot', [traceBars], layout);
+</script>
+</body>
+</html>
