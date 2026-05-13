@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Two-Dimensional Distribution Function (Joint CDF) | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- Plotly for 3D graphs -->
+    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .graph-container {
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .pmf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .pmf-table th, .pmf-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .pmf-table th {
+            background: #f1f5f9;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Two-Dimensional Distribution Function</span>
+        </div>
+        <h1>📐 Two-Dimensional Distribution Function (Joint CDF)</h1>
+        <p>Definition, properties, and proofs for the joint cumulative distribution function</p>
+        <span class="badge">Probability Theory · Unit III · Joint Distribution Function</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of Joint Distribution Function</h2>
+            </div>
+            <div class="definition">
+                The <strong>joint cumulative distribution function</strong> (joint CDF) of two random variables \(X\) and \(Y\) is defined as:
+                <div class="math-display">
+                    \[ F_{X,Y}(x, y) = P(X \leq x, Y \leq y), \quad \forall (x, y) \in \mathbb{R}^2 \]
+                </div>
+                <p>This function gives the probability that \(X\) is at most \(x\) and \(Y\) is at most \(y\) simultaneously.</p>
+            </div>
+            <div class="note-tip">
+                💡 The joint CDF completely characterizes the joint distribution of \((X, Y)\), capturing all information about the relationship between \(X\) and \(Y\).
+            </div>
+        </div>
+
+        <!-- Section 2: Properties of Joint CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Properties of the Joint Distribution Function</h2>
+            </div>
+
+            <!-- Property 1: Boundedness -->
+            <div class="theorem-box">
+                <h3>📌 Property 1: Boundedness</h3>
+                <div class="math-display">
+                    \[ 0 \leq F_{X,Y}(x, y) \leq 1 \quad \text{for all } (x, y) \in \mathbb{R}^2 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    Since \(F_{X,Y}(x,y) = P(X \leq x, Y \leq y)\) is a probability, by the axioms of probability, \(0 \leq P(\cdot) \leq 1\). Hence, \(0 \leq F_{X,Y}(x,y) \leq 1\).
+                </div>
+            </div>
+
+            <!-- Property 2: Monotonicity -->
+            <div class="theorem-box">
+                <h3>📌 Property 2: Non-decreasing in Each Argument</h3>
+                <div class="math-display">
+                    \[ \text{If } x_1 < x_2 \text{, then } F_{X,Y}(x_1, y) \leq F_{X,Y}(x_2, y) \text{ for fixed } y \]
+                </div>
+                <div class="math-display">
+                    \[ \text{If } y_1 < y_2 \text{, then } F_{X,Y}(x, y_1) \leq F_{X,Y}(x, y_2) \text{ for fixed } x \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof for \(x\):</h4>
+                <div class="proof-step">
+                    If \(x_1 < x_2\), then \(\{X \leq x_1, Y \leq y\} \subseteq \{X \leq x_2, Y \leq y\}\). By monotonicity of probability, the probability of the subset is less than or equal to the probability of the superset:
+                    <div class="math-display">
+                        \[ F_{X,Y}(x_1, y) = P(X \leq x_1, Y \leq y) \leq P(X \leq x_2, Y \leq y) = F_{X,Y}(x_2, y) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 3: Limits at -∞ -->
+            <div class="theorem-box">
+                <h3>📌 Property 3: Limits at \(-\infty\)</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to -\infty} F_{X,Y}(x, y) = 0 \quad \text{for any fixed } y \]
+                </div>
+                <div class="math-display">
+                    \[ \lim_{y \to -\infty} F_{X,Y}(x, y) = 0 \quad \text{for any fixed } x \]
+                </div>
+                <div class="math-display">
+                    \[ \lim_{x \to -\infty, y \to -\infty} F_{X,Y}(x, y) = 0 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    As \(x \to -\infty\), the event \(\{X \leq x, Y \leq y\}\) approaches the empty set (since no real number is ≤ -∞). By continuity of probability:
+                    <div class="math-display">
+                        \[ \lim_{x \to -\infty} F_{X,Y}(x, y) = P(\emptyset) = 0 \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 4: Limit at +∞ -->
+            <div class="theorem-box">
+                <h3>📌 Property 4: Marginal CDFs as Limits</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to \infty} F_{X,Y}(x, y) = F_Y(y) = P(Y \leq y) \]
+                </div>
+                <div class="math-display">
+                    \[ \lim_{y \to \infty} F_{X,Y}(x, y) = F_X(x) = P(X \leq x) \]
+                </div>
+                <div class="math-display">
+                    \[ \lim_{x \to \infty, y \to \infty} F_{X,Y}(x, y) = 1 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    As \(x \to \infty\), the event \(\{X \leq x, Y \leq y\}\) becomes \(\{Y \leq y\}\). Therefore:
+                    <div class="math-display">
+                        \[ \lim_{x \to \infty} F_{X,Y}(x, y) = P(Y \leq y) = F_Y(y) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 5: Right-Continuity -->
+            <div class="theorem-box">
+                <h3>📌 Property 5: Right-Continuity in Each Argument</h3>
+                <div class="math-display">
+                    \[ \lim_{h \to 0^+} F_{X,Y}(x + h, y) = F_{X,Y}(x, y) \]
+                </div>
+                <div class="math-display">
+                    \[ \lim_{h \to 0^+} F_{X,Y}(x, y + h) = F_{X,Y}(x, y) \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    For a decreasing sequence \(h_n \downarrow 0\), the events \(\{X \leq x + h_n, Y \leq y\}\) decrease to \(\{X \leq x, Y \leq y\}\). By continuity from above:
+                    <div class="math-display">
+                        \[ \lim_{h \to 0^+} F_{X,Y}(x + h, y) = P(X \leq x, Y \leq y) = F_{X,Y}(x, y) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 6: Probability of Rectangle -->
+            <div class="theorem-box">
+                <h3>📌 Property 6: Probability of a Rectangle</h3>
+                <div class="math-display">
+                    \[ P(x_1 < X \leq x_2, y_1 < Y \leq y_2) = F_{X,Y}(x_2, y_2) - F_{X,Y}(x_1, y_2) - F_{X,Y}(x_2, y_1) + F_{X,Y}(x_1, y_1) \]
+                </div>
+                <p>for any \(x_1 < x_2\) and \(y_1 < y_2\).</p>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Use the inclusion-exclusion principle:</strong>
+                    <div class="math-display">
+                        \[ P(x_1 < X \leq x_2, y_1 < Y \leq y_2) = P(X \leq x_2, Y \leq y_2) - P(X \leq x_1, Y \leq y_2) - P(X \leq x_2, Y \leq y_1) + P(X \leq x_1, Y \leq y_1) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Substitute the definition of joint CDF:</strong>
+                    <div class="math-display">
+                        \[ = F_{X,Y}(x_2, y_2) - F_{X,Y}(x_1, y_2) - F_{X,Y}(x_2, y_1) + F_{X,Y}(x_1, y_1) \]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 7: Rectangle Probability Non-negative -->
+            <div class="theorem-box">
+                <h3>📌 Property 7: Rectangle Inequality</h3>
+                <div class="math-display">
+                    \[ F_{X,Y}(x_2, y_2) - F_{X,Y}(x_1, y_2) - F_{X,Y}(x_2, y_1) + F_{X,Y}(x_1, y_1) \geq 0 \]
+                </div>
+            </div>
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                <div class="proof-step">
+                    The left-hand side equals \(P(x_1 < X \leq x_2, y_1 < Y \leq y_2)\), which is a probability and hence non-negative.
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1:</strong> The marginal CDFs can be obtained from the joint CDF by taking limits to infinity.<br><br>
+                <strong>📌 Corollary 2.2:</strong> For discrete random variables, the joint PMF can be recovered as:
+                <div class="math-display">\[ p_{X,Y}(x_i, y_j) = F_{X,Y}(x_i, y_j) - F_{X,Y}(x_{i-1}, y_j) - F_{X,Y}(x_i, y_{j-1}) + F_{X,Y}(x_{i-1}, y_{j-1}) \]</div>
+                <strong>📌 Corollary 2.3:</strong> For continuous random variables, the joint PDF is given by:
+                <div class="math-display">\[ f_{X,Y}(x, y) = \frac{\partial^2 F_{X,Y}(x, y)}{\partial x \partial y} \]</div>
+            </div>
+        </div>
+
+        <!-- Section 3: Tabular Example for Discrete Case -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>3. Joint CDF Table for Discrete Random Variables</h2>
+            </div>
+            <div class="definition">
+                Consider the joint PMF of \((X, Y)\) from the previous section:
+            </div>
+            <table class="pmf-table">
+                <thead>
+                    <tr><th>\(X \setminus Y\)</th><th>1</th><th>2</th><th>3</th><th>\(p_X(x)\)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><th>1</th><td>0.1</td><td>0.1</td><td>0.0</td><td>0.2</td></tr>
+                    <tr><th>2</th><td>0.2</td><td>0.1</td><td>0.1</td><td>0.4</td></tr>
+                    <tr><th>3</th><td>0.0</td><td>0.2</td><td>0.2</td><td>0.4</td></tr>
+                    <tr><th>\(p_Y(y)\)</th><td>0.3</td><td>0.4</td><td>0.3</td><td>1.0</td></tr>
+                </tbody>
+            </table>
+
+            <div class="definition">
+                The joint CDF values \(F_{X,Y}(x, y) = P(X \leq x, Y \leq y)\) are:
+            </div>
+            <table class="pmf-table">
+                <thead>
+                    <tr><th>\(F_{X,Y}(x,y)\)</th><th>\(y=1\)</th><th>\(y=2\)</th><th>\(y=3\)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><th>\(x=1\)</th><td>0.1</td><td>0.2</td><td>0.2</td></tr>
+                    <tr><th>\(x=2\)</th><td>0.3</td><td>0.5</td><td>0.6</td></tr>
+                    <tr><th>\(x=3\)</th><td>0.3</td><td>0.7</td><td>1.0</td></tr>
+                </tbody>
+            </table>
+            <div class="example-box">
+                <strong>📖 Verification:</strong> \(F_{X,Y}(2,2) = P(X \leq 2, Y \leq 2) = p(1,1)+p(1,2)+p(2,1)+p(2,2) = 0.1+0.1+0.2+0.1 = 0.5\).
+                <br>\(F_{X,Y}(3,3) = 1.0\) (all probability mass).<br>
+                \(F_{X,Y}(1,2) = 0.1+0.1 = 0.2\).
+            </div>
+        </div>
+
+        <!-- Section 4: 3D Visualization of Joint CDF -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📊</span>
+                <h2>4. 3D Visualization of Joint CDF</h2>
+            </div>
+            <div class="graph-container">
+                <h3>Joint CDF Surface for the Example</h3>
+                <div id="cdfPlot" style="width: 100%; height: 500px;"></div>
+                <p style="text-align: center; margin-top: 0.5rem;">The surface shows \(F_{X,Y}(x,y)\) for discrete values (interpolated for visualization)</p>
+            </div>
+        </div>
+
+        <!-- Section 5: Worked Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>5. Worked Examples</h2>
+            </div>
+            <div class="example-box">
+                <strong>📖 Example 1: Continuous Joint CDF</strong><br>
+                For the uniform distribution on the unit square \([0,1] \times [0,1]\), the joint CDF is:
+                <div class="math-display">
+                    \[ F_{X,Y}(x,y) = \begin{cases} 0 & x < 0 \text{ or } y < 0 \\ xy & 0 \leq x \leq 1, 0 \leq y \leq 1 \\ x & 0 \leq x \leq 1, y > 1 \\ y & x > 1, 0 \leq y \leq 1 \\ 1 & x > 1, y > 1 \end{cases} \]
+                </div>
+            </div>
+            <div class="example-box">
+                <strong>📖 Example 2: Probability Calculation</strong><br>
+                Using the joint CDF table above, find \(P(1 < X \leq 3, 1 < Y \leq 3)\).
+                <div class="math-display">
+                    \[ = F(3,3) - F(1,3) - F(3,1) + F(1,1) = 1.0 - 0.2 - 0.3 + 0.1 = 0.6 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>6. Practice Problems</h2>
+            </div>
+            <div class="definition">
+                <p><strong>Problem 1:</strong> Prove that \(F_{X,Y}(x,y)\) is non-decreasing in both arguments.</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>If \(x_1 < x_2\), the event \(\{X \leq x_1, Y \leq y\} \subseteq \{X \leq x_2, Y \leq y\}\), so the probability of the subset is less than or equal to the superset.</p>
+                </details>
+            </div>
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Use the joint CDF table to find \(P(X \leq 2, Y = 2)\).</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>\(P(X \leq 2, Y = 2) = F(2,2) - F(2,1) = 0.5 - 0.3 = 0.2\).</p>
+                </details>
+            </div>
+            <div class="definition">
+                <p><strong>Problem 3:</strong> For continuous RVs, prove that \(\frac{\partial^2 F_{X,Y}(x,y)}{\partial x \partial y} = f_{X,Y}(x,y)\) wherever the joint PDF exists.</p>
+                <details>
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p>By the definition \(F(x,y) = \int_{-\infty}^x \int_{-\infty}^y f(u,v) dv du\), differentiating with respect to \(x\) and then \(y\) gives \(f(x,y)\) by the Fundamental Theorem of Calculus.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Joint CDF Definition:</strong> \(F_{X,Y}(x,y) = P(X \leq x, Y \leq y)\)</li>
+                <li><strong>Properties:</strong> Bounded \([0,1]\), non-decreasing, right-continuous, limits at \(-\infty\) give 0 and at \(+\infty\) give marginal CDFs</li>
+                <li><strong>Rectangle Probability:</strong> \(P(x_1 < X \leq x_2, y_1 < Y \leq y_2) = F(x_2,y_2) - F(x_1,y_2) - F(x_2,y_1) + F(x_1,y_1)\)</li>
+                <li><strong>Marginals from Joint:</strong> \(F_X(x) = \lim_{y \to \infty} F_{X,Y}(x,y)\), \(F_Y(y) = \lim_{x \to \infty} F_{X,Y}(x,y)\)</li>
+                <li><strong>PDF from CDF:</strong> \(f_{X,Y}(x,y) = \frac{\partial^2 F_{X,Y}(x,y)}{\partial x \partial y}\) (continuous case)</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="conditional_pmf_discrete.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Conditional PMF</a>
+            <a href="marginal_distributions.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Marginal Distributions →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Two-Dimensional Distribution Function — the complete characterization of joint distributions.
+    </footer>
+</div>
+
+<script>
+    // Data from the joint CDF table
+    const x_vals = [1, 2, 3];
+    const y_vals = [1, 2, 3];
+    const cdfValues = [
+        [0.1, 0.2, 0.2],  // x=1, y=1,2,3
+        [0.3, 0.5, 0.6],  // x=2
+        [0.3, 0.7, 1.0]   // x=3
+    ];
+    
+    // Prepare data for surface plot
+    const xMesh = [];
+    const yMesh = [];
+    const zMesh = [];
+    
+    for (let i = 0; i < x_vals.length; i++) {
+        for (let j = 0; j < y_vals.length; j++) {
+            xMesh.push(x_vals[i]);
+            yMesh.push(y_vals[j]);
+            zMesh.push(cdfValues[i][j]);
+        }
+    }
+    
+    const trace = {
+        x: xMesh,
+        y: yMesh,
+        z: zMesh,
+        type: 'scatter3d',
+        mode: 'markers+text',
+        marker: {
+            size: 15,
+            color: zMesh,
+            colorscale: 'Viridis',
+            opacity: 0.9,
+            showscale: true
+        },
+        text: zMesh.map(v => v.toFixed(2)),
+        textposition: 'top center',
+        name: 'F(x,y)'
+    };
+    
+    const layout = {
+        title: 'Joint CDF F<sub>X,Y</sub>(x, y)',
+        scene: {
+            xaxis: { title: 'x', tickvals: [1, 2, 3], ticktext: ['1', '2', '3'] },
+            yaxis: { title: 'y', tickvals: [1, 2, 3], ticktext: ['1', '2', '3'] },
+            zaxis: { title: 'F(x,y)', range: [0, 1.1] },
+            camera: { eye: { x: 1.8, y: 1.8, z: 1.5 } }
+        },
+        margin: { l: 0, r: 0, b: 0, t: 50 }
+    };
+    
+    Plotly.newPlot('cdfPlot', [trace], layout);
+</script>
+</body>
+</html>
