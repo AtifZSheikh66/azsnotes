@@ -303,6 +303,36 @@
                     <tr><th>\(p_Y(y)\)</th><td>0.3</td><td>0.4</td><td>0.3</td><td>1.0</td></tr>
                 </tbody>
             </table>
+
+                        <div class="definition">
+                <strong>Conditional PMF Table: \(p_{X|Y}(x \mid y)\)</strong>
+                <table class="pmf-table">
+                    <thead>
+                        <tr><th>\(x\)</th><th>\(p_{X|Y}(x \mid y=1)\)</th><th>\(p_{X|Y}(x \mid y=2)\)</th><th>\(p_{X|Y}(x \mid y=3)\)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>\(\frac{0.1}{0.3} = 0.333\)</td><td>\(\frac{0.1}{0.4} = 0.25\)</td><td>\(\frac{0.0}{0.3} = 0\)</td></tr>
+                        <tr><td>2</td><td>\(\frac{0.2}{0.3} = 0.667\)</td><td>\(\frac{0.1}{0.4} = 0.25\)</td><td>\(\frac{0.1}{0.3} = 0.333\)</td></tr>
+                        <tr><td>3</td><td>\(\frac{0.0}{0.3} = 0\)</td><td>\(\frac{0.2}{0.4} = 0.50\)</td><td>\(\frac{0.2}{0.3} = 0.667\)</td></tr>
+                        <tr><td><strong>Sum</strong></td><td><strong>1</strong></td><td><strong>1</strong></td><td><strong>1</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="definition">
+                <strong>Conditional PMF Table: \(p_{Y|X}(y \mid x)\)</strong>
+                <table class="pmf-table">
+                    <thead>
+                        <tr><th>\(y\)</th><th>\(p_{Y|X}(y \mid x=1)\)</th><th>\(p_{Y|X}(y \mid x=2)\)</th><th>\(p_{Y|X}(y \mid x=3)\)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>\(\frac{0.1}{0.2} = 0.50\)</td><td>\(\frac{0.2}{0.4} = 0.50\)</td><td>\(\frac{0.0}{0.4} = 0\)</td></tr>
+                        <tr><td>2</td><td>\(\frac{0.1}{0.2} = 0.50\)</td><td>\(\frac{0.1}{0.4} = 0.25\)</td><td>\(\frac{0.2}{0.4} = 0.50\)</td></tr>
+                        <tr><td>3</td><td>\(\frac{0.0}{0.2} = 0\)</td><td>\(\frac{0.1}{0.4} = 0.25\)</td><td>\(\frac{0.2}{0.4} = 0.50\)</td></tr>
+                        <tr><td><strong>Sum</strong></td><td><strong>1</strong></td><td><strong>1</strong></td><td><strong>1</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
             
             <div class="example-box">
                 <strong>📖 Compute \(p_{X|Y}(x \mid y = 2)\):</strong>
