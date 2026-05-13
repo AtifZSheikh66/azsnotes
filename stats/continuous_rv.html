@@ -391,13 +391,50 @@
                 </div>
             </div>
 
-            <!-- Standard Deviation -->
+                        <!-- Standard Deviation -->
             <div class="theorem-box">
                 <h3>📌 Theorem 5.2: Standard Deviation</h3>
                 <div class="math-display">
                     \[ \sigma = \sqrt{\text{Var}(X)} = \sqrt{\int_{-\infty}^{\infty} (x - \mu)^2 f(x) \, dx} \]
                 </div>
                 <p>The standard deviation measures spread in the same units as \(X\).</p>
+            </div>
+
+            <!-- Mean Deviation (Absolute Deviation) -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 5.3: Mean Deviation (Mean Absolute Deviation)</h3>
+                <div class="math-display">
+                    \[ \text{M.D.} = E[|X - \mu|] = \int_{-\infty}^{\infty} |x - \mu| \, f(x) \, dx \]
+                </div>
+                <p>Sometimes the mean deviation is taken about the median \(m\) instead of the mean:</p>
+                <div class="math-display">
+                    \[ \text{M.D. (about median)} = E[|X - m|] = \int_{-\infty}^{\infty} |x - m| \, f(x) \, dx \]
+                </div>
+                <p>Properties of Mean Deviation:</p>
+                <ul>
+                    <li>M.D. is always \(\leq\) Standard Deviation</li>
+                    <li>M.D. is less sensitive to outliers than variance</li>
+                    <li>For symmetric unimodal distributions, M.D. \(\approx 0.8 \times \sigma\) (for normal distribution, M.D. = \(\sigma \sqrt{2/\pi} \approx 0.7979\sigma\))</li>
+                </ul>
+            </div>
+
+            <div class="proof-box">
+                <h4>📝 Derivation for Normal Distribution:</h4>
+                <div class="proof-step">
+                    <strong>For \(X \sim N(\mu, \sigma^2)\), the mean deviation about the mean is:</strong>
+                    <div class="math-display">
+                        \[ E[|X - \mu|] = \int_{-\infty}^{\infty} |x - \mu| \cdot \frac{1}{\sigma\sqrt{2\pi}} e^{-(x-\mu)^2/(2\sigma^2)} \, dx \]
+                    </div>
+                    <div class="math-display">
+                        \[ = \sigma \sqrt{\frac{2}{\pi}} \approx 0.7979\sigma \]
+                    </div>
+                </div>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Remark:</strong> For a discrete random variable, mean deviation is:
+                <div class="math-display">\[ \text{M.D.} = \sum_{i} |x_i - \mu| \, p(x_i) \quad \text{or} \quad \sum_{i} |x_i - m| \, p(x_i) \]</div>
+                <strong>📌 Relationship:</strong> Mean deviation is a more robust measure of dispersion than variance because it does not square the deviations, reducing the influence of outliers.
             </div>
 
             <div class="corollary-box">
