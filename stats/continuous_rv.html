@@ -289,13 +289,66 @@
                 <p>The median is the value \(m\) such that half the probability lies below \(m\) and half above.</p>
             </div>
 
-            <!-- Mode -->
+                        <!-- Mode -->
             <div class="theorem-box">
                 <h3>📌 Theorem 4.3: Mode</h3>
                 <div class="math-display">
                     \[ \text{Mode} = \arg\max_{x} f(x) \]
                 </div>
                 <p>The mode is the value where the PDF attains its maximum (peak of the distribution).</p>
+            </div>
+
+            <!-- Geometric Mean -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.4: Geometric Mean</h3>
+                <div class="math-display">
+                    \[ G = \exp\left( \int_{-\infty}^{\infty} \ln(x) \, f(x) \, dx \right), \quad x > 0 \]
+                </div>
+                <p>The geometric mean is defined only for positive random variables. For a discrete RV, replace integral with \(\exp\left( \sum \ln(x) p(x) \right)\).</p>
+            </div>
+
+            <!-- Harmonic Mean -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.5: Harmonic Mean</h3>
+                <div class="math-display">
+                    \[ H = \left( \int_{-\infty}^{\infty} \frac{1}{x} \, f(x) \, dx \right)^{-1}, \quad x \neq 0 \]
+                </div>
+                <p>The harmonic mean is defined for positive random variables. For a discrete RV, replace integral with \(\left( \sum \frac{1}{x} p(x) \right)^{-1}\).</p>
+            </div>
+
+            <!-- Quartiles -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.6: Quartiles</h3>
+                <p>The first (lower) quartile \(Q_1\) and third (upper) quartile \(Q_3\) satisfy:</p>
+                <div class="math-display">
+                    \[ \int_{-\infty}^{Q_1} f(x) \, dx = 0.25, \quad \int_{-\infty}^{Q_3} f(x) \, dx = 0.75 \]
+                </div>
+                <p>The second quartile \(Q_2\) is the median.</p>
+                <p><strong>Interquartile Range (IQR):</strong> \( \text{IQR} = Q_3 - Q_1 \)</p>
+            </div>
+
+            <!-- Deciles -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.7: Deciles</h3>
+                <p>The \(k\)-th decile \(D_k\) (for \(k = 1, 2, \ldots, 9\)) satisfies:</p>
+                <div class="math-display">
+                    \[ \int_{-\infty}^{D_k} f(x) \, dx = \frac{k}{10} \]
+                </div>
+                <p>For a discrete RV, deciles are values that divide the distribution into ten equal parts.</p>
+            </div>
+
+            <!-- Percentiles -->
+            <div class="theorem-box">
+                <h3>📌 Theorem 4.8: Percentiles</h3>
+                <p>The \(p\)-th percentile \(\pi_p\) (for \(0 < p < 1\)) satisfies:</p>
+                <div class="math-display">
+                    \[ \int_{-\infty}^{\pi_p} f(x) \, dx = \frac{p}{100} \]
+                </div>
+                <p>Special cases: Median = \(50\)th percentile, \(Q_1 = 25\)th percentile, \(Q_3 = 75\)th percentile, \(D_k = (10k)\)th percentile.</p>
+            </div>
+
+            <div class="corollary-box">
+                <strong>📌 Remark:</strong> If \(X\) were a discrete random variable, the geometric mean is \(\left( \prod x_i^{p(x_i)} \right)\), harmonic mean is \(\left( \sum \frac{p(x_i)}{x_i} \right)^{-1}\), and quantiles are found by cumulative distribution function \(F(x) \geq p\).
             </div>
 
             <div class="corollary-box">
