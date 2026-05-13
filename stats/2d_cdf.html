@@ -312,6 +312,17 @@
                 </div>
             </div>
 
+                            <!-- Visualization of Rectangle Probability (Property 6 & 7) -->
+            <div class="theorem-box">
+                <h3>📌 Visualization: Rectangle Probability from Joint CDF</h3>
+                <p>For any \(x_1 < x_2\) and \(y_1 < y_2\), the probability that \((X, Y)\) lies in the rectangle \((x_1, x_2] \times (y_1, y_2]\) is:</p>
+                <div class="math-display">
+                    \[ P(x_1 < X \leq x_2, y_1 < Y \leq y_2) = F(x_2, y_2) - F(x_1, y_2) - F(x_2, y_1) + F(x_1, y_1) \]
+                </div>
+                <div id="rectangleDiagram" style="width: 100%; height: 450px; margin-top: 1rem;"></div>
+                <p style="text-align: center; margin-top: 0.5rem;">The colored rectangle represents the region \((x_1, x_2] \times (y_1, y_2]\). The joint CDF difference formula gives the probability mass in this region.</p>
+            </div>
+
             <div class="corollary-box">
                 <strong>📌 Corollary 2.1:</strong> The marginal CDFs can be obtained from the joint CDF by taking limits to infinity.<br><br>
                 <strong>📌 Corollary 2.2:</strong> For discrete random variables, the joint PMF can be recovered as:
@@ -504,6 +515,80 @@
     };
     
     Plotly.newPlot('cdfPlot', [trace], layout);
+
+                // 3D Rectangle Visualization for Property 6 & 7
+            const rectX1 = 1.2, rectX2 = 2.8;
+            const rectY1 = 1.2, rectY2 = 2.8;
+            
+            // Create mesh for the rectangle region
+            const rectX = [rectX1, rectX2, rectX2, rectX1, rectX1];
+            const rectY = [rectY1, rectY1, rectY2, rectY2, rectY1];
+            const rectZ = [0, 0, 0, 0, 0];
+            
+            const rectTrace = {
+                x: rectX,
+                y: rectY,
+                z: rectZ,
+                type: 'scatter3d',
+                mode: 'lines',
+                line: { color: 'red', width: 4 },
+                name: 'Rectangle Region (x₁,x₂] × (y₁,y₂]',
+                showlegend: true
+            };
+            
+            // Create surface for joint CDF
+            const xGrid = [1, 2, 3];
+            const yGrid = [1, 2, 3];
+            const zGrid = [
+                [0.1, 0.2, 0.2],
+                [0.3, 0.5, 0.6],
+                [0.3, 0.7, 1.0]
+            ];
+            
+            const surfaceTrace = {
+                x: xGrid,
+                y: yGrid,
+                z: zGrid,
+                type: 'surface',
+                colorscale: 'Viridis',
+                opacity: 0.85,
+                name: 'Joint CDF Surface',
+                showscale: true
+            };
+            
+            // Add corner points for the rectangle formula visualization
+            const corners = [
+                { x: rectX1, y: rectY1, label: 'F(x₁,y₁)' },
+                { x: rectX2, y: rectY1, label: 'F(x₂,y₁)' },
+                { x: rectX1, y: rectY2, label: 'F(x₁,y₂)' },
+                { x: rectX2, y: rectY2, label: 'F(x₂,y₂)' }
+            ];
+            
+            const cornerTraces = corners.map(corner => ({
+                x: [corner.x],
+                y: [corner.y],
+                z: [0],
+                type: 'scatter3d',
+                mode: 'markers+text',
+                marker: { size: 8, color: 'darkblue' },
+                text: [corner.label],
+                textposition: 'top center',
+                showlegend: false
+            }));
+            
+            const rectLayout = {
+                title: 'Rectangle Probability: F(x₂,y₂) - F(x₁,y₂) - F(x₂,y₁) + F(x₁,y₁)',
+                scene: {
+                    xaxis: { title: 'x', range: [0.5, 3.5] },
+                    yaxis: { title: 'y', range: [0.5, 3.5] },
+                    zaxis: { title: 'F(x,y)', range: [0, 1.1] },
+                    camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }
+                },
+                margin: { l: 0, r: 0, b: 0, t: 50 }
+            };
+            
+            const allTraces = [surfaceTrace, rectTrace, ...cornerTraces];
+            Plotly.newPlot('rectangleDiagram', allTraces, rectLayout);
 </script>
 </body>
 </html>
