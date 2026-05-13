@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Distribution Function (CDF) | Probability Theory Notes</title>
+    <link rel="stylesheet" href="../css/notes-style.css">
+    <!-- MathJax for LaTeX rendering with larger font -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <style>
+        .theorem-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        .theorem-box h3 {
+            color: #0369a1;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .proof-box {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0 1rem 1rem;
+            border-radius: 0.5rem;
+        }
+        .proof-step {
+            margin: 0.75rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+        }
+        .corollary-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+        .corollary-box strong {
+            color: #92400e;
+        }
+        .example-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0.75rem;
+        }
+        .definition {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+        .math-display {
+            overflow-x: auto;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+        .math-display .MathJax {
+            font-size: 1.15rem !important;
+        }
+        .property-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .property-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .property-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .cdf-plot {
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto;
+            display: block;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .proof-box {
+                margin-left: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="breadcrumb">
+            <a href="../index.html">azsnotes</a> / 
+            <a href="../stats_notes.html">Statistics</a> / 
+            <a href="probability_theory.html">Probability Theory</a> / 
+            <span>Distribution Function (CDF)</span>
+        </div>
+        <h1>📈 Distribution Function (Cumulative Distribution Function)</h1>
+        <p>Definition, fundamental properties, and proofs of the CDF</p>
+        <span class="badge">Probability Theory · Unit III · Distribution Function</span>
+    </div>
+
+    <div class="content">
+        <!-- Section 1: Definition -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📜</span>
+                <h2>1. Definition of Distribution Function</h2>
+            </div>
+            <div class="definition">
+                The <strong>Cumulative Distribution Function (CDF)</strong> or simply <strong>Distribution Function</strong> of a random variable \(X\) is defined as:
+                <div class="math-display">
+                    \[ F_X(x) = P(X \leq x) \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+                <p>The CDF gives the probability that the random variable \(X\) takes a value less than or equal to \(x\).</p>
+                <p><strong>Notation:</strong> \(F(x)\) is used when the random variable is understood from context.</p>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example:</strong> For a fair die roll, \(X \sim \text{Uniform}\{1,2,3,4,5,6\}\).
+                <div class="math-display">
+                    \[ F(x) = \begin{cases} 
+                        0 & x < 1 \\
+                        \frac{1}{6} & 1 \leq x < 2 \\
+                        \frac{2}{6} & 2 \leq x < 3 \\
+                        \frac{3}{6} & 3 \leq x < 4 \\
+                        \frac{4}{6} & 4 \leq x < 5 \\
+                        \frac{5}{6} & 5 \leq x < 6 \\
+                        1 & x \geq 6 
+                    \end{cases} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Probability of Interval (F(b) - F(a)) -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📐</span>
+                <h2>2. Probability of an Interval: \(P(a < X \leq b) = F(b) - F(a)\)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Probability of Half-Open Interval)</h3>
+                <p>For any random variable \(X\) with distribution function \(F\), and for any real numbers \(a < b\),</p>
+                <div class="math-display">
+                    \[ P(a < X \leq b) = F(b) - F(a) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Observe that the event \(\{X \leq b\}\) can be partitioned:</strong>
+                    <div class="math-display">
+                        \[ \{X \leq b\} = \{X \leq a\} \cup \{a < X \leq b\} \]
+                    </div>
+                    <p>These two events are mutually exclusive (disjoint) because \(\{X \leq a\}\) and \(\{a < X \leq b\}\) cannot occur simultaneously.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply the addition rule (Axiom 3 of probability):</strong>
+                    <div class="math-display">
+                        \[ P(X \leq b) = P(X \leq a) + P(a < X \leq b) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Substitute the definition of the CDF:</strong>
+                    <div class="math-display">
+                        \[ F(b) = F(a) + P(a < X \leq b) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Rearranging gives the result:</strong>
+                    <div class="math-display">
+                        \[ P(a < X \leq b) = F(b) - F(a) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{P(a < X \leq b) = F(b) - F(a)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 2.1 (Probability of closed interval):</strong>
+                <div class="math-display">\[ P(a \leq X \leq b) = F(b) - F(a^-) \]</div>
+                where \(F(a^-) = \lim_{x \to a^-} F(x)\) (left-hand limit).<br><br>
+                
+                <strong>📌 Corollary 2.2 (Probability of open interval):</strong>
+                <div class="math-display">\[ P(a < X < b) = F(b^-) - F(a) \]</div>
+                
+                <strong>📌 Corollary 2.3 (Probability of a single point):</strong>
+                <div class="math-display">\[ P(X = a) = F(a) - F(a^-) \]</div>
+                This is the size of the jump (discontinuity) at \(a\).
+            </div>
+        </div>
+
+        <!-- Section 3: Property 1 - Boundedness -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔢</span>
+                <h2>3. Property 1: \(0 \leq F(x) \leq 1\) for all \(x \in \mathbb{R}\)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Bounds of Distribution Function)</h3>
+                <p>For any distribution function \(F\),</p>
+                <div class="math-display">
+                    \[ 0 \leq F(x) \leq 1 \quad \text{for all } x \in \mathbb{R} \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Lower bound:</strong>
+                    <p>Since \(F(x) = P(X \leq x)\) is a probability, by Axiom 1 of probability, all probabilities are non-negative:</p>
+                    <div class="math-display">
+                        \[ F(x) = P(X \leq x) \geq 0 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Upper bound:</strong>
+                    <p>Since \(\{X \leq x\} \subseteq \Omega\) (the entire sample space), by the monotonicity property of probability:</p>
+                    <div class="math-display">
+                        \[ F(x) = P(X \leq x) \leq P(\Omega) = 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{0 \leq F(x) \leq 1 \quad \forall x \in \mathbb{R}} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 3.1:</strong> \(F(x)\) is a bounded function.<br>
+                <strong>📌 Corollary 3.2:</strong> For any \(x\), \(F(x) \in [0,1]\).
+            </div>
+        </div>
+
+        <!-- Section 4: Property 2 - Monotonicity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📈</span>
+                <h2>4. Property 2: \(F(x) \leq F(y)\) if \(x < y\) (Monotonicity)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Monotonicity of Distribution Function)</h3>
+                <p>For any \(x, y \in \mathbb{R}\) with \(x < y\),</p>
+                <div class="math-display">
+                    \[ F(x) \leq F(y) \]
+                </div>
+                <p>That is, the distribution function is non-decreasing.</p>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Observe the set inclusion:</strong>
+                    <p>If \(x < y\), then the event \(\{X \leq x\}\) is a subset of the event \(\{X \leq y\}\) because if \(X \leq x\), then certainly \(X \leq y\).</p>
+                    <div class="math-display">
+                        \[ \{X \leq x\} \subseteq \{X \leq y\} \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — Apply monotonicity of probability:</strong>
+                    <p>For any two events \(A \subseteq B\), we have \(P(A) \leq P(B)\). Therefore:</p>
+                    <div class="math-display">
+                        \[ P(X \leq x) \leq P(X \leq y) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Substitute the definition of \(F\):</strong>
+                    <div class="math-display">
+                        \[ F(x) \leq F(y) \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{x < y \implies F(x) \leq F(y)} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 4.1:</strong> \(F\) is monotone non-decreasing.<br>
+                <strong>📌 Corollary 4.2:</strong> For any \(x\), \(F(x) \geq \lim_{t \to -\infty} F(t)\) and \(F(x) \leq \lim_{t \to \infty} F(t)\).<br>
+                <strong>📌 Corollary 4.3:</strong> The function \(F\) has at most countably many discontinuities (since it is monotone).
+            </div>
+        </div>
+
+        <!-- Section 5: Property 3 - Limit at Negative Infinity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">⬅️</span>
+                <h2>5. Property 3: \(\displaystyle \lim_{x \to -\infty} F(x) = 0\)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Limit at \(-\infty\))</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to -\infty} F(x) = 0 \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Consider a decreasing sequence \(x_n \to -\infty\):</strong>
+                    <p>Let \(x_1, x_2, x_3, \ldots\) be a sequence such that \(x_n \downarrow -\infty\) (decreasing to \(-\infty\)). Then the events \(A_n = \{X \leq x_n\}\) form a decreasing sequence:</p>
+                    <div class="math-display">
+                        \[ A_1 \supseteq A_2 \supseteq A_3 \supseteq \cdots \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — The limit of the events as \(n \to \infty\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} A_n = \bigcap_{n=1}^{\infty} \{X \leq x_n\} = \emptyset \]
+                    </div>
+                    <p>Because as \(x_n \to -\infty\), there is no real number that is simultaneously \(\leq\) all these numbers.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply continuity of probability (from above):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(A_n) = P\left( \lim_{n \to \infty} A_n \right) = P(\emptyset) = 0 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Recognize \(P(A_n) = F(x_n)\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to -\infty} F(x) = 0 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{\lim_{x \to -\infty} F(x) = 0} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 5.1:</strong> For any \(\epsilon > 0\), there exists \(M\) such that \(F(x) < \epsilon\) for all \(x < M\).<br>
+                <strong>📌 Corollary 5.2:</strong> As \(x \to -\infty\), the probability that \(X\) is less than \(x\) becomes arbitrarily small.
+            </div>
+        </div>
+
+        <!-- Section 6: Property 4 - Limit at Positive Infinity -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">➡️</span>
+                <h2>6. Property 4: \(\displaystyle \lim_{x \to \infty} F(x) = 1\)</h2>
+            </div>
+            <div class="theorem-box">
+                <h3>📌 Theorem (Limit at \(+\infty\))</h3>
+                <div class="math-display">
+                    \[ \lim_{x \to \infty} F(x) = 1 \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof:</h4>
+                
+                <div class="proof-step">
+                    <strong>Step 1 — Consider an increasing sequence \(x_n \to \infty\):</strong>
+                    <p>Let \(x_1, x_2, x_3, \ldots\) be a sequence such that \(x_n \uparrow \infty\) (increasing to \(\infty\)). Then the events \(B_n = \{X \leq x_n\}\) form an increasing sequence:</p>
+                    <div class="math-display">
+                        \[ B_1 \subseteq B_2 \subseteq B_3 \subseteq \cdots \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 2 — The limit of the events as \(n \to \infty\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} B_n = \bigcup_{n=1}^{\infty} \{X \leq x_n\} = \Omega \]
+                    </div>
+                    <p>Because as \(x_n \to \infty\), every real number is \(\leq\) some \(x_n\), so the union covers all outcomes.</p>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 3 — Apply continuity of probability (from below):</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} P(B_n) = P\left( \lim_{n \to \infty} B_n \right) = P(\Omega) = 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 4 — Recognize \(P(B_n) = F(x_n)\):</strong>
+                    <div class="math-display">
+                        \[ \lim_{x \to \infty} F(x) = 1 \]
+                    </div>
+                </div>
+                
+                <div class="proof-step">
+                    <strong>Step 5 — Conclusion:</strong>
+                    <div class="math-display">
+                        \[ \boxed{\lim_{x \to \infty} F(x) = 1} \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 6.1:</strong> For any \(\epsilon > 0\), there exists \(M\) such that \(F(x) > 1 - \epsilon\) for all \(x > M\).<br>
+                <strong>📌 Corollary 6.2:</strong> As \(x \to \infty\), the probability that \(X\) is less than \(x\) approaches certainty.
+            </div>
+        </div>
+
+        <!-- Section 7: Additional Properties -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🔧</span>
+                <h2>7. Additional Properties of Distribution Functions</h2>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📌 Theorem (Right-Continuity)</h3>
+                <p>Every distribution function \(F\) is right-continuous:</p>
+                <div class="math-display">
+                    \[ \lim_{h \to 0^+} F(x + h) = F(x) \]
+                </div>
+            </div>
+            
+            <div class="proof-box">
+                <h4>📝 Proof of Right-Continuity:</h4>
+                <div class="proof-step">
+                    <strong>Step 1 — Consider a decreasing sequence \(h_n \downarrow 0\):</strong>
+                    <p>Let \(h_n \downarrow 0\). Then the events \(A_n = \{X \leq x + h_n\}\) form a decreasing sequence.</p>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 2 — Apply continuity from above:</strong>
+                    <div class="math-display">
+                        \[ \lim_{n \to \infty} F(x + h_n) = P\left( \bigcap_{n=1}^{\infty} \{X \leq x + h_n\} \right) = P(X \leq x) = F(x) \]
+                    </div>
+                </div>
+                <div class="proof-step">
+                    <strong>Step 3 — Since this holds for any decreasing sequence, the right-hand limit is \(F(x)\).</strong>
+                </div>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 7.1:</strong> Distribution functions can have jumps (discontinuities), but only from the left.<br>
+                <strong>📌 Corollary 7.2:</strong> \(P(X = a) = F(a) - F(a^-)\), where \(F(a^-) = \lim_{x \to a^-} F(x)\) (left-hand limit).<br>
+                <strong>📌 Corollary 7.3:</strong> A distribution function is continuous at \(a\) if and only if \(P(X = a) = 0\).
+            </div>
+        </div>
+
+        <!-- Section 8: Summary of Properties -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📋</span>
+                <h2>8. Summary of CDF Properties</h2>
+            </div>
+            
+            <div class="definition">
+                <p>A function \(F: \mathbb{R} \to [0,1]\) is a <strong>cumulative distribution function</strong> if and only if it satisfies:</p>
+                <ul class="property-list">
+                    <li><strong>P1 (Boundedness):</strong> \(0 \leq F(x) \leq 1\) for all \(x \in \mathbb{R}\)</li>
+                    <li><strong>P2 (Monotonicity):</strong> \(F(x) \leq F(y)\) whenever \(x < y\)</li>
+                    <li><strong>P3 (Limit at \(-\infty\)):</strong> \(\displaystyle \lim_{x \to -\infty} F(x) = 0\)</li>
+                    <li><strong>P4 (Limit at \(+\infty\)):</strong> \(\displaystyle \lim_{x \to \infty} F(x) = 1\)</li>
+                    <li><strong>P5 (Right-Continuity):</strong> \(\displaystyle \lim_{h \to 0^+} F(x + h) = F(x)\) for all \(x\)</li>
+                </ul>
+            </div>
+            
+            <div class="corollary-box">
+                <strong>📌 Corollary 8.1:</strong> Any function satisfying properties P1-P5 is a valid CDF for some random variable.<br>
+                <strong>📌 Corollary 8.2:</strong> For discrete random variables, the CDF is a step function with jumps at the possible values.<br>
+                <strong>📌 Corollary 8.3:</strong> For continuous random variables, the CDF is continuous everywhere.
+            </div>
+        </div>
+
+        <!-- Section 9: Examples -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">📝</span>
+                <h2>9. Worked Examples</h2>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 1: Discrete Distribution</strong><br>
+                Let \(X\) be the number of heads in two coin tosses. Find \(F(0.5)\), \(F(1.5)\), and \(F(2.5)\).<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(X=0)=\frac{1}{4}, \quad P(X=1)=\frac{1}{2}, \quad P(X=2)=\frac{1}{4} \]
+                </div>
+                <div class="math-display">
+                    \[ F(0.5) = P(X \leq 0.5) = P(X=0) = \frac{1}{4} \]
+                </div>
+                <div class="math-display">
+                    \[ F(1.5) = P(X \leq 1.5) = P(X=0)+P(X=1) = \frac{1}{4}+\frac{1}{2} = \frac{3}{4} \]
+                </div>
+                <div class="math-display">
+                    \[ F(2.5) = P(X \leq 2.5) = P(X=0)+P(X=1)+P(X=2) = 1 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 2: Continuous Distribution</strong><br>
+                Let \(X\) be uniformly distributed on \([0,1]\), with \(F(x) = x\) for \(0 \leq x \leq 1\). Find \(P(0.2 < X \leq 0.7)\).<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(0.2 < X \leq 0.7) = F(0.7) - F(0.2) = 0.7 - 0.2 = 0.5 \]
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <strong>📖 Example 3: Finding Probability from CDF</strong><br>
+                Given \(F(x) = \begin{cases} 
+                    0 & x < 0 \\
+                    \frac{x^2}{4} & 0 \leq x < 2 \\
+                    1 & x \geq 2 
+                \end{cases}\), find \(P(1 < X \leq 1.5)\).<br><br>
+                <strong>Solution:</strong>
+                <div class="math-display">
+                    \[ P(1 < X \leq 1.5) = F(1.5) - F(1) = \frac{(1.5)^2}{4} - \frac{1^2}{4} = \frac{2.25}{4} - \frac{1}{4} = \frac{1.25}{4} = 0.3125 \]
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Practice Problems -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">🧠</span>
+                <h2>10. Practice Problems</h2>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 1:</strong> For a random variable \(X\) with CDF \(F(x)\), show that \(P(X > a) = 1 - F(a)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(P(X > a) = 1 - P(X \leq a) = 1 - F(a)\) by the complement rule.</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 2:</strong> Prove that \(F(b^-) = \lim_{x \to b^-} F(x) = P(X < b)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Consider increasing sequence \(x_n \uparrow b\). Then \(\{X \leq x_n\}\) increases to \(\{X < b\}\). By continuity from below, \(\lim F(x_n) = P(X < b)\).</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 3:</strong> Given \(F(x) = 1 - e^{-x}\) for \(x \geq 0\) (exponential distribution), find \(P(1 < X \leq 3)\).</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">\(F(3) - F(1) = (1 - e^{-3}) - (1 - e^{-1}) = e^{-1} - e^{-3} \approx 0.3679 - 0.0498 = 0.3181\)</p>
+                </details>
+            </div>
+            
+            <div class="definition">
+                <p><strong>Problem 4:</strong> For any CDF, prove that the set of discontinuity points is at most countable.</p>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; color: #0284c7;">Show Solution</summary>
+                    <p style="margin-top: 0.5rem;">Let \(D\) be the set of discontinuity points. For each \(a \in D\), let \(j_a = F(a) - F(a^-) > 0\). Since \(F\) is increasing and bounded by 1, the sum of jumps over any interval is at most 1. Therefore, at most countably many jumps can exceed any threshold \(1/n\), so \(D\) is countable.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="key-takeaway">
+            <h3>📝 Summary: Key Takeaways</h3>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Definition:</strong> \(F(x) = P(X \leq x)\) for all \(x \in \mathbb{R}\)</li>
+                <li><strong>Probability of interval:</strong> \(P(a < X \leq b) = F(b) - F(a)\)</li>
+                <li><strong>Property 1 (Boundedness):</strong> \(0 \leq F(x) \leq 1\) for all \(x\)</li>
+                <li><strong>Property 2 (Monotonicity):</strong> \(F(x) \leq F(y)\) whenever \(x < y\)</li>
+                <li><strong>Property 3 (Limit at \(-\infty\)):</strong> \(\lim_{x \to -\infty} F(x) = 0\)</li>
+                <li><strong>Property 4 (Limit at \(+\infty\)):</strong> \(\lim_{x \to \infty} F(x) = 1\)</li>
+                <li><strong>Property 5 (Right-Continuity):</strong> \(\lim_{h \to 0^+} F(x+h) = F(x)\)</li>
+                <li><strong>Corollary:</strong> \(P(X = a) = F(a) - F(a^-)\) (size of jump at \(a\))</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <hr>
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <a href="random_variables.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">← Previous: Random Variables</a>
+            <a href="probability_mass_function.html" style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Next: Probability Mass Function →</a>
+        </div>
+    </div>
+
+    <footer>
+        📚 Cumulative Distribution Function (CDF) — the complete characterization of a random variable's probability distribution.
+    </footer>
+</div>
+</body>
+</html>
